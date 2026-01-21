@@ -16,7 +16,8 @@ def generate_trajectories(oracle, X_start_numpy, device):
     
     # 设置目标：简单设为当前预测值 + 2.0 (标准化后的分数提升)
     with torch.no_grad():
-        y_target = oracle.predict_mean(X_start) + 2.0
+        # y_target = oracle.predict_mean(X_start) + 2.0
+        y_target = torch.full((X_start.shape[0], 1), 4.0).to(device)
     
     traj_batch = [X_curr.detach().cpu()]
     optimizer = optim.Adam([X_curr], lr=Config.TRAJ_LR)

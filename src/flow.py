@@ -3,6 +3,48 @@ import torch
 import numpy as np
 from src.config import Config
 
+def train_cfm_step(model, trajectories, optimizer, device):
+    """
+    对一批在线生成的轨迹执行一次训练更新
+    """
+    model.train()
+    trajs = torch.FloatTensor(trajectories).to(device)
+    N, T, Dim = trajs.shape
+    M = T - 1 
+    
+    perm = torch.randperm(N)
+    total_loss = 0
+    num_batches = 0
+    
+    for i in range(0, N, Config.FM_BATCH_SIZE):
+        indices = perm[i:i+Config.FM_BATCH_SIZE]
+        batch_traj = trajs[indices]
+        batch_x0 = batch_traj[:, 0, :]
+        
+        # 采样时间段 k
+        k = torch.randint(0, M, (len(indices),)).to(device)
+        idx_range = torch.arange(len(indices))
+        x_k = batch_traj[idx_range, k, :]
+        x_k_next = batch_traj[idx_range, k+1, :]
+        
+        # 线性插值与目标速度计算
+        alpha = torch.rand(len(indices), 1).to(device)
+        t_global = (k.unsqueeze(1) + alpha) / M
+        x_t = (1 - alpha) * x_k + alpha * x_k_next
+        v_target = M * (x_k_next - x_k)
+        
+        # 预测与优化
+        v_pred = model(x_t, t_global, batch_x0)
+        loss = torch.mean((v_pred - v_target) ** 2)
+        
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+        
+        total_loss += loss.item()
+        num_batches += 1
+        
+    return total_loss / num_batches
 def train_cfm(model, trajectories, optimizer, device):
     """
     Phase 3: 训练条件流匹配
