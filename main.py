@@ -7,9 +7,11 @@ import numpy as np
 from src.config import Config
 from src.utils import set_seed, Normalizer
 from src.oracle import NTKOracle
-from src.generator import generate_trajectories
+from src.generator import generate_long_trajectories
 from src.models import VectorFieldNet
 from src.flow import train_cfm_step,train_cfm, inference_ode
+
+import os
 
 def get_design_bench_data(task_name):
     """
@@ -46,6 +48,32 @@ def get_design_bench_data(task_name):
     
     return task, offline_x_norm, offline_y_norm, mean_x, std_x
 
+# main.py 预处理逻辑
+def preprocess_trajectories(oracle, X_train_norm):
+    device = torch.device(Config.DEVICE if torch.cuda.is_available() else "cpu")
+    if os.path.exists(Config.TRAJECTORY_PATH):
+        print(f"Loading cached trajectories from {Config.TRAJECTORY_PATH}")
+        return np.load(Config.TRAJECTORY_PATH)['trajs']
+
+    print("=== Generating ALL long trajectories (GD reverse + GA) ===")
+    all_indices = np.arange(len(X_train_norm))
+    # 按照你的要求：用全量数据，或者至少 10000 条
+    sample_size = len(all_indices)
+    selected_idx = all_indices
+    # selected_idx = np.random.choice(all_indices, sample_size, replace=False)
+    
+    all_valid = []
+    batch_size = 256
+    for i in range(0, sample_size, batch_size):
+        batch_x = X_train_norm[selected_idx[i : i + batch_size]]
+        trajs = generate_long_trajectories(oracle, batch_x, device)
+        all_valid.append(trajs)
+        print(f"Progress: {i + batch_size}/{sample_size}")
+        
+    pool = np.concatenate(all_valid, axis=0)
+    np.savez_compressed(Config.TRAJECTORY_PATH, trajs=pool)
+    return pool
+
 def main():
     # 0. 初始化环境
     print(f"=== UAB-TD Starting: {Config.TASK_NAME} ===")
@@ -69,6 +97,10 @@ def main():
 
     # --- 核心修改：全量动态轨迹训练 ---
     print(f"=== Training: Online Trajectory Distillation ({Config.FM_EPOCHS} Epochs) ===")
+    trajs_pool = preprocess_trajectories(oracle, X_train_norm)
+    print(f"Loaded {len(trajs_pool)} trajectories from {Config.TRAJECTORY_PATH}")
+    print(f"Trajectories shape: {trajs_pool.shape}")
+
     all_indices = np.arange(len(X_train_norm))
     y_scores_flat = y_train_norm.flatten()
 
@@ -78,10 +110,10 @@ def main():
         top_idx = np.argsort(y_scores_flat)[-(Config.NUM_SEEDS // 2):]
         current_seeds_idx = np.concatenate([rand_idx, top_idx])
         
-        X_seeds = X_train_norm[current_seeds_idx]
+        # X_seeds = X_train_norm[current_seeds_idx]
         
         # 阶段一：在线生成/更新轨迹
-        valid_trajs = generate_trajectories(oracle, X_seeds, device)
+        valid_trajs = trajs_pool[current_seeds_idx]
         
         if len(valid_trajs) == 0:
             continue
@@ -123,6 +155,7 @@ def main():
     
     # 计算百分位数
     final_scores_sorted = np.sort(final_scores)
+    print(f"final_scores_sorted: {final_scores_sorted}")
     max_score = final_scores_sorted[-1]
     p80_score = final_scores_sorted[int(0.8 * (test_q - 1))]
     p50_score = final_scores_sorted[int(0.5 * (test_q - 1))]
@@ -133,8 +166,8 @@ def main():
     print(f"Improvement:              {np.mean(final_scores) - np.mean(original_scores):.4f}")
     print("-" * 40)
     print(f"SOTA Max (100th):        {max_score:.4f} (Target: ~0.986)")
-    print(f"SOTA 80th Percentile:    {p80_score:.4f}")
-    print(f"SOTA Median (50th):      {p50_score:.4f}")
+    print(f"SOTA 80th Percentile:    {p80_score:.4f} (Target: ~0.86)")
+    print(f"SOTA Median (50th):      {p50_score:.4f} (Target: ~0.75)")
     print("-" * 40)
 
 if __name__ == "__main__":
