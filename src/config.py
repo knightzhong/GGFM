@@ -11,13 +11,13 @@ class Config:
     GP_NUM_FUNCTIONS = 8        # Sample n_e = 8 GP functions per epoch
     GP_NUM_POINTS = 1024        # Number of pairs per GP function
     GP_NUM_GRADIENT_STEPS = 100 # Gradient steps
-    GP_LEARNING_RATE = 0.1         # GP sampling learning rate
+    GP_LEARNING_RATE = 0.05         # GP sampling learning rate
     GP_DELTA_LENGTHSCALE = 0.25 # Lengthscale perturbation range
     GP_DELTA_VARIANCE = 0.25    # Variance perturbation range
     GP_INITIAL_LENGTHSCALE = 6.25
     GP_INITIAL_OUTPUTSCALE = 6.25
     GP_NOISE = 0.01
-    GP_NUM_FIT_SAMPLES = 15000  # TFBind8 uses partial samples to fit GP
+    GP_NUM_FIT_SAMPLES = 15000  # TFBind8 15000 uses partial samples to fit GP
     GP_THRESHOLD_DIFF = 0.001   # Minimum score difference threshold
     GP_TRAJ_STEPS = 200             # Steps to generate trajectory from GP pairs
     GP_TYPE_INITIAL_POINTS = 'highest'  # 'highest', 'lowest', or other

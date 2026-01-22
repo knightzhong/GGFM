@@ -136,7 +136,7 @@ def main():
     optimizer = optim.Adam(cfm_model.parameters(), lr=Config.FM_LR)
     
     # 🔧 添加学习率调度器，防止后期学习率过大
-    scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=Config.FM_EPOCHS, eta_min=1e-5)
+    # scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=Config.FM_EPOCHS, eta_min=1e-5)
 
     # --- 核心修改：每个 Epoch 动态采样 GP 函数生成轨迹 ---
     print(f"=== Training: Dynamic GP Sampling ({Config.FM_EPOCHS} Epochs) ===")
@@ -178,6 +178,7 @@ def main():
         gp_init_time = time.time() - gp_init_start
         
         # 从 GP 采样 n_e = 8 个函数，每个函数生成 num_points 个配对
+        # best_x = torch.randperm(X_train_tensor.shape[0])[:1024]
         sampling_start = time.time()
         data_from_GP = sampling_data_from_GP(
             x_train=best_x,
@@ -219,7 +220,7 @@ def main():
         epoch_total_time = time.time() - epoch_start
         
         # 🔧 更新学习率
-        scheduler.step()
+        # scheduler.step()
         
         print(f"  [⏱️ Time] 训练: {train_time:.2f}s | Epoch总计: {epoch_total_time:.2f}s")
         
@@ -266,7 +267,7 @@ def main():
     print(f"Selected {test_q} highest samples as starting points")
     print(f"Starting scores (normalized): mean={np.mean(y_test_start):.4f}, max={np.max(y_test_start):.4f}")
     
-    # ODE 推理（添加 y 条件和 CFG）
+    # ODE 推理
     # 与 ROOT 完全对齐：使用 Oracle 理论最大值而非数据集分位数！
     
     opt_X_norm = inference_ode(cfm_model, X_test_norm, device)

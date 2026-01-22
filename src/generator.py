@@ -90,7 +90,7 @@ def sampling_data_from_GP(x_train, device, GP_Model, num_gradient_steps=50, num_
         # ✅ 优化：使用 in-place 操作，避免重复创建 tensor
         x_low = x_start.clone().requires_grad_(True)
         with torch.enable_grad():
-            for _ in range(num_gradient_steps // 2):
+            for _ in range(num_gradient_steps):
                 mu_star = GP_Model.mean_posterior(x_low)
                 grad = torch.autograd.grad(mu_star.sum(), x_low, create_graph=False)[0]
                 x_low.data.sub_(learning_rate * grad)  # in-place: x_low -= lr * grad
@@ -205,7 +205,7 @@ def generate_long_trajectories(oracle, X_init_numpy, device):
     X_curr = torch.FloatTensor(X_init_numpy).to(device).requires_grad_(True)
     X_start = torch.FloatTensor(X_init_numpy).to(device)
     
-    # --- 阶段 B: 冲顶 (GA) 800步 ---
+    # --- 阶段 B: 冲顶 (GA) 200步 ---
     X_curr.data = X_start.data.clone()
     y_target_high = torch.full((X_start.shape[0], 1), 4.0).to(device)
     traj_part2 = [X_curr.detach().cpu().clone()]
