@@ -134,6 +134,9 @@ def main():
     input_dim = X_train_norm.shape[1]
     cfm_model = VectorFieldNet(input_dim, hidden_dim=Config.HIDDEN_DIM).to(device)
     optimizer = optim.Adam(cfm_model.parameters(), lr=Config.FM_LR)
+    
+    # 🔧 添加学习率调度器，防止后期学习率过大
+    scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=Config.FM_EPOCHS, eta_min=1e-5)
 
     # --- 核心修改：每个 Epoch 动态采样 GP 函数生成轨迹 ---
     print(f"=== Training: Dynamic GP Sampling ({Config.FM_EPOCHS} Epochs) ===")
@@ -214,6 +217,9 @@ def main():
         train_time = time.time() - train_start
         
         epoch_total_time = time.time() - epoch_start
+        
+        # 🔧 更新学习率
+        scheduler.step()
         
         print(f"  [⏱️ Time] 训练: {train_time:.2f}s | Epoch总计: {epoch_total_time:.2f}s")
         
