@@ -6,6 +6,7 @@ from src.config import Config
 def train_cfm_step(model, trajectories, optimizer, device):
     """
     对一批在线生成的轨迹执行一次训练更新
+    trajectories: numpy array [N, Steps+1, Dim]
     """
     model.train()
     trajs = torch.FloatTensor(trajectories).to(device)
@@ -43,7 +44,7 @@ def train_cfm_step(model, trajectories, optimizer, device):
         
         total_loss += loss.item()
         num_batches += 1
-        
+    
     return total_loss / num_batches
 def train_cfm(model, trajectories, optimizer, device):
     """
@@ -97,6 +98,14 @@ def train_cfm(model, trajectories, optimizer, device):
 def inference_ode(model, x_query, device):
     """
     Phase 4: 使用 Euler 法解 ODE
+    
+    Args:
+        model: Flow Matching 模型
+        x_query: 起始点 [N, D]
+        device: torch.device
+    
+    Returns:
+        numpy array [N, D]
     """
     model.eval()
     x_curr = torch.FloatTensor(x_query).to(device)
@@ -108,7 +117,7 @@ def inference_ode(model, x_query, device):
     with torch.no_grad():
         for i in range(steps):
             t_val = i / steps
-            t_tensor = torch.full((x_curr.shape[0], 1), t_val).to(device)
+            t_tensor = torch.full((x_curr.shape[0], 1), t_val, device=device)
             
             velocity = model(x_curr, t_tensor, x_0)
             x_curr = x_curr + velocity * dt

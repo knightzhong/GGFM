@@ -1,0 +1,339 @@
+nohup: 忽略输入
+=== GGFM with ROOT GP Sampling: TFBind8-Exact-v0 ===
+Loading task: TFBind8-Exact-v0...
+[数据编码] 离散任务：已调用 map_to_logits，Logits (32898, 8, 3) -> 展平 (32898, 24)
+[GP Init] Using top 1024 samples for GP sampling
+=== Training: Dynamic GP Sampling (100 Epochs) ===
+每个 Epoch 采样 n_e = 8 个 GP 函数
+每个 GP 函数采样 1024 个配对
+总计将生成约 8 × 100 = 800 个 GP 函数
+
+=== Epoch 1/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 2/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 3/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 4/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 5/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 6/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 7/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 8/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 9/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 10/100 ===
+Generated 8192 trajectories from GP samples
+Epoch 10/100 | Loss: 0.3985 | Trajs: 8192
+
+=== Epoch 11/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 12/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 13/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 14/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 15/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 16/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 17/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 18/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 19/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 20/100 ===
+Generated 8192 trajectories from GP samples
+Epoch 20/100 | Loss: 0.2905 | Trajs: 8192
+
+=== Epoch 21/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 22/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 23/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 24/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 25/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 26/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 27/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 28/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 29/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 30/100 ===
+Generated 8192 trajectories from GP samples
+Epoch 30/100 | Loss: 0.2565 | Trajs: 8192
+
+=== Epoch 31/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 32/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 33/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 34/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 35/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 36/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 37/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 38/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 39/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 40/100 ===
+Generated 8192 trajectories from GP samples
+Epoch 40/100 | Loss: 0.2055 | Trajs: 8192
+
+=== Epoch 41/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 42/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 43/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 44/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 45/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 46/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 47/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 48/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 49/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 50/100 ===
+Generated 8192 trajectories from GP samples
+Epoch 50/100 | Loss: 0.1926 | Trajs: 8192
+
+=== Epoch 51/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 52/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 53/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 54/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 55/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 56/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 57/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 58/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 59/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 60/100 ===
+Generated 8192 trajectories from GP samples
+Epoch 60/100 | Loss: 0.1767 | Trajs: 8192
+
+=== Epoch 61/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 62/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 63/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 64/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 65/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 66/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 67/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 68/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 69/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 70/100 ===
+Generated 8192 trajectories from GP samples
+Epoch 70/100 | Loss: 0.1731 | Trajs: 8192
+
+=== Epoch 71/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 72/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 73/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 74/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 75/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 76/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 77/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 78/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 79/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 80/100 ===
+Generated 8192 trajectories from GP samples
+Epoch 80/100 | Loss: 0.1467 | Trajs: 8192
+
+=== Epoch 81/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 82/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 83/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 84/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 85/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 86/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 87/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 88/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 89/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 90/100 ===
+Generated 8192 trajectories from GP samples
+Epoch 90/100 | Loss: 0.1453 | Trajs: 8192
+
+=== Epoch 91/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 92/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 93/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 94/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 95/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 96/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 97/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 98/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 99/100 ===
+Generated 8192 trajectories from GP samples
+
+=== Epoch 100/100 ===
+Generated 8192 trajectories from GP samples
+Epoch 100/100 | Loss: 0.1448 | Trajs: 8192
+
+=== SOTA Evaluation (Highest-point, Q=128) ===
+Selected 128 highest samples as starting points
+Starting scores (normalized): mean=1.4758, max=1.4803
+[Discrete Task] Reshaped to Logits format: (128, 8, 3)
+
+[Result] Final scores distribution:
+  Min: 0.1429
+  Max: 0.9870
+  Mean: 0.6298
+  Std: 0.1850
+------------------------------------------------------------
+Original Mean (Top 128): 0.4390
+Optimized Mean (Top 128): 0.6298
+Improvement:                   0.1908
+------------------------------------------------------------
+100th Percentile (Max):      0.9870
+80th Percentile:             0.8334
+50th Percentile (Median):    0.6081
+------------------------------------------------------------
