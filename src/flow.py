@@ -3,13 +3,19 @@ import torch
 import numpy as np
 from src.config import Config
 
-def train_cfm_step(model, trajectories, optimizer, device):
+def train_cfm_step(model, trajectories, optimizer, device, weights=None):
     """
     对一批在线生成的轨迹执行一次训练更新
     trajectories: numpy array [N, Steps+1, Dim]
     """
     model.train()
     trajs = torch.FloatTensor(trajectories).to(device)
+
+    # [新增] 处理权重
+    if weights is not None:
+        weights = torch.FloatTensor(weights).to(device).view(-1) # (N,)
+
+
     N, T, Dim = trajs.shape
     M = T - 1 
     
@@ -21,6 +27,10 @@ def train_cfm_step(model, trajectories, optimizer, device):
         indices = perm[i:i+Config.FM_BATCH_SIZE]
         batch_traj = trajs[indices]
         batch_x0 = batch_traj[:, 0, :]
+
+        # [新增] 获取当前 batch 的权重
+        if weights is not None:
+            batch_weights = weights[indices]
         
         # 采样时间段 k
         k = torch.randint(0, M, (len(indices),)).to(device)
@@ -36,7 +46,15 @@ def train_cfm_step(model, trajectories, optimizer, device):
         
         # 预测与优化
         v_pred = model(x_t, t_global, batch_x0)
-        loss = torch.mean((v_pred - v_target) ** 2)
+        # [修改] 计算加权 Loss
+        loss_elementwise = torch.mean((v_pred - v_target) ** 2, dim=-1) # (B,)
+        
+        if weights is not None:
+            # 加权平均
+            loss = torch.mean(loss_elementwise * batch_weights)
+        else:
+            # 原始平均
+            loss = torch.mean(loss_elementwise)
         
         optimizer.zero_grad()
         loss.backward()

@@ -21,7 +21,7 @@ class VectorFieldNet(nn.Module):
     """
     条件流匹配网络 v_theta(x_t, t, x_0)
     """
-    def __init__(self, input_dim, hidden_dim=256):
+    def __init__(self, input_dim, hidden_dim=256, dropout=0.1):
         super().__init__()
         # 时间嵌入
         self.time_mlp = nn.Sequential(
@@ -34,7 +34,7 @@ class VectorFieldNet(nn.Module):
         self.input_proj = nn.Linear(input_dim * 2, hidden_dim)
         
         # 主干网络 (Residual MLP)
-        self.blocks = nn.ModuleList([ResidualBlock(hidden_dim) for _ in range(6)])
+        self.blocks = nn.ModuleList([ResidualBlock(hidden_dim, dropout=dropout) for _ in range(6)])
         self.out_proj = nn.Linear(hidden_dim, input_dim) # 输出速度向量
 
     def forward(self, x, t, x_0):
@@ -54,12 +54,14 @@ class VectorFieldNet(nn.Module):
 
 
 class ResidualBlock(nn.Module):
-    def __init__(self, dim):
+    def __init__(self, dim, dropout=0.1):
         super().__init__()
         self.net = nn.Sequential(
             nn.Linear(dim, dim),
             nn.SiLU(),
+            nn.Dropout(dropout),
             nn.Linear(dim, dim),
+            nn.Dropout(dropout),
         )
         self.act = nn.SiLU()
 

@@ -157,23 +157,29 @@ def generate_trajectories_from_GP_samples(GP_samples, device, num_steps=50):
     """
     # 收集所有轨迹
     all_trajectories = []
+    all_scores = []  # <--- [新增] 收集分数
     
     for func_name, samples in GP_samples.items():
         for sample in samples:
             trajectory, y_start, y_end = sample
             # trajectory: (gp_steps+1, dim) - GP 的完整非线性路径
             all_trajectories.append(trajectory)
+            all_scores.append(y_end) # <--- [新增] 保存 y_end
     
     if len(all_trajectories) == 0:
-        return np.array([]).reshape(0, num_steps + 1, 0)
+        return np.array([]).reshape(0, num_steps + 1, 0), np.array([])
     
     # 批量堆叠所有轨迹: (N, gp_steps+1, dim)
     trajectories_batch = torch.stack(all_trajectories, dim=0).to(device)
     N, gp_steps, dim = trajectories_batch.shape
+
+    # [新增] 转换分数
+    # y_end 可能是 tensor 也可能是 float，统一转 numpy
+    scores_array = np.array([s.item() if torch.is_tensor(s) else s for s in all_scores])
     
     # 如果 GP 步数和目标步数相同，直接返回
     if gp_steps == num_steps + 1:
-        return trajectories_batch.cpu().numpy()
+        return trajectories_batch.cpu().numpy(),scores_array
     
     # ✅ 高效重采样：批量插值（完全向量化，无循环）
     # 使用 F.interpolate 批量处理所有轨迹
@@ -193,8 +199,10 @@ def generate_trajectories_from_GP_samples(GP_samples, device, num_steps=50):
     
     # 转换为 numpy
     trajs_array = final_trajs.cpu().numpy()
+
     
-    return trajs_array
+    
+    return trajs_array,scores_array
 
 
 def generate_long_trajectories(oracle, X_init_numpy, device):

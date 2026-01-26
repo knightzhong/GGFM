@@ -1,0 +1,828 @@
+nohup: 忽略输入
+=== GGFM with ROOT GP Sampling: TFBind10-Exact-v0 ===
+[Config] Using: configs/TfBind10_FlowMatching.yaml
+Loading task: TFBind10-Exact-v0...
+[数据编码] 离散任务：已调用 map_to_logits，Logits (10000, 10, 3) -> 展平 (10000, 30)
+[GP Init] Using top 1024 samples for GP sampling (ROOT style: same samples, different order each epoch)
+=== Training: Dynamic GP Sampling (150 Epochs) ===
+每个 Epoch 采样 n_e = 8 个 GP 函数
+每个 GP 函数采样 2048 个配对
+总计将生成约 8 × 150 = 1200 个 GP 函数
+
+=== Epoch 1/150 ===
+    [GP内部] set_hyper: 2.39s | 梯度采样: 10.05s | 后验: 0.03s
+  [Rank Weight] Min: 0.0027 | Max: 8.0012
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.02s | GP采样: 13.39s | 轨迹生成: 0.27s
+  [⏱️ Time] 训练: 0.68s | Epoch总计: 14.36s
+
+=== Epoch 2/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.58s | 轨迹生成: 0.27s
+  [⏱️ Time] 训练: 0.43s | Epoch总计: 12.29s
+
+=== Epoch 3/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.59s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.76s | Epoch总计: 11.65s
+
+=== Epoch 4/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.85s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.43s | Epoch总计: 11.57s
+
+=== Epoch 5/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.83s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.44s | Epoch总计: 11.57s
+
+=== Epoch 6/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.21s | 轨迹生成: 0.27s
+  [⏱️ Time] 训练: 0.59s | Epoch总计: 12.07s
+
+=== Epoch 7/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.58s | 轨迹生成: 0.27s
+  [⏱️ Time] 训练: 0.68s | Epoch总计: 12.53s
+
+=== Epoch 8/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.24s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.44s | Epoch总计: 11.97s
+
+=== Epoch 9/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.91s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.77s | Epoch总计: 11.98s
+
+=== Epoch 10/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.88s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.43s | Epoch总计: 11.61s
+Epoch 10/150 | Loss: 2.0111 | Trajs: 16384
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_10.pt
+
+=== Epoch 11/150 ===
+  [Rank Weight] Min: 0.0027 | Max: 8.0012
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.02s | GP采样: 11.34s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.49s | Epoch总计: 12.14s
+
+=== Epoch 12/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.87s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.44s | Epoch总计: 11.61s
+
+=== Epoch 13/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.29s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.43s | Epoch总计: 12.03s
+
+=== Epoch 14/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.32s | 轨迹生成: 0.31s
+  [⏱️ Time] 训练: 0.41s | Epoch总计: 12.04s
+
+=== Epoch 15/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.17s | 轨迹生成: 0.27s
+  [⏱️ Time] 训练: 0.58s | Epoch总计: 12.02s
+
+=== Epoch 16/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.90s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.43s | Epoch总计: 11.63s
+
+=== Epoch 17/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.29s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.45s | Epoch总计: 12.03s
+
+=== Epoch 18/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.20s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.56s | Epoch总计: 12.05s
+
+=== Epoch 19/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.92s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.41s | Epoch总计: 11.64s
+
+=== Epoch 20/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.30s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.48s | Epoch总计: 12.07s
+Epoch 20/150 | Loss: 1.1162 | Trajs: 16384
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_20.pt
+
+=== Epoch 21/150 ===
+  [Rank Weight] Min: 0.0027 | Max: 8.0012
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.02s | GP采样: 11.31s | 轨迹生成: 0.28s
+  [⏱️ Time] 训练: 0.70s | Epoch总计: 12.30s
+
+=== Epoch 22/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.19s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.43s | Epoch总计: 11.91s
+
+=== Epoch 23/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.21s | 轨迹生成: 0.28s
+  [⏱️ Time] 训练: 0.51s | Epoch总计: 12.00s
+
+=== Epoch 24/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.28s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.45s | Epoch总计: 12.02s
+
+=== Epoch 25/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.85s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.42s | Epoch总计: 11.58s
+
+=== Epoch 26/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.55s | 轨迹生成: 0.26s
+  [⏱️ Time] 训练: 0.43s | Epoch总计: 11.24s
+
+=== Epoch 27/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.27s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.44s | Epoch总计: 12.00s
+
+=== Epoch 28/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.89s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.41s | Epoch总计: 11.61s
+
+=== Epoch 29/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.29s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.44s | Epoch总计: 12.02s
+
+=== Epoch 30/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.30s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.45s | Epoch总计: 12.04s
+Epoch 30/150 | Loss: 0.9709 | Trajs: 16384
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_30.pt
+
+=== Epoch 31/150 ===
+  [Rank Weight] Min: 0.0027 | Max: 8.0012
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.02s | GP采样: 11.04s | 轨迹生成: 0.31s
+  [⏱️ Time] 训练: 0.77s | Epoch总计: 12.14s
+
+=== Epoch 32/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.86s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.46s | Epoch总计: 11.61s
+
+=== Epoch 33/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.53s | 轨迹生成: 0.27s
+  [⏱️ Time] 训练: 0.73s | Epoch总计: 12.54s
+
+=== Epoch 34/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.61s | 轨迹生成: 0.27s
+  [⏱️ Time] 训练: 0.69s | Epoch总计: 12.57s
+
+=== Epoch 35/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.20s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.43s | Epoch总计: 11.92s
+
+=== Epoch 36/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.88s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.42s | Epoch总计: 11.60s
+
+=== Epoch 37/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.92s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.77s | Epoch总计: 11.99s
+
+=== Epoch 38/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.87s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.44s | Epoch总计: 11.60s
+
+=== Epoch 39/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.83s | 轨迹生成: 0.27s
+  [⏱️ Time] 训练: 0.55s | Epoch总计: 11.65s
+
+=== Epoch 40/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.52s | 轨迹生成: 0.28s
+  [⏱️ Time] 训练: 0.77s | Epoch总计: 12.57s
+Epoch 40/150 | Loss: 0.7659 | Trajs: 16384
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_40.pt
+
+=== Epoch 41/150 ===
+  [Rank Weight] Min: 0.0027 | Max: 8.0012
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.02s | GP采样: 11.32s | 轨迹生成: 0.27s
+  [⏱️ Time] 训练: 0.68s | Epoch总计: 12.29s
+
+=== Epoch 42/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.18s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.43s | Epoch总计: 11.91s
+
+=== Epoch 43/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.84s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.44s | Epoch总计: 11.58s
+
+=== Epoch 44/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.86s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.43s | Epoch总计: 11.59s
+
+=== Epoch 45/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.11s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.61s | Epoch总计: 12.02s
+
+=== Epoch 46/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.84s | 轨迹生成: 0.28s
+  [⏱️ Time] 训练: 0.52s | Epoch总计: 11.64s
+
+=== Epoch 47/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.18s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.43s | Epoch总计: 11.91s
+
+=== Epoch 48/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.92s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.77s | Epoch总计: 12.00s
+
+=== Epoch 49/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.87s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.45s | Epoch总计: 11.61s
+
+=== Epoch 50/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.20s | 轨迹生成: 0.26s
+  [⏱️ Time] 训练: 0.43s | Epoch总计: 10.89s
+Epoch 50/150 | Loss: 0.7169 | Trajs: 16384
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_50.pt
+
+=== Epoch 51/150 ===
+  [Rank Weight] Min: 0.0027 | Max: 8.0012
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 8.18s | 轨迹生成: 0.27s
+  [⏱️ Time] 训练: 0.37s | Epoch总计: 8.82s
+
+=== Epoch 52/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 8.21s | 轨迹生成: 0.28s
+  [⏱️ Time] 训练: 0.40s | Epoch总计: 8.89s
+
+=== Epoch 53/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 8.18s | 轨迹生成: 0.27s
+  [⏱️ Time] 训练: 0.39s | Epoch总计: 8.84s
+
+=== Epoch 54/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 8.12s | 轨迹生成: 0.26s
+  [⏱️ Time] 训练: 0.39s | Epoch总计: 8.77s
+
+=== Epoch 55/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 8.18s | 轨迹生成: 0.26s
+  [⏱️ Time] 训练: 0.34s | Epoch总计: 8.79s
+
+=== Epoch 56/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 8.15s | 轨迹生成: 0.26s
+  [⏱️ Time] 训练: 0.34s | Epoch总计: 8.76s
+
+=== Epoch 57/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 8.15s | 轨迹生成: 0.26s
+  [⏱️ Time] 训练: 0.34s | Epoch总计: 8.75s
+
+=== Epoch 58/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 8.16s | 轨迹生成: 0.26s
+  [⏱️ Time] 训练: 0.34s | Epoch总计: 8.76s
+
+=== Epoch 59/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 8.16s | 轨迹生成: 0.26s
+  [⏱️ Time] 训练: 0.35s | Epoch总计: 8.76s
+
+=== Epoch 60/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 8.11s | 轨迹生成: 0.26s
+  [⏱️ Time] 训练: 0.35s | Epoch总计: 8.72s
+Epoch 60/150 | Loss: 0.6365 | Trajs: 16384
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_60.pt
+
+=== Epoch 61/150 ===
+  [Rank Weight] Min: 0.0027 | Max: 8.0012
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 8.15s | 轨迹生成: 0.26s
+  [⏱️ Time] 训练: 0.35s | Epoch总计: 8.76s
+
+=== Epoch 62/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 8.22s | 轨迹生成: 0.26s
+  [⏱️ Time] 训练: 0.34s | Epoch总计: 8.83s
+
+=== Epoch 63/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 8.15s | 轨迹生成: 0.26s
+  [⏱️ Time] 训练: 0.34s | Epoch总计: 8.76s
+
+=== Epoch 64/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 8.17s | 轨迹生成: 0.26s
+  [⏱️ Time] 训练: 0.34s | Epoch总计: 8.78s
+
+=== Epoch 65/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 8.16s | 轨迹生成: 0.26s
+  [⏱️ Time] 训练: 0.35s | Epoch总计: 8.77s
+
+=== Epoch 66/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 8.11s | 轨迹生成: 0.26s
+  [⏱️ Time] 训练: 0.34s | Epoch总计: 8.71s
+
+=== Epoch 67/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 8.16s | 轨迹生成: 0.26s
+  [⏱️ Time] 训练: 0.34s | Epoch总计: 8.77s
+
+=== Epoch 68/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 8.21s | 轨迹生成: 0.28s
+  [⏱️ Time] 训练: 0.40s | Epoch总计: 8.89s
+
+=== Epoch 69/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 8.21s | 轨迹生成: 0.26s
+  [⏱️ Time] 训练: 0.34s | Epoch总计: 8.81s
+
+=== Epoch 70/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 8.21s | 轨迹生成: 0.28s
+  [⏱️ Time] 训练: 0.39s | Epoch总计: 8.88s
+Epoch 70/150 | Loss: 0.4825 | Trajs: 16384
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_70.pt
+
+=== Epoch 71/150 ===
+  [Rank Weight] Min: 0.0027 | Max: 8.0012
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 8.14s | 轨迹生成: 0.28s
+  [⏱️ Time] 训练: 0.35s | Epoch总计: 8.77s
+
+=== Epoch 72/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 8.16s | 轨迹生成: 0.27s
+  [⏱️ Time] 训练: 0.34s | Epoch总计: 8.77s
+
+=== Epoch 73/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 8.15s | 轨迹生成: 0.26s
+  [⏱️ Time] 训练: 0.34s | Epoch总计: 8.76s
+
+=== Epoch 74/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 8.16s | 轨迹生成: 0.26s
+  [⏱️ Time] 训练: 0.34s | Epoch总计: 8.76s
+
+=== Epoch 75/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 8.15s | 轨迹生成: 0.26s
+  [⏱️ Time] 训练: 0.34s | Epoch总计: 8.75s
+
+=== Epoch 76/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 8.17s | 轨迹生成: 0.26s
+  [⏱️ Time] 训练: 0.35s | Epoch总计: 8.78s
+
+=== Epoch 77/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 8.11s | 轨迹生成: 0.26s
+  [⏱️ Time] 训练: 0.34s | Epoch总计: 8.72s
+
+=== Epoch 78/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 9.65s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.43s | Epoch总计: 10.38s
+
+=== Epoch 79/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.26s | 轨迹生成: 0.28s
+  [⏱️ Time] 训练: 0.47s | Epoch总计: 12.01s
+
+=== Epoch 80/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.13s | 轨迹生成: 0.31s
+  [⏱️ Time] 训练: 0.62s | Epoch总计: 12.07s
+Epoch 80/150 | Loss: 0.6358 | Trajs: 16384
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_80.pt
+
+=== Epoch 81/150 ===
+  [Rank Weight] Min: 0.0027 | Max: 8.0012
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.02s | GP采样: 11.06s | 轨迹生成: 0.31s
+  [⏱️ Time] 训练: 0.41s | Epoch总计: 11.80s
+
+=== Epoch 82/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.19s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.44s | Epoch总计: 11.93s
+
+=== Epoch 83/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.91s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.42s | Epoch总计: 11.63s
+
+=== Epoch 84/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.19s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.55s | Epoch总计: 12.04s
+
+=== Epoch 85/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.30s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.44s | Epoch总计: 12.03s
+
+=== Epoch 86/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.92s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.43s | Epoch总计: 11.65s
+
+=== Epoch 87/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.28s | 轨迹生成: 0.27s
+  [⏱️ Time] 训练: 0.56s | Epoch总计: 12.12s
+
+=== Epoch 88/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.18s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.43s | Epoch总计: 11.91s
+
+=== Epoch 89/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.86s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.43s | Epoch总计: 11.59s
+
+=== Epoch 90/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.94s | 轨迹生成: 0.31s
+  [⏱️ Time] 训练: 0.53s | Epoch总计: 11.78s
+Epoch 90/150 | Loss: 0.5352 | Trajs: 16384
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_90.pt
+
+=== Epoch 91/150 ===
+  [Rank Weight] Min: 0.0027 | Max: 8.0012
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.31s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.44s | Epoch总计: 12.05s
+
+=== Epoch 92/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.87s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.43s | Epoch总计: 11.60s
+
+=== Epoch 93/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.24s | 轨迹生成: 0.27s
+  [⏱️ Time] 训练: 0.62s | Epoch总计: 12.12s
+
+=== Epoch 94/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.18s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.44s | Epoch总计: 11.91s
+
+=== Epoch 95/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.90s | 轨迹生成: 0.31s
+  [⏱️ Time] 训练: 0.77s | Epoch总计: 11.98s
+
+=== Epoch 96/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.89s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.42s | Epoch总计: 11.61s
+
+=== Epoch 97/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.27s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.44s | Epoch总计: 12.00s
+
+=== Epoch 98/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.86s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.42s | Epoch总计: 11.58s
+
+=== Epoch 99/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.17s | 轨迹生成: 0.27s
+  [⏱️ Time] 训练: 0.67s | Epoch总计: 12.11s
+
+=== Epoch 100/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.19s | 轨迹生成: 0.27s
+  [⏱️ Time] 训练: 0.54s | Epoch总计: 11.99s
+Epoch 100/150 | Loss: 1.0034 | Trajs: 16384
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_100.pt
+
+=== Epoch 101/150 ===
+  [Rank Weight] Min: 0.0027 | Max: 8.0012
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.58s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.44s | Epoch总计: 12.32s
+
+=== Epoch 102/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.55s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.44s | Epoch总计: 11.29s
+
+=== Epoch 103/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.89s | 轨迹生成: 0.28s
+  [⏱️ Time] 训练: 0.48s | Epoch总计: 11.64s
+
+=== Epoch 104/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.92s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.41s | Epoch总计: 11.63s
+
+=== Epoch 105/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.43s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.78s | Epoch总计: 12.50s
+
+=== Epoch 106/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.21s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.44s | Epoch总计: 11.94s
+
+=== Epoch 107/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.08s | 轨迹生成: 0.31s
+  [⏱️ Time] 训练: 0.62s | Epoch总计: 12.01s
+
+=== Epoch 108/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.86s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.45s | Epoch总计: 11.60s
+
+=== Epoch 109/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.86s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.43s | Epoch总计: 11.59s
+
+=== Epoch 110/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.85s | 轨迹生成: 0.28s
+  [⏱️ Time] 训练: 0.49s | Epoch总计: 11.62s
+Epoch 110/150 | Loss: 15.0518 | Trajs: 16384
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_110.pt
+
+=== Epoch 111/150 ===
+  [Rank Weight] Min: 0.0027 | Max: 8.0012
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.02s | GP采样: 11.34s | 轨迹生成: 0.27s
+  [⏱️ Time] 训练: 0.70s | Epoch总计: 12.33s
+
+=== Epoch 112/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.25s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.45s | Epoch总计: 11.99s
+
+=== Epoch 113/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.12s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.60s | Epoch总计: 12.02s
+
+=== Epoch 114/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.59s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.71s | Epoch总计: 11.60s
+
+=== Epoch 115/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.92s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.77s | Epoch总计: 12.00s
+
+=== Epoch 116/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.89s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.44s | Epoch总计: 11.63s
+
+=== Epoch 117/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.18s | 轨迹生成: 0.27s
+  [⏱️ Time] 训练: 0.69s | Epoch总计: 12.14s
+
+=== Epoch 118/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.21s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.44s | Epoch总计: 11.94s
+
+=== Epoch 119/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.26s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.46s | Epoch总计: 12.01s
+
+=== Epoch 120/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.87s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.43s | Epoch总计: 11.59s
+Epoch 120/150 | Loss: 14.6558 | Trajs: 16384
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_120.pt
+
+=== Epoch 121/150 ===
+  [Rank Weight] Min: 0.0027 | Max: 8.0012
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.02s | GP采样: 11.03s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.77s | Epoch总计: 12.13s
+
+=== Epoch 122/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.87s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.45s | Epoch总计: 11.61s
+
+=== Epoch 123/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.94s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.76s | Epoch总计: 12.00s
+
+=== Epoch 124/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.25s | 轨迹生成: 0.27s
+  [⏱️ Time] 训练: 0.55s | Epoch总计: 12.07s
+
+=== Epoch 125/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.19s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.44s | Epoch总计: 11.92s
+
+=== Epoch 126/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.25s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.43s | Epoch总计: 10.98s
+
+=== Epoch 127/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.87s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.42s | Epoch总计: 11.58s
+
+=== Epoch 128/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.17s | 轨迹生成: 0.27s
+  [⏱️ Time] 训练: 0.68s | Epoch总计: 12.12s
+
+=== Epoch 129/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.55s | 轨迹生成: 0.27s
+  [⏱️ Time] 训练: 0.73s | Epoch总计: 12.55s
+
+=== Epoch 130/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.61s | 轨迹生成: 0.26s
+  [⏱️ Time] 训练: 0.77s | Epoch总计: 12.64s
+Epoch 130/150 | Loss: 14.9477 | Trajs: 16384
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_130.pt
+
+=== Epoch 131/150 ===
+  [Rank Weight] Min: 0.0027 | Max: 8.0012
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.02s | GP采样: 11.42s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.48s | Epoch总计: 12.21s
+
+=== Epoch 132/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.25s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.42s | Epoch总计: 11.98s
+
+=== Epoch 133/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.21s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.41s | Epoch总计: 11.92s
+
+=== Epoch 134/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.18s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.56s | Epoch总计: 12.02s
+
+=== Epoch 135/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.28s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.47s | Epoch总计: 12.04s
+
+=== Epoch 136/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.89s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.44s | Epoch总计: 11.63s
+
+=== Epoch 137/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.31s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.45s | Epoch总计: 12.05s
+
+=== Epoch 138/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.22s | 轨迹生成: 0.27s
+  [⏱️ Time] 训练: 0.61s | Epoch总计: 12.10s
+
+=== Epoch 139/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.19s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.45s | Epoch总计: 11.93s
+
+=== Epoch 140/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.88s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.43s | Epoch总计: 11.61s
+Epoch 140/150 | Loss: 14.9585 | Trajs: 16384
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_140.pt
+
+=== Epoch 141/150 ===
+  [Rank Weight] Min: 0.0027 | Max: 8.0012
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.02s | GP采样: 11.36s | 轨迹生成: 0.28s
+  [⏱️ Time] 训练: 0.52s | Epoch总计: 12.18s
+
+=== Epoch 142/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.85s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.44s | Epoch总计: 11.59s
+
+=== Epoch 143/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.93s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.77s | Epoch总计: 12.00s
+
+=== Epoch 144/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.87s | 轨迹生成: 0.28s
+  [⏱️ Time] 训练: 0.47s | Epoch总计: 11.63s
+
+=== Epoch 145/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.17s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.45s | Epoch总计: 11.91s
+
+=== Epoch 146/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.88s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.42s | Epoch总计: 11.60s
+
+=== Epoch 147/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 11.28s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.45s | Epoch总计: 12.02s
+
+=== Epoch 148/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.87s | 轨迹生成: 0.30s
+  [⏱️ Time] 训练: 0.43s | Epoch总计: 11.60s
+
+=== Epoch 149/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.83s | 轨迹生成: 0.26s
+  [⏱️ Time] 训练: 0.42s | Epoch总计: 11.51s
+
+=== Epoch 150/150 ===
+Generated 16384 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 10.94s | 轨迹生成: 0.29s
+  [⏱️ Time] 训练: 0.44s | Epoch总计: 11.67s
+Epoch 150/150 | Loss: 15.0236 | Trajs: 16384
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_150.pt
+
+[💾 Final Model] Saved to checkpoints/cfm_model_final.pt
+
+=== SOTA Evaluation (Highest-point, Q=128) ===
+Selected 128 highest samples as starting points
+Starting scores (normalized): mean=0.8233, max=0.8275
+[Discrete Task] Reshaped to Logits format: (128, 10, 3)
+
+[Result] Final scores distribution:
+  Min: -0.9319
+  Max: 0.5891
+  Mean: -0.0068
+  Std: 0.2152
+------------------------------------------------------------
+Original Mean (Top 128): -0.0029
+Optimized Mean (Top 128): -0.0068
+Improvement:                   -0.0040
+------------------------------------------------------------
+100th Percentile (Max):      0.5891
+80th Percentile:             0.1253
+50th Percentile (Median):    0.0025
+------------------------------------------------------------

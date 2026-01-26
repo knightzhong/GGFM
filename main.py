@@ -1,10 +1,11 @@
 # main.py
+import argparse
 import design_bench
 import torch
 import torch.optim as optim
 import numpy as np
 
-from src.config import Config
+from src.config import Config, load_config
 from src.utils import set_seed, Normalizer
 from src.oracle import NTKOracle
 from src.generator import GP, sampling_data_from_GP, generate_trajectories_from_GP_samples
@@ -12,6 +13,37 @@ from src.models import VectorFieldNet
 from src.flow import train_cfm_step,train_cfm, inference_ode
 import time
 import os
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="GGFM training")
+    parser.add_argument(
+        "-c",
+        "--config",
+        type=str,
+        default="configs/TfBind8_FlowMatching.yaml",
+        help="Path to config yaml",
+    )
+    parser.add_argument(
+        "-s",
+        "--seed",
+        type=int,
+        default=None,
+        help="Override random seed",
+    )
+    parser.add_argument(
+        "--device",
+        type=str,
+        default=None,
+        help="Override device (e.g. cuda, cpu)",
+    )
+    return parser.parse_args()
+
+
+def resolve_config_path(config_path):
+    if os.path.isabs(config_path) or os.path.exists(config_path):
+        return config_path
+    return os.path.join(os.path.dirname(__file__), config_path)
 
 def get_design_bench_data(task_name):
     """
@@ -87,8 +119,17 @@ def get_design_bench_data(task_name):
 #     return pool
 
 def main():
+    args = parse_args()
+    config_path = resolve_config_path(args.config)
+    load_config(config_path)
+    if args.seed is not None:
+        Config.SEED = args.seed
+    if args.device is not None:
+        Config.DEVICE = args.device
+
     # 0. 初始化环境
     print(f"=== GGFM with ROOT GP Sampling: {Config.TASK_NAME} ===")
+    print(f"[Config] Using: {config_path}")
     set_seed(Config.SEED)
     device = torch.device(Config.DEVICE if torch.cuda.is_available() else "cpu")
     
@@ -129,10 +170,18 @@ def main():
     else:
         best_x = X_train_tensor
         print(f"[GP Init] Using all samples for GP sampling")
+    # 1. 预先准备好全量索引 (在循环外)
+    all_indices = torch.arange(X_train_tensor.shape[0], device=device)
+    # 预先计算好高分索引 (Top 2000 作为一个池子，防止只盯着 Top 1024 过拟合)
+    top_k_indices = torch.argsort(y_train_tensor.view(-1), descending=True)[:2000]
     
     # 5. 初始化 Flow Matching 网络
     input_dim = X_train_norm.shape[1]
-    cfm_model = VectorFieldNet(input_dim, hidden_dim=Config.HIDDEN_DIM).to(device)
+    cfm_model = VectorFieldNet(
+        input_dim,
+        hidden_dim=Config.HIDDEN_DIM,
+        dropout=Config.DROPOUT,
+    ).to(device)
     optimizer = optim.Adam(cfm_model.parameters(), lr=Config.FM_LR)
     
     # 🔧 添加学习率调度器，防止后期学习率过大
@@ -151,6 +200,22 @@ def main():
         # 每个 Epoch 重新采样具有不同超参数的 GP
         epoch_start = time.time()  # 记录 epoch 开始时间
         print(f"\n=== Epoch {epoch+1}/{Config.FM_EPOCHS} ===")
+
+        # === 核心修改：构建混合采样池 (Mix 50/50) ===
+        # A. 50% 来自 Top 高分 (保证上限)
+        num_high = int(Config.GP_NUM_POINTS // 2)  # 例如 512
+        # 从 Top 2000 里随机选 512 个，增加一点变异性
+        idx_high = top_k_indices[torch.randperm(len(top_k_indices))[:num_high]]
+        
+        # B. 50% 来自全局随机 (保证中位数和泛化)
+        num_rand = Config.GP_NUM_POINTS - num_high
+        idx_rand = all_indices[torch.randperm(len(all_indices))[:num_rand]]
+        
+        # C. 合并
+        mixed_indices = torch.cat([idx_high, idx_rand])
+        current_epoch_x = X_train_tensor[mixed_indices]
+        
+        # -------------------------------------------------
         
         # 构建 GP 模型（TFBind8 使用部分样本，与 ROOT 一致）
         gp_init_start = time.time()
@@ -181,7 +246,7 @@ def main():
         # best_x = torch.randperm(X_train_tensor.shape[0])[:1024]
         sampling_start = time.time()
         data_from_GP = sampling_data_from_GP(
-            x_train=best_x,
+            x_train=current_epoch_x,
             device=device,
             GP_Model=GP_Model,
             num_functions=Config.GP_NUM_FUNCTIONS,
@@ -198,11 +263,88 @@ def main():
         
         # 从 GP 采样结果生成轨迹
         traj_gen_start = time.time()
-        trajs_array = generate_trajectories_from_GP_samples(
+        trajs_array, scores_array = generate_trajectories_from_GP_samples(
             data_from_GP,
             device=device,
             num_steps=Config.GP_TRAJ_STEPS
         )
+        # # 2. 计算动态 Softmax 权重 (Dynamic Softmax Weighting)
+        # if len(scores_array) > 0:
+        #     # 转为 Tensor
+        #     batch_scores = torch.FloatTensor(scores_array).to(device)
+            
+        #     # === 关键步骤 1: Z-Score 标准化 (让分数分布对齐，不依赖绝对值) ===
+        #     # 这样无论是 [0.2, 0.4] 还是 [0.8, 1.0]，相对差距都能被正确捕捉
+        #     scores_mean = batch_scores.mean()
+        #     scores_std = batch_scores.std() + 1e-6  # 防止除以 0
+        #     z_scores = (batch_scores - scores_mean) / scores_std
+            
+        #     # === 关键步骤 2: 温度系数 k (Temperature) ===
+        #     # k = 1.0 : 温和加权，保留低分样本的学习信号 (推荐起点)
+        #     # k = 2.0 : 激进加权，强力冲击 SOTA
+        #     # k > 5.0 : 极度贪婪，可能导致 Median 下降 (近似 Argmax)
+        #     # 建议先设为 2.0，既能拉开差距，又不会把低分样本权重杀到 0
+        #     k = 2.0 
+        #     if Config.TASK_NAME == 'TFBind10-Exact-v0':
+        #         k = 0.5
+            
+        #     # 计算 Softmax
+        #     weights_softmax = torch.softmax(z_scores * k, dim=0)
+            
+        #     # === 关键步骤 3: 重缩放 (Rescaling) ===
+        #     # Softmax 的和是 1，我们需要 和 = N (即平均权重为 1)
+        #     # 否则梯度会消失
+        #     batch_size = len(batch_scores)
+        #     weights = weights_softmax * batch_size
+            
+        #     # 转回 numpy 传给训练函数
+        #     weights_np = weights.cpu().numpy()
+            
+        #     # (可选) 打印一下权重的极值，看看是不是太极端
+        #     if epoch % 10 == 0:
+        #         print(f"  [Weight Debug] Min: {weights.min().item():.4f} | Max: {weights.max().item():.4f} | Mean: {weights.mean().item():.4f}")
+
+        # else:
+        #     weights_np = None
+        if len(scores_array) > 0:
+            batch_scores = torch.FloatTensor(scores_array).to(device)
+            N = len(batch_scores)
+            
+            # === 🌟 升级方案：Rank-Based Weighting (基于排名的加权) ===
+            
+            # 1. 获取排名 (argsort 两次可以得到每个元素的排名索引)
+            # argsort 默认是升序，所以最后一名是最高分
+            # ranks: 0 (最低分) -> N-1 (最高分)
+            sorted_indices = torch.argsort(batch_scores)
+            ranks = torch.zeros_like(sorted_indices, dtype=torch.float, device=device)
+            ranks[sorted_indices] = torch.arange(N, device=device, dtype=torch.float)
+            
+            # 2. 归一化排名到 [0, 1] 区间
+            # 这样无论是 1000 个样本还是 8000 个样本，温度 k 的物理意义不变
+            normalized_ranks = ranks / (N - 1)  # Range: [0.0, 1.0]
+            
+            # 3. 带温度的 Softmax
+            # k 控制"贪婪程度"：
+            # k=0: 所有权重一样 (Uniform)
+            # k=5: 也就是 exp(5) ≈ 148 倍的差距 (Top vs Bottom)
+            # 对于 TFBind10，建议 k=5.0 到 10.0 之间
+            # 相比之前的 Z-Score，这里的 k 需要设得大一点，因为输入被压缩到了 [0,1]
+            k = 3.0 
+            
+            weights_softmax = torch.softmax(normalized_ranks * k, dim=0)
+            
+            # 4. 重缩放 (保持 Sum = N)
+            weights = weights_softmax * N
+            
+            # 转 numpy
+            weights_np = weights.cpu().numpy()
+            
+            # [Debug] 看看现在的权重分布是不是漂亮多了
+            if epoch % 10 == 0:
+                print(f"  [Rank Weight] Min: {weights.min().item():.4f} | Max: {weights.max().item():.4f}")
+
+        else:
+            weights_np = None
         traj_gen_time = time.time() - traj_gen_start
         
         if len(trajs_array) == 0:
@@ -214,7 +356,7 @@ def main():
         
         # 对这批轨迹进行流匹配训练更新
         train_start = time.time()
-        avg_loss = train_cfm_step(cfm_model, trajs_array, optimizer, device)
+        avg_loss = train_cfm_step(cfm_model, trajs_array, optimizer, device, weights=weights_np)
         train_time = time.time() - train_start
         
         epoch_total_time = time.time() - epoch_start
@@ -294,34 +436,58 @@ def main():
     final_scores = task.predict(opt_X_for_predict).flatten()
     original_scores = task.predict(original_X_for_predict).flatten()
     
-    # 计算标准化分数（与 ROOT 一致）
-    # oracle_y_min, oracle_y_max = np.min(task.y), np.max(task.y)
-    # final_score_norm = (final_scores - oracle_y_min) / (oracle_y_max - oracle_y_min)
+    # 与 ROOT 完全对齐：使用相同的 task_to_min, task_to_max, task_to_best 字典
+    task_to_min = {'TFBind8-Exact-v0': 0.0, 'TFBind10-Exact-v0': -1.8585268, 'AntMorphology-Exact-v0': -386.90036, 'DKittyMorphology-Exact-v0': -880.4585}
+    task_to_max = {'TFBind8-Exact-v0': 1.0, 'TFBind10-Exact-v0': 2.1287067, 'AntMorphology-Exact-v0': 590.24445, 'DKittyMorphology-Exact-v0': 340.90985}
+    task_to_best = {'TFBind8-Exact-v0': 0.43929616, 'TFBind10-Exact-v0': 0.005328223, 'AntMorphology-Exact-v0': 165.32648, 'DKittyMorphology-Exact-v0': 199.36252}
     
-    # 计算百分位数（与 ROOT 一致）
+    # 获取任务的 min 和 max 值（与 ROOT 一致）
+    oracle_y_min = task_to_min[Config.TASK_NAME]
+    oracle_y_max = task_to_max[Config.TASK_NAME]
+    
+    # 计算标准化分数（与 ROOT 完全一致）
+    # ROOT 使用公式: final_score = (high_true_scores - oracle_y_min) / (oracle_y_max - oracle_y_min)
+    final_score_normalized = (torch.from_numpy(final_scores) - oracle_y_min) / (oracle_y_max - oracle_y_min)
+    original_score_normalized = (torch.from_numpy(original_scores) - oracle_y_min) / (oracle_y_max - oracle_y_min)
+    
+    # 计算百分位数（与 ROOT 完全一致：使用标准化后的分数）
+    percentiles = torch.quantile(final_score_normalized, torch.tensor([1.0, 0.8, 0.5]), interpolation='higher')
+    p100_score = percentiles[0].item()
+    p80_score = percentiles[1].item()
+    p50_score = percentiles[2].item()
+    
+    # 打印原始分数分布（用于调试）
     final_scores_sorted = np.sort(final_scores)
-    print(f"\n[Result] Final scores distribution:")
+    print(f"\n[Result] Final scores distribution (raw):")
     print(f"  Min: {final_scores_sorted[0]:.4f}")
     print(f"  Max: {final_scores_sorted[-1]:.4f}")
     print(f"  Mean: {np.mean(final_scores):.4f}")
     print(f"  Std: {np.std(final_scores):.4f}")
     
-    # 使用 torch.quantile 计算百分位数（与 ROOT 一致）
-    final_scores_tensor = torch.from_numpy(final_scores)
-    percentiles = torch.quantile(final_scores_tensor, torch.tensor([1.0, 0.8, 0.5]), interpolation='higher')
-    p100_score = percentiles[0].item()
-    p80_score = percentiles[1].item()
-    p50_score = percentiles[2].item()
+    # 打印标准化后的分数分布
+    final_score_normalized_np = final_score_normalized.numpy()
+    print(f"\n[Result] Normalized scores distribution (comparable with ROOT):")
+    print(f"  Min: {np.min(final_score_normalized_np):.4f}")
+    print(f"  Max: {np.max(final_score_normalized_np):.4f}")
+    print(f"  Mean: {np.mean(final_score_normalized_np):.4f}")
+    print(f"  Std: {np.std(final_score_normalized_np):.4f}")
     
     print("-" * 60)
-    print(f"Original Mean (Top {test_q}): {np.mean(original_scores):.4f}")
-    print(f"Optimized Mean (Top {test_q}): {np.mean(final_scores):.4f}")
-    print(f"Improvement:                   {np.mean(final_scores) - np.mean(original_scores):.4f}")
+    print(f"Original Mean (Top {test_q}, raw): {np.mean(original_scores):.4f}")
+    print(f"Optimized Mean (Top {test_q}, raw): {np.mean(final_scores):.4f}")
+    print(f"Improvement (raw):                   {np.mean(final_scores) - np.mean(original_scores):.4f}")
     print("-" * 60)
-    print(f"100th Percentile (Max):      {p100_score:.4f}")
-    print(f"80th Percentile:             {p80_score:.4f}")
-    print(f"50th Percentile (Median):    {p50_score:.4f}")
+    print(f"Normalized 100th Percentile (Max):      {p100_score:.6f}")
+    print(f"Normalized 80th Percentile:             {p80_score:.6f}")
+    print(f"Normalized 50th Percentile (Median):    {p50_score:.6f}")
     print("-" * 60)
+    print(f"[ROOT Comparable] These normalized percentiles are directly comparable with ROOT results")
 
 if __name__ == "__main__":
     main()
+
+
+#TF10 0.685  0.526  0.473
+#Ant 0.965 0.847 0.712
+#Dkitty 0.972 0.938 0.919
+#TF8  0.986   0.839 0.675
