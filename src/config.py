@@ -24,6 +24,11 @@ class Config:
     GP_THRESHOLD_DIFF = 0.001
     GP_TRAJ_STEPS = 200
     GP_TYPE_INITIAL_POINTS = 'highest'  # 'highest', 'lowest', or other
+    
+    # Uncertainty-aware gradient ascent config
+    GP_UNCERTAINTY_PENALTY = 0.0       # lambda: objective = mu - lambda * std
+    GP_UNCERTAINTY_INTERVAL = 10       # 每隔多少步计算一次方差惩罚
+    GP_MAX_END_UNCERTAINTY = None      # 终点最大允许不确定性，None表示不过滤
 
     # Flow Matching training config
     HIDDEN_DIM = 1024
@@ -64,6 +69,11 @@ def _apply_gp_config(gp_cfg):
     _apply_if_present(gp_cfg.get('threshold_diff'), 'GP_THRESHOLD_DIFF')
     _apply_if_present(gp_cfg.get('type_of_initial_points'), 'GP_TYPE_INITIAL_POINTS')
     _apply_if_present(gp_cfg.get('traj_steps'), 'GP_TRAJ_STEPS')
+    
+    # Uncertainty-aware config
+    _apply_if_present(gp_cfg.get('uncertainty_penalty'), 'GP_UNCERTAINTY_PENALTY')
+    _apply_if_present(gp_cfg.get('uncertainty_interval'), 'GP_UNCERTAINTY_INTERVAL')
+    _apply_if_present(gp_cfg.get('max_end_uncertainty'), 'GP_MAX_END_UNCERTAINTY')
 
     # 兼容不同字段名
     if 'sampling_from_GP_lr' in gp_cfg:

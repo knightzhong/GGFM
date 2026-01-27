@@ -8,7 +8,7 @@ import numpy as np
 from src.config import Config, load_config
 from src.utils import set_seed, Normalizer
 from src.oracle import NTKOracle
-from src.generator import GP, sampling_data_from_GP, generate_trajectories_from_GP_samples
+from src.generator import GP, sampling_data_from_GP, generate_trajectories_from_GP_samples,RFFGP
 from src.models import VectorFieldNet
 from src.flow import train_cfm_step,train_cfm, inference_ode
 import time
@@ -219,26 +219,35 @@ def main():
         
         # 构建 GP 模型（TFBind8 使用部分样本，与 ROOT 一致）
         gp_init_start = time.time()
-        if Config.TASK_NAME == 'TFBind8-Exact-v0':
-            selected_fit_samples = torch.randperm(X_train_tensor.shape[0])[:Config.GP_NUM_FIT_SAMPLES]
-            GP_Model = GP(
+        # if Config.TASK_NAME == 'TFBind8-Exact-v0':
+        #     selected_fit_samples = torch.randperm(X_train_tensor.shape[0])[:Config.GP_NUM_FIT_SAMPLES]
+        #     GP_Model = GP(
+        #         device=device,
+        #         x_train=X_train_tensor[selected_fit_samples],
+        #         y_train=y_train_tensor[selected_fit_samples].view(-1),  # 确保是 (N,) 形状
+        #         lengthscale=lengthscale,
+        #         variance=variance,
+        #         noise=noise,
+        #         mean_prior=mean_prior
+        #     )
+        # else:
+        # GP_Model = GP(
+        #     device=device,
+        #     x_train=X_train_tensor,
+        #     y_train=y_train_tensor.view(-1),  # 确保是 (N,) 形状
+        #     lengthscale=lengthscale,
+        #     variance=variance,
+        #     noise=noise,
+        #     mean_prior=mean_prior
+        # )
+        GP_Model = RFFGP(
                 device=device,
-                x_train=X_train_tensor[selected_fit_samples],
-                y_train=y_train_tensor[selected_fit_samples].view(-1),  # 确保是 (N,) 形状
-                lengthscale=lengthscale,
-                variance=variance,
+                x_train=X_train_tensor, 
+                y_train=y_train_tensor.view(-1),  # 确保是 (N,) 形状, 
+                lengthscale=lengthscale, 
+                variance=variance, 
                 noise=noise,
-                mean_prior=mean_prior
-            )
-        else:
-            GP_Model = GP(
-                device=device,
-                x_train=X_train_tensor,
-                y_train=y_train_tensor.view(-1),  # 确保是 (N,) 形状
-                lengthscale=lengthscale,
-                variance=variance,
-                noise=noise,
-                mean_prior=mean_prior
+                num_features=2048 
             )
         gp_init_time = time.time() - gp_init_start
         
@@ -257,6 +266,9 @@ def main():
             delta_variance=Config.GP_DELTA_VARIANCE,
             seed=epoch,  # 使用 epoch 作为随机种子，确保每个 epoch 不同
             threshold_diff=Config.GP_THRESHOLD_DIFF,
+            uncertainty_penalty=Config.GP_UNCERTAINTY_PENALTY,
+            uncertainty_interval=Config.GP_UNCERTAINTY_INTERVAL,
+            max_end_uncertainty=Config.GP_MAX_END_UNCERTAINTY,
             verbose=(epoch == 0)  # 第一个 epoch 显示详细计时
         )
         sampling_time = time.time() - sampling_start
@@ -310,36 +322,23 @@ def main():
             batch_scores = torch.FloatTensor(scores_array).to(device)
             N = len(batch_scores)
             
-            # === 🌟 升级方案：Rank-Based Weighting (基于排名的加权) ===
-            
+            # === Rank-Based Weighting (基于排名的加权) ===
             # 1. 获取排名 (argsort 两次可以得到每个元素的排名索引)
-            # argsort 默认是升序，所以最后一名是最高分
-            # ranks: 0 (最低分) -> N-1 (最高分)
             sorted_indices = torch.argsort(batch_scores)
             ranks = torch.zeros_like(sorted_indices, dtype=torch.float, device=device)
             ranks[sorted_indices] = torch.arange(N, device=device, dtype=torch.float)
             
             # 2. 归一化排名到 [0, 1] 区间
-            # 这样无论是 1000 个样本还是 8000 个样本，温度 k 的物理意义不变
             normalized_ranks = ranks / (N - 1)  # Range: [0.0, 1.0]
             
-            # 3. 带温度的 Softmax
-            # k 控制"贪婪程度"：
-            # k=0: 所有权重一样 (Uniform)
-            # k=5: 也就是 exp(5) ≈ 148 倍的差距 (Top vs Bottom)
-            # 对于 TFBind10，建议 k=5.0 到 10.0 之间
-            # 相比之前的 Z-Score，这里的 k 需要设得大一点，因为输入被压缩到了 [0,1]
+            # 3. 带温度的 Softmax (k 控制贪婪程度)
             k = 3.0 
-            
             weights_softmax = torch.softmax(normalized_ranks * k, dim=0)
             
             # 4. 重缩放 (保持 Sum = N)
             weights = weights_softmax * N
-            
-            # 转 numpy
             weights_np = weights.cpu().numpy()
             
-            # [Debug] 看看现在的权重分布是不是漂亮多了
             if epoch % 10 == 0:
                 print(f"  [Rank Weight] Min: {weights.min().item():.4f} | Max: {weights.max().item():.4f}")
 
@@ -354,7 +353,7 @@ def main():
         print(f"Generated {len(trajs_array)} trajectories from GP samples")
         print(f"  [⏱️ Time] GP初始化: {gp_init_time:.2f}s | GP采样: {sampling_time:.2f}s | 轨迹生成: {traj_gen_time:.2f}s")
         
-        # 对这批轨迹进行流匹配训练更新
+        # 对这批轨迹进行流匹配训练更新 (Rank-Based Weighting)
         train_start = time.time()
         avg_loss = train_cfm_step(cfm_model, trajs_array, optimizer, device, weights=weights_np)
         train_time = time.time() - train_start
@@ -409,10 +408,9 @@ def main():
     print(f"Selected {test_q} highest samples as starting points")
     print(f"Starting scores (normalized): mean={np.mean(y_test_start):.4f}, max={np.max(y_test_start):.4f}")
     
-    # ODE 推理
-    # 与 ROOT 完全对齐：使用 Oracle 理论最大值而非数据集分位数！
-    
-    opt_X_norm = inference_ode(cfm_model, X_test_norm, device)
+    # ODE 推理 (使用 Velocity Scaling 进行外推加速)
+    # velocity_scale > 1.0: 利用 Rank Weighting 训练的高质量方向进行外推
+    opt_X_norm = inference_ode(cfm_model, X_test_norm, device, velocity_scale=1.5)
     
     # 反标准化（与 ROOT 一致）
     opt_X_denorm = opt_X_norm * std_x + mean_x

@@ -35,7 +35,7 @@ class VectorFieldNet(nn.Module):
         
         # 主干网络 (Residual MLP)
         self.blocks = nn.ModuleList([ResidualBlock(hidden_dim, dropout=dropout) for _ in range(6)])
-        self.out_proj = nn.Linear(hidden_dim, input_dim) # 输出速度向量
+        self.out_proj = nn.Linear(hidden_dim, input_dim)  # 输出速度向量
 
     def forward(self, x, t, x_0):
         """

@@ -6,15 +6,20 @@ from src.config import Config
 def train_cfm_step(model, trajectories, optimizer, device, weights=None):
     """
     对一批在线生成的轨迹执行一次训练更新
-    trajectories: numpy array [N, Steps+1, Dim]
+    
+    Args:
+        model: VectorFieldNet 模型
+        trajectories: numpy array [N, Steps+1, Dim]
+        optimizer: 优化器
+        device: torch.device
+        weights: 可选，样本权重 numpy array [N,] (Rank-Based Weighting)
     """
     model.train()
     trajs = torch.FloatTensor(trajectories).to(device)
 
-    # [新增] 处理权重
+    # 处理权重 (Rank-Based Weighting 核心)
     if weights is not None:
-        weights = torch.FloatTensor(weights).to(device).view(-1) # (N,)
-
+        weights = torch.FloatTensor(weights).to(device).view(-1)  # (N,)
 
     N, T, Dim = trajs.shape
     M = T - 1 
@@ -28,7 +33,7 @@ def train_cfm_step(model, trajectories, optimizer, device, weights=None):
         batch_traj = trajs[indices]
         batch_x0 = batch_traj[:, 0, :]
 
-        # [新增] 获取当前 batch 的权重
+        # 获取当前 batch 的权重
         if weights is not None:
             batch_weights = weights[indices]
         
@@ -46,8 +51,8 @@ def train_cfm_step(model, trajectories, optimizer, device, weights=None):
         
         # 预测与优化
         v_pred = model(x_t, t_global, batch_x0)
-        # [修改] 计算加权 Loss
-        loss_elementwise = torch.mean((v_pred - v_target) ** 2, dim=-1) # (B,)
+        # 计算加权 Loss
+        loss_elementwise = torch.mean((v_pred - v_target) ** 2, dim=-1)  # (B,)
         
         if weights is not None:
             # 加权平均
@@ -113,21 +118,27 @@ def train_cfm(model, trajectories, optimizer, device):
         if (epoch + 1) % 20 == 0:
             print(f"Epoch {epoch+1} | Loss: {epoch_loss / (N/Config.FM_BATCH_SIZE):.4f}")
 
-def inference_ode(model, x_query, device):
+def inference_ode(model, x_query, device, velocity_scale=2.0):
     """
-    Phase 4: 使用 Euler 法解 ODE
+    Phase 4: 使用 Euler 法解 ODE，支持速度缩放 (Velocity Scaling)
     
     Args:
         model: Flow Matching 模型
         x_query: 起始点 [N, D]
         device: torch.device
+        velocity_scale: 速度缩放因子 (默认 1.0)
+            - velocity_scale = 1.0: 标准推理
+            - velocity_scale > 1.0: 外推加速 (利用 Rank Weighting 训练的高质量方向)
+            - velocity_scale < 1.0: 保守推理
     
     Returns:
         numpy array [N, D]
+    
+    原理: 利用 Rank Weighting 训练出的高质量方向，直接放大步长进行外推
     """
     model.eval()
     x_curr = torch.FloatTensor(x_query).to(device)
-    x_0 = x_curr.clone() # Condition
+    x_0 = x_curr.clone()  # Condition
     
     steps = Config.INFERENCE_STEPS
     dt = 1.0 / steps
@@ -137,7 +148,10 @@ def inference_ode(model, x_query, device):
             t_val = i / steps
             t_tensor = torch.full((x_curr.shape[0], 1), t_val, device=device)
             
+            # 单次 Forward
             velocity = model(x_curr, t_tensor, x_0)
-            x_curr = x_curr + velocity * dt
+            
+            # 应用速度缩放
+            x_curr = x_curr + (velocity * velocity_scale) * dt
             
     return x_curr.cpu().numpy()
