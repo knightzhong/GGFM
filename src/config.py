@@ -12,7 +12,7 @@ class Config:
 
     # GP sampling config (ROOT style)
     GP_NUM_FUNCTIONS = 8
-    GP_NUM_POINTS = 1024
+    GP_NUM_POINTS = 2048
     GP_NUM_GRADIENT_STEPS = 100
     GP_LEARNING_RATE = 0.05
     GP_DELTA_LENGTHSCALE = 0.25
@@ -25,9 +25,12 @@ class Config:
     GP_TRAJ_STEPS = 200
     GP_TYPE_INITIAL_POINTS = 'highest'  # 'highest', 'lowest', or other
     
-    # Uncertainty-aware gradient ascent config
-    GP_UNCERTAINTY_PENALTY = 0.0       # lambda: objective = mu - lambda * std
-    GP_UNCERTAINTY_INTERVAL = 10       # 每隔多少步计算一次方差惩罚
+    # Langevin GP sampling config
+    GP_ETA_MIN = 0.01
+    GP_ETA_MAX = 0.01
+    GP_SIGMA_MAX = 0.0
+    GP_UNCERTAINTY_PENALTY = 0.0
+    GP_UNCERTAINTY_INTERVAL = 1
     GP_MAX_END_UNCERTAINTY = None      # 终点最大允许不确定性，None表示不过滤
 
     # Flow Matching training config

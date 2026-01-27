@@ -1,0 +1,2000 @@
+nohup: 忽略输入
+=== GGFM with ROOT GP Sampling: DKittyMorphology-Exact-v0 ===
+[Config] Using: configs/Dkitty.yaml
+Loading task: DKittyMorphology-Exact-v0...
+[数据编码] 连续任务：直接使用原始数据
+[GP Init] Fitting GP once with fixed parameters...
+[GP] Sampled 8 fixed GP functions for FM training.
+=== Training: Langevin GP Sampling (100 Epochs) ===
+每个 Epoch 采样 n_e = 1 个固定 GP 函数集合 (K=8)
+每个 Epoch 尝试生成 1024 个 Langevin 轨迹
+
+=== Epoch 1/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.171772
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4351, min=-2.2827, max=0.9361
+    [Diagnostic] y_end:   mean=0.7075, min=-0.3643, max=5.8209
+    [Diagnostic] Score Diff: mean=0.2724, max=7.0422
+    [Diagnostic] f_start: mean=0.4352, min=-2.2749, max=0.9606
+    [Diagnostic] f_end:   mean=9.8634, min=7.5839, max=12.4902
+    [Diagnostic] f_diff:  mean=9.4282, max=13.3934, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3085s
+  [Rank Weight] Min: 0.1571 | Max: 3.1552
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.40s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.52s
+Epoch 1/100 | Loss: 0.0941 | Trajs: 1024
+
+=== Epoch 2/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.176691
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4302, min=-2.2049, max=0.9361
+    [Diagnostic] y_end:   mean=0.7137, min=-0.4516, max=5.8549
+    [Diagnostic] Score Diff: mean=0.2835, max=6.6755
+    [Diagnostic] f_start: mean=0.4306, min=-2.1653, max=0.9500
+    [Diagnostic] f_end:   mean=9.8634, min=7.1910, max=13.2134
+    [Diagnostic] f_diff:  mean=9.4327, max=13.3938, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.1963s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.28s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.10s | Epoch总计: 4.42s
+Epoch 2/100 | Loss: 0.0774 | Trajs: 1024
+
+=== Epoch 3/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.214182
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4433, min=-2.2827, max=0.9332
+    [Diagnostic] y_end:   mean=0.7509, min=-0.4565, max=5.7998
+    [Diagnostic] Score Diff: mean=0.3077, max=6.5937
+    [Diagnostic] f_start: mean=0.4437, min=-2.2885, max=0.9606
+    [Diagnostic] f_end:   mean=9.8565, min=7.4907, max=12.4612
+    [Diagnostic] f_diff:  mean=9.4129, max=13.0473, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3975s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.49s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.61s
+Epoch 3/100 | Loss: 0.0897 | Trajs: 1024
+
+=== Epoch 4/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.125085
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4430, min=-1.7210, max=0.9332
+    [Diagnostic] y_end:   mean=0.6694, min=-0.3254, max=5.8378
+    [Diagnostic] Score Diff: mean=0.2263, max=6.5389
+    [Diagnostic] f_start: mean=0.4437, min=-1.7281, max=0.9574
+    [Diagnostic] f_end:   mean=9.8319, min=7.5216, max=12.4749
+    [Diagnostic] f_diff:  mean=9.3882, max=13.1218, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.2603s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.35s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.47s
+Epoch 4/100 | Loss: 0.0896 | Trajs: 1024
+
+=== Epoch 5/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.179623
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4522, min=-2.5406, max=0.9361
+    [Diagnostic] y_end:   mean=0.7253, min=-0.3696, max=5.5990
+    [Diagnostic] Score Diff: mean=0.2731, max=6.5067
+    [Diagnostic] f_start: mean=0.4530, min=-2.5463, max=0.9536
+    [Diagnostic] f_end:   mean=9.8321, min=7.4722, max=12.2393
+    [Diagnostic] f_diff:  mean=9.3792, max=13.3811, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.4049s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.49s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.62s
+Epoch 5/100 | Loss: 0.1041 | Trajs: 1024
+
+=== Epoch 6/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.222436
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4694, min=-2.0179, max=0.9336
+    [Diagnostic] y_end:   mean=0.7516, min=-0.4366, max=6.0409
+    [Diagnostic] Score Diff: mean=0.2822, max=6.9171
+    [Diagnostic] f_start: mean=0.4701, min=-2.0110, max=0.9547
+    [Diagnostic] f_end:   mean=9.8531, min=7.4607, max=12.2563
+    [Diagnostic] f_diff:  mean=9.3830, max=13.2421, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.2208s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.30s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.43s
+Epoch 6/100 | Loss: 0.0916 | Trajs: 1024
+
+=== Epoch 7/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.123334
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4277, min=-1.7910, max=0.9345
+    [Diagnostic] y_end:   mean=0.6774, min=-0.3882, max=5.8021
+    [Diagnostic] Score Diff: mean=0.2497, max=7.1778
+    [Diagnostic] f_start: mean=0.4272, min=-1.7854, max=0.9518
+    [Diagnostic] f_end:   mean=9.8316, min=7.3299, max=12.3402
+    [Diagnostic] f_diff:  mean=9.4044, max=13.9990, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3911s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.48s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.60s
+Epoch 7/100 | Loss: 0.0843 | Trajs: 1024
+
+=== Epoch 8/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.161842
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4505, min=-2.5406, max=0.9346
+    [Diagnostic] y_end:   mean=0.7102, min=-0.4161, max=5.8527
+    [Diagnostic] Score Diff: mean=0.2598, max=6.7469
+    [Diagnostic] f_start: mean=0.4495, min=-2.5356, max=0.9747
+    [Diagnostic] f_end:   mean=9.8109, min=7.5596, max=12.3823
+    [Diagnostic] f_diff:  mean=9.3614, max=13.7524, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.2536s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.34s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.46s
+Epoch 8/100 | Loss: 0.0877 | Trajs: 1024
+
+=== Epoch 9/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.145104
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.3926, min=-2.5884, max=0.9361
+    [Diagnostic] y_end:   mean=0.6881, min=-0.3877, max=5.9303
+    [Diagnostic] Score Diff: mean=0.2954, max=7.1382
+    [Diagnostic] f_start: mean=0.3928, min=-2.5992, max=0.9520
+    [Diagnostic] f_end:   mean=9.8339, min=7.1177, max=12.5309
+    [Diagnostic] f_diff:  mean=9.4411, max=13.5104, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.2808s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.37s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.10s | Epoch总计: 4.50s
+Epoch 9/100 | Loss: 0.0823 | Trajs: 1024
+
+=== Epoch 10/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.145947
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4137, min=-1.7181, max=0.9361
+    [Diagnostic] y_end:   mean=0.6762, min=-0.3906, max=5.7441
+    [Diagnostic] Score Diff: mean=0.2625, max=7.0961
+    [Diagnostic] f_start: mean=0.4144, min=-1.7239, max=0.9620
+    [Diagnostic] f_end:   mean=9.8928, min=5.8463, max=12.2193
+    [Diagnostic] f_diff:  mean=9.4785, max=12.8110, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.2401s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.35s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.47s
+Epoch 10/100 | Loss: 0.0986 | Trajs: 1024
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_10.pt
+
+=== Epoch 11/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.117406
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4392, min=-1.8274, max=0.9332
+    [Diagnostic] y_end:   mean=0.6707, min=-0.3735, max=5.7310
+    [Diagnostic] Score Diff: mean=0.2316, max=6.6154
+    [Diagnostic] f_start: mean=0.4389, min=-1.8273, max=0.9495
+    [Diagnostic] f_end:   mean=9.8304, min=7.1989, max=12.2706
+    [Diagnostic] f_diff:  mean=9.3915, max=13.4435, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.5403s
+  [Rank Weight] Min: 0.1571 | Max: 3.1552
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.63s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.11s | Epoch总计: 4.77s
+Epoch 11/100 | Loss: 0.0891 | Trajs: 1024
+
+=== Epoch 12/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.156560
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4538, min=-3.0891, max=0.9345
+    [Diagnostic] y_end:   mean=0.7119, min=-0.3747, max=5.6711
+    [Diagnostic] Score Diff: mean=0.2580, max=6.5712
+    [Diagnostic] f_start: mean=0.4527, min=-3.0851, max=0.9492
+    [Diagnostic] f_end:   mean=9.8273, min=7.1368, max=12.1952
+    [Diagnostic] f_diff:  mean=9.3746, max=13.1291, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.4051s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.49s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.62s
+Epoch 12/100 | Loss: 0.0963 | Trajs: 1024
+
+=== Epoch 13/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.139140
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4459, min=-1.7774, max=0.9313
+    [Diagnostic] y_end:   mean=0.6758, min=-0.3483, max=5.7100
+    [Diagnostic] Score Diff: mean=0.2298, max=5.9419
+    [Diagnostic] f_start: mean=0.4461, min=-1.7430, max=0.9540
+    [Diagnostic] f_end:   mean=9.8119, min=7.3427, max=12.1273
+    [Diagnostic] f_diff:  mean=9.3657, max=13.4824, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3590s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.45s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.57s
+Epoch 13/100 | Loss: 0.0904 | Trajs: 1024
+
+=== Epoch 14/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.183314
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4102, min=-3.0891, max=0.9336
+    [Diagnostic] y_end:   mean=0.7131, min=-0.3699, max=5.8060
+    [Diagnostic] Score Diff: mean=0.3029, max=6.7627
+    [Diagnostic] f_start: mean=0.4105, min=-3.0879, max=0.9711
+    [Diagnostic] f_end:   mean=9.8496, min=7.2234, max=12.5495
+    [Diagnostic] f_diff:  mean=9.4391, max=13.1445, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.5544s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.64s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.77s
+Epoch 14/100 | Loss: 0.0869 | Trajs: 1024
+
+=== Epoch 15/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.184890
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4348, min=-1.7401, max=0.9336
+    [Diagnostic] y_end:   mean=0.7325, min=-0.3651, max=5.8092
+    [Diagnostic] Score Diff: mean=0.2976, max=6.9715
+    [Diagnostic] f_start: mean=0.4360, min=-1.7243, max=0.9574
+    [Diagnostic] f_end:   mean=9.8090, min=7.2807, max=12.4847
+    [Diagnostic] f_diff:  mean=9.3730, max=13.8332, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.5534s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.64s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.10s | Epoch总计: 4.77s
+Epoch 15/100 | Loss: 0.0804 | Trajs: 1024
+
+=== Epoch 16/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.141014
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4522, min=-1.8552, max=0.9345
+    [Diagnostic] y_end:   mean=0.6643, min=-0.3656, max=6.0229
+    [Diagnostic] Score Diff: mean=0.2120, max=7.0874
+    [Diagnostic] f_start: mean=0.4525, min=-1.8535, max=0.9577
+    [Diagnostic] f_end:   mean=9.8824, min=7.3659, max=12.6051
+    [Diagnostic] f_diff:  mean=9.4298, max=13.2255, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.4012s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.49s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.62s
+Epoch 16/100 | Loss: 0.0792 | Trajs: 1024
+
+=== Epoch 17/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.163501
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4525, min=-1.7210, max=0.9346
+    [Diagnostic] y_end:   mean=0.7240, min=-0.3495, max=5.9407
+    [Diagnostic] Score Diff: mean=0.2715, max=7.2562
+    [Diagnostic] f_start: mean=0.4523, min=-1.7257, max=0.9580
+    [Diagnostic] f_end:   mean=9.7816, min=7.3299, max=12.1109
+    [Diagnostic] f_diff:  mean=9.3293, max=13.4147, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3881s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.48s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.60s
+Epoch 17/100 | Loss: 0.0967 | Trajs: 1024
+
+=== Epoch 18/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.099125
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4304, min=-1.7636, max=0.9315
+    [Diagnostic] y_end:   mean=0.6309, min=-0.3934, max=5.7967
+    [Diagnostic] Score Diff: mean=0.2005, max=6.5984
+    [Diagnostic] f_start: mean=0.4303, min=-1.7713, max=0.9538
+    [Diagnostic] f_end:   mean=9.8535, min=7.3942, max=12.1136
+    [Diagnostic] f_diff:  mean=9.4232, max=13.7805, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.0726s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.16s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.28s
+Epoch 18/100 | Loss: 862383.4382 | Trajs: 1024
+
+=== Epoch 19/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.174189
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4180, min=-1.9609, max=0.9361
+    [Diagnostic] y_end:   mean=0.7063, min=-0.3877, max=5.8910
+    [Diagnostic] Score Diff: mean=0.2883, max=5.8867
+    [Diagnostic] f_start: mean=0.4176, min=-1.9675, max=0.9711
+    [Diagnostic] f_end:   mean=9.8608, min=6.4760, max=12.2604
+    [Diagnostic] f_diff:  mean=9.4432, max=13.7129, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.1832s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.27s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.39s
+Epoch 19/100 | Loss: 5771.0485 | Trajs: 1024
+
+=== Epoch 20/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.200342
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4140, min=-1.7247, max=0.9336
+    [Diagnostic] y_end:   mean=0.7470, min=-0.3660, max=5.9399
+    [Diagnostic] Score Diff: mean=0.3330, max=6.7402
+    [Diagnostic] f_start: mean=0.4134, min=-1.7330, max=0.9524
+    [Diagnostic] f_end:   mean=9.8132, min=7.2234, max=12.4787
+    [Diagnostic] f_diff:  mean=9.3998, max=13.6307, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.2092s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.29s | 轨迹生成: 0.04s
+  [⏱️ Time] 训练: 0.10s | Epoch总计: 4.43s
+Epoch 20/100 | Loss: 65.1823 | Trajs: 1024
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_20.pt
+
+=== Epoch 21/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.136098
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4667, min=-1.7428, max=0.9346
+    [Diagnostic] y_end:   mean=0.6995, min=-0.3283, max=5.8217
+    [Diagnostic] Score Diff: mean=0.2327, max=7.1439
+    [Diagnostic] f_start: mean=0.4671, min=-1.7407, max=0.9538
+    [Diagnostic] f_end:   mean=9.8197, min=7.3427, max=12.9011
+    [Diagnostic] f_diff:  mean=9.3526, max=13.4651, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3672s
+  [Rank Weight] Min: 0.1571 | Max: 3.1552
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.45s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.57s
+Epoch 21/100 | Loss: 21.7315 | Trajs: 1024
+
+=== Epoch 22/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.123633
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4365, min=-1.7770, max=0.9346
+    [Diagnostic] y_end:   mean=0.6580, min=-0.3561, max=5.7736
+    [Diagnostic] Score Diff: mean=0.2215, max=7.1437
+    [Diagnostic] f_start: mean=0.4372, min=-1.7881, max=0.9582
+    [Diagnostic] f_end:   mean=9.8496, min=7.4690, max=12.3178
+    [Diagnostic] f_diff:  mean=9.4124, max=13.6159, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.1945s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.28s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.40s
+Epoch 22/100 | Loss: 10.8426 | Trajs: 1024
+
+=== Epoch 23/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.169227
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.3881, min=-1.8274, max=0.9315
+    [Diagnostic] y_end:   mean=0.6648, min=-0.3789, max=5.7449
+    [Diagnostic] Score Diff: mean=0.2766, max=6.6184
+    [Diagnostic] f_start: mean=0.3878, min=-1.8137, max=0.9538
+    [Diagnostic] f_end:   mean=9.8752, min=7.5040, max=12.3541
+    [Diagnostic] f_diff:  mean=9.4874, max=13.7895, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3188s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.40s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.52s
+Epoch 23/100 | Loss: 8.4585 | Trajs: 1024
+
+=== Epoch 24/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.116249
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4284, min=-1.8552, max=0.9345
+    [Diagnostic] y_end:   mean=0.6612, min=-0.3824, max=5.9731
+    [Diagnostic] Score Diff: mean=0.2328, max=6.8659
+    [Diagnostic] f_start: mean=0.4276, min=-1.8635, max=0.9546
+    [Diagnostic] f_end:   mean=9.8350, min=6.4785, max=12.5489
+    [Diagnostic] f_diff:  mean=9.4074, max=13.3935, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.5452s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.63s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.75s
+Epoch 24/100 | Loss: 5.9466 | Trajs: 1024
+
+=== Epoch 25/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.152576
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4169, min=-2.2049, max=0.9361
+    [Diagnostic] y_end:   mean=0.7061, min=-0.4606, max=5.8484
+    [Diagnostic] Score Diff: mean=0.2892, max=7.0200
+    [Diagnostic] f_start: mean=0.4163, min=-2.2130, max=0.9546
+    [Diagnostic] f_end:   mean=9.8280, min=7.1178, max=12.1952
+    [Diagnostic] f_diff:  mean=9.4117, max=13.4933, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.4062s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.49s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.62s
+Epoch 25/100 | Loss: 4.8691 | Trajs: 1024
+
+=== Epoch 26/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.146009
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4638, min=-1.9609, max=0.9345
+    [Diagnostic] y_end:   mean=0.7090, min=-0.3729, max=5.9635
+    [Diagnostic] Score Diff: mean=0.2452, max=6.7958
+    [Diagnostic] f_start: mean=0.4639, min=-1.9501, max=0.9525
+    [Diagnostic] f_end:   mean=9.8551, min=7.3918, max=12.7122
+    [Diagnostic] f_diff:  mean=9.3912, max=13.6604, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.2663s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.40s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.53s
+Epoch 26/100 | Loss: 3.8513 | Trajs: 1024
+
+=== Epoch 27/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.152486
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4192, min=-1.7475, max=0.9361
+    [Diagnostic] y_end:   mean=0.6901, min=-0.3391, max=5.8216
+    [Diagnostic] Score Diff: mean=0.2709, max=6.9197
+    [Diagnostic] f_start: mean=0.4186, min=-1.7565, max=0.9484
+    [Diagnostic] f_end:   mean=9.8608, min=7.1369, max=12.5446
+    [Diagnostic] f_diff:  mean=9.4422, max=13.4207, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3546s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.44s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.56s
+Epoch 27/100 | Loss: 3.4083 | Trajs: 1024
+
+=== Epoch 28/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.142994
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4130, min=-1.7369, max=0.9336
+    [Diagnostic] y_end:   mean=0.6449, min=-0.3799, max=5.8827
+    [Diagnostic] Score Diff: mean=0.2319, max=7.2898
+    [Diagnostic] f_start: mean=0.4125, min=-1.7324, max=0.9534
+    [Diagnostic] f_end:   mean=9.8584, min=7.7578, max=12.8391
+    [Diagnostic] f_diff:  mean=9.4459, max=13.8188, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3369s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.42s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.55s
+Epoch 28/100 | Loss: 2.5555 | Trajs: 1024
+
+=== Epoch 29/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.151323
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4638, min=-2.2827, max=0.9346
+    [Diagnostic] y_end:   mean=0.7067, min=-0.4097, max=5.7028
+    [Diagnostic] Score Diff: mean=0.2428, max=7.0509
+    [Diagnostic] f_start: mean=0.4637, min=-2.2629, max=0.9502
+    [Diagnostic] f_end:   mean=9.8639, min=7.6441, max=12.2436
+    [Diagnostic] f_diff:  mean=9.4002, max=13.4529, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.2240s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.31s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.43s
+Epoch 29/100 | Loss: 2.3984 | Trajs: 1024
+
+=== Epoch 30/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.177355
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4444, min=-2.4392, max=0.9318
+    [Diagnostic] y_end:   mean=0.7279, min=-0.4806, max=5.9789
+    [Diagnostic] Score Diff: mean=0.2834, max=7.0293
+    [Diagnostic] f_start: mean=0.4450, min=-2.4509, max=0.9580
+    [Diagnostic] f_end:   mean=9.8583, min=7.6220, max=12.6427
+    [Diagnostic] f_diff:  mean=9.4133, max=13.2906, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.4609s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.54s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.66s
+Epoch 30/100 | Loss: 2.0374 | Trajs: 1024
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_30.pt
+
+=== Epoch 31/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.149554
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4307, min=-1.8524, max=0.9332
+    [Diagnostic] y_end:   mean=0.6696, min=-0.4126, max=5.8198
+    [Diagnostic] Score Diff: mean=0.2389, max=6.3660
+    [Diagnostic] f_start: mean=0.4302, min=-1.8373, max=0.9607
+    [Diagnostic] f_end:   mean=9.8082, min=7.2719, max=12.4379
+    [Diagnostic] f_diff:  mean=9.3780, max=13.6708, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.2948s
+  [Rank Weight] Min: 0.1571 | Max: 3.1552
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.39s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.51s
+Epoch 31/100 | Loss: 1.8102 | Trajs: 1024
+
+=== Epoch 32/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.165196
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4333, min=-1.7770, max=0.9361
+    [Diagnostic] y_end:   mean=0.7006, min=-0.3310, max=5.8868
+    [Diagnostic] Score Diff: mean=0.2673, max=7.0682
+    [Diagnostic] f_start: mean=0.4333, min=-1.7797, max=0.9563
+    [Diagnostic] f_end:   mean=9.8505, min=7.0047, max=12.5827
+    [Diagnostic] f_diff:  mean=9.4172, max=13.1721, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.2022s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.29s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.41s
+Epoch 32/100 | Loss: 1.3671 | Trajs: 1024
+
+=== Epoch 33/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.150013
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4446, min=-1.8720, max=0.9332
+    [Diagnostic] y_end:   mean=0.6917, min=-0.4235, max=6.0110
+    [Diagnostic] Score Diff: mean=0.2471, max=6.7185
+    [Diagnostic] f_start: mean=0.4441, min=-1.8819, max=0.9546
+    [Diagnostic] f_end:   mean=9.8679, min=7.3659, max=12.5524
+    [Diagnostic] f_diff:  mean=9.4238, max=14.2499, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.5504s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.64s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.76s
+Epoch 33/100 | Loss: 1.0272 | Trajs: 1024
+
+=== Epoch 34/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.090028
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4122, min=-2.2366, max=0.9361
+    [Diagnostic] y_end:   mean=0.6297, min=-0.3883, max=5.6899
+    [Diagnostic] Score Diff: mean=0.2175, max=6.7816
+    [Diagnostic] f_start: mean=0.4115, min=-2.2551, max=0.9512
+    [Diagnostic] f_end:   mean=9.8678, min=7.5596, max=12.1728
+    [Diagnostic] f_diff:  mean=9.4563, max=13.6772, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3801s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.47s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.59s
+Epoch 34/100 | Loss: 0.8528 | Trajs: 1024
+
+=== Epoch 35/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.149792
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4114, min=-1.8274, max=0.9346
+    [Diagnostic] y_end:   mean=0.6837, min=-0.3672, max=5.8874
+    [Diagnostic] Score Diff: mean=0.2723, max=6.3553
+    [Diagnostic] f_start: mean=0.4111, min=-1.8336, max=0.9571
+    [Diagnostic] f_end:   mean=9.8535, min=7.2772, max=12.0863
+    [Diagnostic] f_diff:  mean=9.4424, max=13.4435, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3572s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.44s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.57s
+Epoch 35/100 | Loss: 0.8294 | Trajs: 1024
+
+=== Epoch 36/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.235186
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4491, min=-1.7201, max=0.9361
+    [Diagnostic] y_end:   mean=0.7712, min=-0.4319, max=6.0305
+    [Diagnostic] Score Diff: mean=0.3221, max=6.2938
+    [Diagnostic] f_start: mean=0.4492, min=-1.7208, max=0.9711
+    [Diagnostic] f_end:   mean=9.8409, min=7.0047, max=12.2838
+    [Diagnostic] f_diff:  mean=9.3917, max=13.6092, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.2081s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.29s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.41s
+Epoch 36/100 | Loss: 0.7329 | Trajs: 1024
+
+=== Epoch 37/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.169170
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4568, min=-1.8801, max=0.9346
+    [Diagnostic] y_end:   mean=0.7543, min=-0.3870, max=5.9715
+    [Diagnostic] Score Diff: mean=0.2975, max=7.0185
+    [Diagnostic] f_start: mean=0.4573, min=-1.8856, max=0.9639
+    [Diagnostic] f_end:   mean=9.8314, min=7.5256, max=12.4612
+    [Diagnostic] f_diff:  mean=9.3741, max=13.6965, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3570s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.44s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.57s
+Epoch 37/100 | Loss: 0.6292 | Trajs: 1024
+
+=== Epoch 38/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.154329
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4424, min=-1.7307, max=0.9346
+    [Diagnostic] y_end:   mean=0.6967, min=-0.3709, max=5.7906
+    [Diagnostic] Score Diff: mean=0.2543, max=6.1977
+    [Diagnostic] f_start: mean=0.4420, min=-1.7299, max=0.9558
+    [Diagnostic] f_end:   mean=9.8161, min=7.3564, max=12.2392
+    [Diagnostic] f_diff:  mean=9.3741, max=13.7443, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.5339s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.62s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.75s
+Epoch 38/100 | Loss: 0.6023 | Trajs: 1024
+
+=== Epoch 39/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.148496
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4252, min=-1.8338, max=0.9345
+    [Diagnostic] y_end:   mean=0.6820, min=-0.3864, max=5.9038
+    [Diagnostic] Score Diff: mean=0.2568, max=6.4552
+    [Diagnostic] f_start: mean=0.4249, min=-1.8461, max=0.9504
+    [Diagnostic] f_end:   mean=9.8670, min=7.7173, max=12.6051
+    [Diagnostic] f_diff:  mean=9.4421, max=13.3705, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.2438s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.33s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.45s
+Epoch 39/100 | Loss: 0.5617 | Trajs: 1024
+
+=== Epoch 40/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.115830
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4305, min=-2.0179, max=0.9332
+    [Diagnostic] y_end:   mean=0.6729, min=-0.3659, max=5.8824
+    [Diagnostic] Score Diff: mean=0.2423, max=7.1329
+    [Diagnostic] f_start: mean=0.4299, min=-2.0162, max=0.9580
+    [Diagnostic] f_end:   mean=9.8690, min=7.3783, max=12.3630
+    [Diagnostic] f_diff:  mean=9.4390, max=13.7036, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.2438s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.33s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.45s
+Epoch 40/100 | Loss: 0.5617 | Trajs: 1024
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_40.pt
+
+=== Epoch 41/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.113092
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4386, min=-2.5884, max=0.9361
+    [Diagnostic] y_end:   mean=0.6628, min=-0.3746, max=5.9405
+    [Diagnostic] Score Diff: mean=0.2242, max=7.0511
+    [Diagnostic] f_start: mean=0.4382, min=-2.6012, max=0.9534
+    [Diagnostic] f_end:   mean=9.8467, min=7.5040, max=12.2854
+    [Diagnostic] f_diff:  mean=9.4085, max=13.5610, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.4014s
+  [Rank Weight] Min: 0.1571 | Max: 3.1552
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.49s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.61s
+Epoch 41/100 | Loss: 0.4926 | Trajs: 1024
+
+=== Epoch 42/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.108492
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4276, min=-2.0179, max=0.9346
+    [Diagnostic] y_end:   mean=0.6658, min=-0.3693, max=5.9059
+    [Diagnostic] Score Diff: mean=0.2382, max=6.3052
+    [Diagnostic] f_start: mean=0.4279, min=-2.0149, max=0.9463
+    [Diagnostic] f_end:   mean=9.8863, min=7.3547, max=12.1094
+    [Diagnostic] f_diff:  mean=9.4584, max=13.3889, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3605s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.45s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.58s
+Epoch 42/100 | Loss: 0.4799 | Trajs: 1024
+
+=== Epoch 43/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.171405
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4623, min=-2.2827, max=0.9313
+    [Diagnostic] y_end:   mean=0.7112, min=-0.3901, max=5.8463
+    [Diagnostic] Score Diff: mean=0.2490, max=6.7397
+    [Diagnostic] f_start: mean=0.4616, min=-2.2749, max=0.9481
+    [Diagnostic] f_end:   mean=9.8397, min=7.0049, max=12.3726
+    [Diagnostic] f_diff:  mean=9.3781, max=13.6771, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3751s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.46s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.59s
+Epoch 43/100 | Loss: 0.3455 | Trajs: 1024
+
+=== Epoch 44/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.122835
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4250, min=-1.7083, max=0.9361
+    [Diagnostic] y_end:   mean=0.6684, min=-0.3816, max=5.9486
+    [Diagnostic] Score Diff: mean=0.2433, max=7.1620
+    [Diagnostic] f_start: mean=0.4248, min=-1.7218, max=0.9639
+    [Diagnostic] f_end:   mean=9.8415, min=7.6769, max=12.2405
+    [Diagnostic] f_diff:  mean=9.4167, max=13.5613, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3800s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.46s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.58s
+Epoch 44/100 | Loss: 0.5747 | Trajs: 1024
+
+=== Epoch 45/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.165174
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4226, min=-2.5406, max=0.9361
+    [Diagnostic] y_end:   mean=0.7036, min=-0.4241, max=5.6783
+    [Diagnostic] Score Diff: mean=0.2809, max=6.5898
+    [Diagnostic] f_start: mean=0.4226, min=-2.5358, max=0.9482
+    [Diagnostic] f_end:   mean=9.8205, min=7.4722, max=12.1474
+    [Diagnostic] f_diff:  mean=9.3979, max=13.3424, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3502s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.43s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.55s
+Epoch 45/100 | Loss: 0.6671 | Trajs: 1024
+
+=== Epoch 46/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.138000
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4550, min=-2.2049, max=0.9361
+    [Diagnostic] y_end:   mean=0.6782, min=-0.3717, max=5.7976
+    [Diagnostic] Score Diff: mean=0.2232, max=6.6139
+    [Diagnostic] f_start: mean=0.4544, min=-2.1901, max=0.9520
+    [Diagnostic] f_end:   mean=9.8435, min=6.3404, max=12.2604
+    [Diagnostic] f_diff:  mean=9.3891, max=13.5367, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3801s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.46s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.58s
+Epoch 46/100 | Loss: 0.4909 | Trajs: 1024
+
+=== Epoch 47/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.163958
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4073, min=-1.7233, max=0.9315
+    [Diagnostic] y_end:   mean=0.7254, min=-0.4124, max=5.6956
+    [Diagnostic] Score Diff: mean=0.3181, max=6.9019
+    [Diagnostic] f_start: mean=0.4070, min=-1.7313, max=0.9539
+    [Diagnostic] f_end:   mean=9.8298, min=7.5591, max=12.1485
+    [Diagnostic] f_diff:  mean=9.4229, max=13.5366, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3812s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.47s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.59s
+Epoch 47/100 | Loss: 0.6481 | Trajs: 1024
+
+=== Epoch 48/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.154547
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4168, min=-1.7068, max=0.9345
+    [Diagnostic] y_end:   mean=0.6708, min=-0.3554, max=5.9480
+    [Diagnostic] Score Diff: mean=0.2541, max=6.7815
+    [Diagnostic] f_start: mean=0.4165, min=-1.7152, max=0.9538
+    [Diagnostic] f_end:   mean=9.8675, min=7.3548, max=12.1615
+    [Diagnostic] f_diff:  mean=9.4511, max=13.4342, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3731s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.46s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.59s
+Epoch 48/100 | Loss: 0.4404 | Trajs: 1024
+
+=== Epoch 49/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.096878
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4781, min=-1.7309, max=0.9332
+    [Diagnostic] y_end:   mean=0.7108, min=-0.3583, max=5.9388
+    [Diagnostic] Score Diff: mean=0.2327, max=6.9999
+    [Diagnostic] f_start: mean=0.4783, min=-1.7308, max=0.9606
+    [Diagnostic] f_end:   mean=9.8499, min=6.4196, max=12.1109
+    [Diagnostic] f_diff:  mean=9.3717, max=13.1042, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3274s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.41s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.53s
+Epoch 49/100 | Loss: 0.9995 | Trajs: 1024
+
+=== Epoch 50/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.179689
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4555, min=-2.1997, max=0.9318
+    [Diagnostic] y_end:   mean=0.7497, min=-0.4015, max=6.0735
+    [Diagnostic] Score Diff: mean=0.2942, max=6.8454
+    [Diagnostic] f_start: mean=0.4553, min=-2.2015, max=0.9538
+    [Diagnostic] f_end:   mean=9.8273, min=7.3311, max=12.3178
+    [Diagnostic] f_diff:  mean=9.3720, max=13.3390, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3824s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.47s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.60s
+Epoch 50/100 | Loss: 0.5669 | Trajs: 1024
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_50.pt
+
+=== Epoch 51/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.137216
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4504, min=-1.7636, max=0.9313
+    [Diagnostic] y_end:   mean=0.7123, min=-0.4097, max=5.7901
+    [Diagnostic] Score Diff: mean=0.2619, max=6.5991
+    [Diagnostic] f_start: mean=0.4500, min=-1.7691, max=0.9573
+    [Diagnostic] f_end:   mean=9.8340, min=6.7651, max=12.4847
+    [Diagnostic] f_diff:  mean=9.3840, max=13.6176, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.4482s
+  [Rank Weight] Min: 0.1571 | Max: 3.1552
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.54s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.66s
+Epoch 51/100 | Loss: 0.4737 | Trajs: 1024
+
+=== Epoch 52/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.100171
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4470, min=-1.7293, max=0.9345
+    [Diagnostic] y_end:   mean=0.6953, min=-0.3822, max=5.9719
+    [Diagnostic] Score Diff: mean=0.2483, max=7.3013
+    [Diagnostic] f_start: mean=0.4465, min=-1.7434, max=0.9546
+    [Diagnostic] f_end:   mean=9.8007, min=7.2807, max=12.4144
+    [Diagnostic] f_diff:  mean=9.3542, max=13.4670, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.2794s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.37s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.10s | Epoch总计: 4.50s
+Epoch 52/100 | Loss: 0.3237 | Trajs: 1024
+
+=== Epoch 53/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.195650
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4392, min=-1.7369, max=0.9361
+    [Diagnostic] y_end:   mean=0.7270, min=-0.3405, max=5.8811
+    [Diagnostic] Score Diff: mean=0.2877, max=7.1880
+    [Diagnostic] f_start: mean=0.4389, min=-1.7423, max=0.9537
+    [Diagnostic] f_end:   mean=9.8117, min=7.4236, max=12.5303
+    [Diagnostic] f_diff:  mean=9.3728, max=13.0348, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.2573s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.35s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.47s
+Epoch 53/100 | Loss: 0.3956 | Trajs: 1024
+
+=== Epoch 54/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.148147
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4152, min=-2.2366, max=0.9361
+    [Diagnostic] y_end:   mean=0.7105, min=-0.3973, max=5.8309
+    [Diagnostic] Score Diff: mean=0.2953, max=6.3932
+    [Diagnostic] f_start: mean=0.4150, min=-2.2273, max=0.9483
+    [Diagnostic] f_end:   mean=9.7974, min=7.3510, max=12.0348
+    [Diagnostic] f_diff:  mean=9.3823, max=13.5291, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.5368s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.63s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.75s
+Epoch 54/100 | Loss: 0.4489 | Trajs: 1024
+
+=== Epoch 55/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.168380
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4567, min=-2.2049, max=0.9346
+    [Diagnostic] y_end:   mean=0.7200, min=-0.3792, max=5.9478
+    [Diagnostic] Score Diff: mean=0.2634, max=6.0587
+    [Diagnostic] f_start: mean=0.4564, min=-2.2066, max=0.9576
+    [Diagnostic] f_end:   mean=9.8598, min=7.3547, max=13.2134
+    [Diagnostic] f_diff:  mean=9.4034, max=13.7443, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.2339s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.33s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.45s
+Epoch 55/100 | Loss: 0.3711 | Trajs: 1024
+
+=== Epoch 56/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.123958
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4513, min=-1.8338, max=0.9361
+    [Diagnostic] y_end:   mean=0.6713, min=-0.3774, max=5.9169
+    [Diagnostic] Score Diff: mean=0.2200, max=6.8490
+    [Diagnostic] f_start: mean=0.4513, min=-1.8470, max=0.9710
+    [Diagnostic] f_end:   mean=9.8480, min=7.3942, max=12.1595
+    [Diagnostic] f_diff:  mean=9.3967, max=13.0909, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.4262s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.51s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.64s
+Epoch 56/100 | Loss: 0.7353 | Trajs: 1024
+
+=== Epoch 57/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.170209
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4104, min=-2.5884, max=0.9318
+    [Diagnostic] y_end:   mean=0.6899, min=-0.4366, max=5.7467
+    [Diagnostic] Score Diff: mean=0.2795, max=7.0948
+    [Diagnostic] f_start: mean=0.4100, min=-2.6119, max=0.9584
+    [Diagnostic] f_end:   mean=9.8458, min=7.0621, max=12.5035
+    [Diagnostic] f_diff:  mean=9.4358, max=13.8761, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.1166s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.20s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.33s
+Epoch 57/100 | Loss: 0.6194 | Trajs: 1024
+
+=== Epoch 58/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.128789
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.3999, min=-1.9609, max=0.9345
+    [Diagnostic] y_end:   mean=0.6456, min=-0.3830, max=5.8279
+    [Diagnostic] Score Diff: mean=0.2457, max=7.0945
+    [Diagnostic] f_start: mean=0.4001, min=-1.9678, max=0.9571
+    [Diagnostic] f_end:   mean=9.8505, min=7.2234, max=12.4612
+    [Diagnostic] f_diff:  mean=9.4505, max=13.6695, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3875s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.47s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.60s
+Epoch 58/100 | Loss: 0.2343 | Trajs: 1024
+
+=== Epoch 59/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.170063
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4315, min=-1.7770, max=0.9313
+    [Diagnostic] y_end:   mean=0.6982, min=-0.3522, max=6.0476
+    [Diagnostic] Score Diff: mean=0.2667, max=6.5851
+    [Diagnostic] f_start: mean=0.4317, min=-1.7797, max=0.9530
+    [Diagnostic] f_end:   mean=9.8495, min=7.0621, max=12.0850
+    [Diagnostic] f_diff:  mean=9.4178, max=13.5333, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.2698s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.40s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.53s
+Epoch 59/100 | Loss: 0.8493 | Trajs: 1024
+
+=== Epoch 60/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.109836
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4329, min=-1.7435, max=0.9345
+    [Diagnostic] y_end:   mean=0.6802, min=-0.3612, max=5.8761
+    [Diagnostic] Score Diff: mean=0.2474, max=7.1851
+    [Diagnostic] f_start: mean=0.4331, min=-1.7456, max=0.9492
+    [Diagnostic] f_end:   mean=9.8858, min=7.5288, max=12.5257
+    [Diagnostic] f_diff:  mean=9.4527, max=13.2521, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.2573s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.34s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.47s
+Epoch 60/100 | Loss: 0.2704 | Trajs: 1024
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_60.pt
+
+=== Epoch 61/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.140763
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4287, min=-2.4392, max=0.9345
+    [Diagnostic] y_end:   mean=0.6795, min=-0.4606, max=6.0473
+    [Diagnostic] Score Diff: mean=0.2508, max=6.9020
+    [Diagnostic] f_start: mean=0.4282, min=-2.4509, max=0.9580
+    [Diagnostic] f_end:   mean=9.8398, min=7.0048, max=12.3020
+    [Diagnostic] f_diff:  mean=9.4116, max=13.1675, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.4518s
+  [Rank Weight] Min: 0.1571 | Max: 3.1552
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.54s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.67s
+Epoch 61/100 | Loss: 0.3023 | Trajs: 1024
+
+=== Epoch 62/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.132753
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4615, min=-1.7237, max=0.9346
+    [Diagnostic] y_end:   mean=0.7150, min=-0.4374, max=5.9475
+    [Diagnostic] Score Diff: mean=0.2535, max=6.8102
+    [Diagnostic] f_start: mean=0.4610, min=-1.7194, max=0.9584
+    [Diagnostic] f_end:   mean=9.8287, min=7.0048, max=12.5827
+    [Diagnostic] f_diff:  mean=9.3676, max=13.5648, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.4026s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.49s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.10s | Epoch总计: 4.62s
+Epoch 62/100 | Loss: 0.2974 | Trajs: 1024
+
+=== Epoch 63/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.112433
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4411, min=-1.7636, max=0.9315
+    [Diagnostic] y_end:   mean=0.6564, min=-0.3855, max=5.9720
+    [Diagnostic] Score Diff: mean=0.2152, max=7.1407
+    [Diagnostic] f_start: mean=0.4408, min=-1.7499, max=0.9573
+    [Diagnostic] f_end:   mean=9.8563, min=7.3783, max=12.1144
+    [Diagnostic] f_diff:  mean=9.4156, max=13.7697, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3692s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.46s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.10s | Epoch总计: 4.58s
+Epoch 63/100 | Loss: 0.2809 | Trajs: 1024
+
+=== Epoch 64/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.106272
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4251, min=-2.2366, max=0.9361
+    [Diagnostic] y_end:   mean=0.6528, min=-0.4310, max=5.9682
+    [Diagnostic] Score Diff: mean=0.2277, max=6.8532
+    [Diagnostic] f_start: mean=0.4245, min=-2.2363, max=0.9584
+    [Diagnostic] f_end:   mean=9.8731, min=7.4371, max=12.2869
+    [Diagnostic] f_diff:  mean=9.4487, max=13.5265, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3779s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.46s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.58s
+Epoch 64/100 | Loss: 0.3147 | Trajs: 1024
+
+=== Epoch 65/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.133523
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4455, min=-2.5884, max=0.9345
+    [Diagnostic] y_end:   mean=0.6705, min=-0.4356, max=5.9496
+    [Diagnostic] Score Diff: mean=0.2250, max=7.1514
+    [Diagnostic] f_start: mean=0.4457, min=-2.5992, max=0.9530
+    [Diagnostic] f_end:   mean=9.8373, min=7.1176, max=13.2134
+    [Diagnostic] f_diff:  mean=9.3916, max=13.5518, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3345s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.42s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.54s
+Epoch 65/100 | Loss: 0.5714 | Trajs: 1024
+
+=== Epoch 66/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.128082
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4580, min=-1.7021, max=0.9361
+    [Diagnostic] y_end:   mean=0.7151, min=-0.3867, max=5.7317
+    [Diagnostic] Score Diff: mean=0.2571, max=7.1798
+    [Diagnostic] f_start: mean=0.4577, min=-1.7231, max=0.9503
+    [Diagnostic] f_end:   mean=9.7967, min=7.0621, max=12.2356
+    [Diagnostic] f_diff:  mean=9.3390, max=13.5333, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3696s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.45s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.58s
+Epoch 66/100 | Loss: 0.3312 | Trajs: 1024
+
+=== Epoch 67/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.157601
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4392, min=-2.2827, max=0.9346
+    [Diagnostic] y_end:   mean=0.6886, min=-0.4044, max=5.7771
+    [Diagnostic] Score Diff: mean=0.2494, max=6.6202
+    [Diagnostic] f_start: mean=0.4386, min=-2.2734, max=0.9639
+    [Diagnostic] f_end:   mean=9.8752, min=6.4197, max=12.6427
+    [Diagnostic] f_diff:  mean=9.4366, max=13.5504, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.2283s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.32s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.44s
+Epoch 67/100 | Loss: 0.4837 | Trajs: 1024
+
+=== Epoch 68/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.176672
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4365, min=-1.8524, max=0.9361
+    [Diagnostic] y_end:   mean=0.7250, min=-0.3726, max=5.7452
+    [Diagnostic] Score Diff: mean=0.2885, max=7.1418
+    [Diagnostic] f_start: mean=0.4357, min=-1.8528, max=0.9576
+    [Diagnostic] f_end:   mean=9.8679, min=7.4367, max=12.6783
+    [Diagnostic] f_diff:  mean=9.4322, max=13.3322, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3924s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.48s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.60s
+Epoch 68/100 | Loss: 0.5334 | Trajs: 1024
+
+=== Epoch 69/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.134139
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4116, min=-1.8274, max=0.9361
+    [Diagnostic] y_end:   mean=0.6618, min=-0.4044, max=5.8692
+    [Diagnostic] Score Diff: mean=0.2503, max=6.7182
+    [Diagnostic] f_start: mean=0.4115, min=-1.8279, max=0.9607
+    [Diagnostic] f_end:   mean=9.8553, min=7.3002, max=12.6783
+    [Diagnostic] f_diff:  mean=9.4438, max=13.2944, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.2097s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.29s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.41s
+Epoch 69/100 | Loss: 0.2672 | Trajs: 1024
+
+=== Epoch 70/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.166389
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4283, min=-1.7435, max=0.9318
+    [Diagnostic] y_end:   mean=0.6987, min=-0.3962, max=6.0120
+    [Diagnostic] Score Diff: mean=0.2704, max=6.8587
+    [Diagnostic] f_start: mean=0.4282, min=-1.7413, max=0.9546
+    [Diagnostic] f_end:   mean=9.8483, min=7.5485, max=11.9599
+    [Diagnostic] f_diff:  mean=9.4201, max=13.6176, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3655s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.45s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.57s
+Epoch 70/100 | Loss: 0.2974 | Trajs: 1024
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_70.pt
+
+=== Epoch 71/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.154782
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4032, min=-3.0891, max=0.9361
+    [Diagnostic] y_end:   mean=0.6909, min=-0.3788, max=5.8681
+    [Diagnostic] Score Diff: mean=0.2878, max=6.8656
+    [Diagnostic] f_start: mean=0.4024, min=-3.0862, max=0.9498
+    [Diagnostic] f_end:   mean=9.8335, min=7.0621, max=12.2048
+    [Diagnostic] f_diff:  mean=9.4311, max=13.5569, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3939s
+  [Rank Weight] Min: 0.1571 | Max: 3.1552
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.48s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.61s
+Epoch 71/100 | Loss: 0.5960 | Trajs: 1024
+
+=== Epoch 72/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.108512
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4234, min=-2.5884, max=0.9346
+    [Diagnostic] y_end:   mean=0.6613, min=-0.3735, max=5.8305
+    [Diagnostic] Score Diff: mean=0.2379, max=6.7265
+    [Diagnostic] f_start: mean=0.4230, min=-2.5927, max=0.9620
+    [Diagnostic] f_end:   mean=9.8630, min=7.5358, max=12.6783
+    [Diagnostic] f_diff:  mean=9.4399, max=13.8622, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.2183s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.30s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.42s
+Epoch 72/100 | Loss: 0.5233 | Trajs: 1024
+
+=== Epoch 73/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.142036
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4259, min=-2.2049, max=0.9361
+    [Diagnostic] y_end:   mean=0.6727, min=-0.3450, max=5.9196
+    [Diagnostic] Score Diff: mean=0.2468, max=7.1513
+    [Diagnostic] f_start: mean=0.4253, min=-2.2088, max=0.9711
+    [Diagnostic] f_end:   mean=9.8543, min=7.2676, max=12.5827
+    [Diagnostic] f_diff:  mean=9.4289, max=13.2339, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.5432s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.63s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.75s
+Epoch 73/100 | Loss: 0.3815 | Trajs: 1024
+
+=== Epoch 74/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.171965
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4083, min=-1.7309, max=0.9332
+    [Diagnostic] y_end:   mean=0.7155, min=-0.3844, max=6.0973
+    [Diagnostic] Score Diff: mean=0.3073, max=6.6618
+    [Diagnostic] f_start: mean=0.4074, min=-1.7393, max=0.9499
+    [Diagnostic] f_end:   mean=9.8427, min=7.4722, max=12.0313
+    [Diagnostic] f_diff:  mean=9.4353, max=13.5040, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.5240s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.61s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.73s
+Epoch 74/100 | Loss: 0.5737 | Trajs: 1024
+
+=== Epoch 75/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.146715
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4373, min=-2.5884, max=0.9361
+    [Diagnostic] y_end:   mean=0.6947, min=-0.3688, max=5.9208
+    [Diagnostic] Score Diff: mean=0.2574, max=6.9663
+    [Diagnostic] f_start: mean=0.4373, min=-2.6013, max=0.9524
+    [Diagnostic] f_end:   mean=9.8477, min=7.0254, max=12.2869
+    [Diagnostic] f_diff:  mean=9.4104, max=13.4966, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3961s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.48s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.60s
+Epoch 75/100 | Loss: 0.2291 | Trajs: 1024
+
+=== Epoch 76/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.132970
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4315, min=-1.8720, max=0.9361
+    [Diagnostic] y_end:   mean=0.6727, min=-0.4643, max=5.7609
+    [Diagnostic] Score Diff: mean=0.2412, max=6.6436
+    [Diagnostic] f_start: mean=0.4315, min=-1.8783, max=0.9502
+    [Diagnostic] f_end:   mean=9.8479, min=7.5289, max=13.2134
+    [Diagnostic] f_diff:  mean=9.4164, max=13.3172, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.2411s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.33s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.45s
+Epoch 76/100 | Loss: 0.4660 | Trajs: 1024
+
+=== Epoch 77/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.096797
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4477, min=-2.5884, max=0.9318
+    [Diagnostic] y_end:   mean=0.6541, min=-0.4050, max=5.5899
+    [Diagnostic] Score Diff: mean=0.2063, max=6.3933
+    [Diagnostic] f_start: mean=0.4470, min=-2.6119, max=0.9498
+    [Diagnostic] f_end:   mean=9.8155, min=7.5766, max=12.5134
+    [Diagnostic] f_diff:  mean=9.3685, max=13.9754, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.5605s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.64s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.77s
+Epoch 77/100 | Loss: 0.5052 | Trajs: 1024
+
+=== Epoch 78/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.087715
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4403, min=-1.7910, max=0.9361
+    [Diagnostic] y_end:   mean=0.6306, min=-0.3803, max=5.7336
+    [Diagnostic] Score Diff: mean=0.1902, max=6.5176
+    [Diagnostic] f_start: mean=0.4411, min=-1.7819, max=0.9639
+    [Diagnostic] f_end:   mean=9.8692, min=7.3447, max=12.2428
+    [Diagnostic] f_diff:  mean=9.4281, max=13.3227, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3529s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.44s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.56s
+Epoch 78/100 | Loss: 0.2173 | Trajs: 1024
+
+=== Epoch 79/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.134500
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4467, min=-1.8274, max=0.9346
+    [Diagnostic] y_end:   mean=0.6889, min=-0.4015, max=5.9509
+    [Diagnostic] Score Diff: mean=0.2422, max=7.1025
+    [Diagnostic] f_start: mean=0.4463, min=-1.8137, max=0.9577
+    [Diagnostic] f_end:   mean=9.8585, min=7.7010, max=12.4849
+    [Diagnostic] f_diff:  mean=9.4122, max=13.2694, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.4038s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.49s | 轨迹生成: 0.04s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.61s
+Epoch 79/100 | Loss: 0.3953 | Trajs: 1024
+
+=== Epoch 80/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.129432
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4168, min=-1.8524, max=0.9332
+    [Diagnostic] y_end:   mean=0.6895, min=-0.3830, max=5.6880
+    [Diagnostic] Score Diff: mean=0.2727, max=6.7395
+    [Diagnostic] f_start: mean=0.4171, min=-1.8359, max=0.9540
+    [Diagnostic] f_end:   mean=9.8745, min=6.8733, max=12.4379
+    [Diagnostic] f_diff:  mean=9.4574, max=13.3322, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.2189s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.30s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.43s
+Epoch 80/100 | Loss: 0.2191 | Trajs: 1024
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_80.pt
+
+=== Epoch 81/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.138043
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4187, min=-2.5406, max=0.9332
+    [Diagnostic] y_end:   mean=0.6881, min=-0.4097, max=5.7857
+    [Diagnostic] Score Diff: mean=0.2694, max=6.9986
+    [Diagnostic] f_start: mean=0.4183, min=-2.5463, max=0.9525
+    [Diagnostic] f_end:   mean=9.8494, min=7.4754, max=11.9431
+    [Diagnostic] f_diff:  mean=9.4310, max=13.7889, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.5504s
+  [Rank Weight] Min: 0.1571 | Max: 3.1552
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.64s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.76s
+Epoch 81/100 | Loss: 0.1859 | Trajs: 1024
+
+=== Epoch 82/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.207308
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4666, min=-1.7293, max=0.9336
+    [Diagnostic] y_end:   mean=0.7534, min=-0.4565, max=5.9842
+    [Diagnostic] Score Diff: mean=0.2867, max=6.7812
+    [Diagnostic] f_start: mean=0.4667, min=-1.7310, max=0.9491
+    [Diagnostic] f_end:   mean=9.8280, min=7.3783, max=12.0062
+    [Diagnostic] f_diff:  mean=9.3614, max=13.2847, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3481s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.44s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.56s
+Epoch 82/100 | Loss: 0.2305 | Trajs: 1024
+
+=== Epoch 83/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.149366
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4415, min=-2.0179, max=0.9345
+    [Diagnostic] y_end:   mean=0.6620, min=-0.3476, max=6.0266
+    [Diagnostic] Score Diff: mean=0.2205, max=6.1717
+    [Diagnostic] f_start: mean=0.4414, min=-2.0110, max=0.9572
+    [Diagnostic] f_end:   mean=9.8104, min=6.4197, max=12.5035
+    [Diagnostic] f_diff:  mean=9.3689, max=13.4025, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.5578s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.65s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.77s
+Epoch 83/100 | Loss: 0.2079 | Trajs: 1024
+
+=== Epoch 84/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.185560
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4255, min=-2.0609, max=0.9361
+    [Diagnostic] y_end:   mean=0.7393, min=-0.3547, max=6.0261
+    [Diagnostic] Score Diff: mean=0.3139, max=6.9099
+    [Diagnostic] f_start: mean=0.4253, min=-2.0576, max=0.9483
+    [Diagnostic] f_end:   mean=9.8905, min=7.5151, max=12.4749
+    [Diagnostic] f_diff:  mean=9.4652, max=13.7495, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.0926s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.18s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.31s
+Epoch 84/100 | Loss: 0.2409 | Trajs: 1024
+
+=== Epoch 85/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.091973
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4534, min=-1.7210, max=0.9336
+    [Diagnostic] y_end:   mean=0.6429, min=-0.3620, max=5.7137
+    [Diagnostic] Score Diff: mean=0.1895, max=6.2478
+    [Diagnostic] f_start: mean=0.4530, min=-1.7275, max=0.9580
+    [Diagnostic] f_end:   mean=9.8600, min=7.9075, max=12.5035
+    [Diagnostic] f_diff:  mean=9.4070, max=13.6775, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.0558s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.14s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.26s
+Epoch 85/100 | Loss: 0.2431 | Trajs: 1024
+
+=== Epoch 86/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.204578
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.3933, min=-2.2366, max=0.9312
+    [Diagnostic] y_end:   mean=0.7334, min=-0.3698, max=5.8277
+    [Diagnostic] Score Diff: mean=0.3402, max=6.8101
+    [Diagnostic] f_start: mean=0.3933, min=-2.1974, max=0.9553
+    [Diagnostic] f_end:   mean=9.8717, min=7.4989, max=12.6968
+    [Diagnostic] f_diff:  mean=9.4784, max=13.4142, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3610s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.44s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.57s
+Epoch 86/100 | Loss: 0.2122 | Trajs: 1024
+
+=== Epoch 87/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.187608
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4388, min=-1.7401, max=0.9361
+    [Diagnostic] y_end:   mean=0.7236, min=-0.3746, max=5.8349
+    [Diagnostic] Score Diff: mean=0.2848, max=7.0291
+    [Diagnostic] f_start: mean=0.4384, min=-1.7299, max=0.9607
+    [Diagnostic] f_end:   mean=9.8431, min=7.2371, max=12.2262
+    [Diagnostic] f_diff:  mean=9.4047, max=13.8499, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.2170s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.30s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.43s
+Epoch 87/100 | Loss: 0.2900 | Trajs: 1024
+
+=== Epoch 88/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.163615
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4272, min=-2.5406, max=0.9336
+    [Diagnostic] y_end:   mean=0.6889, min=-0.4241, max=6.0300
+    [Diagnostic] Score Diff: mean=0.2617, max=7.1406
+    [Diagnostic] f_start: mean=0.4271, min=-2.5358, max=0.9463
+    [Diagnostic] f_end:   mean=9.8506, min=7.3942, max=12.4678
+    [Diagnostic] f_diff:  mean=9.4234, max=13.2240, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.4537s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.54s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.66s
+Epoch 88/100 | Loss: 0.2550 | Trajs: 1024
+
+=== Epoch 89/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.121366
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4349, min=-1.8720, max=0.9346
+    [Diagnostic] y_end:   mean=0.6604, min=-0.3645, max=5.9681
+    [Diagnostic] Score Diff: mean=0.2255, max=6.9851
+    [Diagnostic] f_start: mean=0.4352, min=-1.8607, max=0.9620
+    [Diagnostic] f_end:   mean=9.8482, min=7.3508, max=12.2836
+    [Diagnostic] f_diff:  mean=9.4130, max=13.6604, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.2841s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.37s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.49s
+Epoch 89/100 | Loss: 0.2162 | Trajs: 1024
+
+=== Epoch 90/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.147180
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4319, min=-2.0179, max=0.9332
+    [Diagnostic] y_end:   mean=0.7098, min=-0.4104, max=5.7860
+    [Diagnostic] Score Diff: mean=0.2780, max=6.6348
+    [Diagnostic] f_start: mean=0.4320, min=-2.0206, max=0.9607
+    [Diagnostic] f_end:   mean=9.9005, min=7.1910, max=12.5281
+    [Diagnostic] f_diff:  mean=9.4685, max=13.1291, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.2495s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.33s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.46s
+Epoch 90/100 | Loss: 0.3597 | Trajs: 1024
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_90.pt
+
+=== Epoch 91/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.170920
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4348, min=-1.7303, max=0.9332
+    [Diagnostic] y_end:   mean=0.7043, min=-0.4028, max=5.7102
+    [Diagnostic] Score Diff: mean=0.2696, max=6.8534
+    [Diagnostic] f_start: mean=0.4356, min=-1.7329, max=0.9546
+    [Diagnostic] f_end:   mean=9.8056, min=7.4254, max=12.1062
+    [Diagnostic] f_diff:  mean=9.3700, max=12.9534, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.5664s
+  [Rank Weight] Min: 0.1571 | Max: 3.1552
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.66s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.10s | Epoch总计: 4.79s
+Epoch 91/100 | Loss: 0.1961 | Trajs: 1024
+
+=== Epoch 92/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.181716
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4182, min=-2.2827, max=0.9361
+    [Diagnostic] y_end:   mean=0.7259, min=-0.3553, max=5.9422
+    [Diagnostic] Score Diff: mean=0.3077, max=6.8558
+    [Diagnostic] f_start: mean=0.4180, min=-2.2885, max=0.9577
+    [Diagnostic] f_end:   mean=9.8431, min=7.2145, max=12.8391
+    [Diagnostic] f_diff:  mean=9.4251, max=13.7496, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.7655s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.90s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.10s | Epoch总计: 5.03s
+Epoch 92/100 | Loss: 0.2049 | Trajs: 1024
+
+=== Epoch 93/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.127302
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4271, min=-1.8552, max=0.9345
+    [Diagnostic] y_end:   mean=0.6789, min=-0.4154, max=5.8062
+    [Diagnostic] Score Diff: mean=0.2518, max=6.8947
+    [Diagnostic] f_start: mean=0.4271, min=-1.8631, max=0.9518
+    [Diagnostic] f_end:   mean=9.8945, min=7.1177, max=12.0315
+    [Diagnostic] f_diff:  mean=9.4674, max=13.3658, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.5754s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.67s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.79s
+Epoch 93/100 | Loss: 0.1757 | Trajs: 1024
+
+=== Epoch 94/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.163073
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4264, min=-2.0179, max=0.9318
+    [Diagnostic] y_end:   mean=0.7008, min=-0.4124, max=5.9220
+    [Diagnostic] Score Diff: mean=0.2744, max=7.3857
+    [Diagnostic] f_start: mean=0.4261, min=-2.0206, max=0.9483
+    [Diagnostic] f_end:   mean=9.8236, min=7.4367, max=11.8275
+    [Diagnostic] f_diff:  mean=9.3976, max=13.2963, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3505s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.43s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.55s
+Epoch 94/100 | Loss: 0.2911 | Trajs: 1024
+
+=== Epoch 95/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.141796
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4198, min=-2.2827, max=0.9313
+    [Diagnostic] y_end:   mean=0.6783, min=-0.3644, max=5.9476
+    [Diagnostic] Score Diff: mean=0.2585, max=6.7907
+    [Diagnostic] f_start: mean=0.4192, min=-2.2900, max=0.9493
+    [Diagnostic] f_end:   mean=9.8526, min=7.0048, max=12.3725
+    [Diagnostic] f_diff:  mean=9.4334, max=13.3116, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.2199s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.31s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.43s
+Epoch 95/100 | Loss: 0.2903 | Trajs: 1024
+
+=== Epoch 96/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.146883
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4383, min=-2.1997, max=0.9361
+    [Diagnostic] y_end:   mean=0.7272, min=-0.3934, max=5.8112
+    [Diagnostic] Score Diff: mean=0.2889, max=6.7848
+    [Diagnostic] f_start: mean=0.4388, min=-2.2267, max=0.9602
+    [Diagnostic] f_end:   mean=9.8189, min=7.2605, max=12.2405
+    [Diagnostic] f_diff:  mean=9.3801, max=13.2336, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.4041s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.49s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.61s
+Epoch 96/100 | Loss: 0.3960 | Trajs: 1024
+
+=== Epoch 97/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.135156
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4264, min=-2.2049, max=0.9361
+    [Diagnostic] y_end:   mean=0.6918, min=-0.3900, max=6.1253
+    [Diagnostic] Score Diff: mean=0.2653, max=6.8350
+    [Diagnostic] f_start: mean=0.4261, min=-2.1777, max=0.9525
+    [Diagnostic] f_end:   mean=9.8632, min=7.5238, max=12.5035
+    [Diagnostic] f_diff:  mean=9.4371, max=13.2421, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.3651s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.45s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.57s
+Epoch 97/100 | Loss: 0.4523 | Trajs: 1024
+
+=== Epoch 98/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.196405
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4409, min=-1.9816, max=0.9336
+    [Diagnostic] y_end:   mean=0.7455, min=-0.3518, max=5.6652
+    [Diagnostic] Score Diff: mean=0.3046, max=6.6390
+    [Diagnostic] f_start: mean=0.4404, min=-1.9627, max=0.9572
+    [Diagnostic] f_end:   mean=9.8128, min=7.5287, max=12.1474
+    [Diagnostic] f_diff:  mean=9.3724, max=13.3114, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.5478s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.64s | 轨迹生成: 0.04s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.77s
+Epoch 98/100 | Loss: 0.2146 | Trajs: 1024
+
+=== Epoch 99/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.116765
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4286, min=-1.8552, max=0.9346
+    [Diagnostic] y_end:   mean=0.6505, min=-0.3531, max=5.8751
+    [Diagnostic] Score Diff: mean=0.2219, max=6.8634
+    [Diagnostic] f_start: mean=0.4286, min=-1.8685, max=0.9577
+    [Diagnostic] f_end:   mean=9.8361, min=7.5040, max=12.4379
+    [Diagnostic] f_diff:  mean=9.4074, max=13.3975, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.6282s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.72s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.10s | Epoch总计: 4.85s
+Epoch 99/100 | Loss: 0.2927 | Trajs: 1024
+
+=== Epoch 100/100 ===
+    [Diagnostic] Step 0 Avg Grad Norm: 4.155419
+    [Diagnostic] Total Points: 1024
+    [Diagnostic] y_start: mean=0.4273, min=-1.8720, max=0.9346
+    [Diagnostic] y_end:   mean=0.7001, min=-0.3332, max=5.8912
+    [Diagnostic] Score Diff: mean=0.2728, max=7.0446
+    [Diagnostic] f_start: mean=0.4273, min=-1.8643, max=0.9534
+    [Diagnostic] f_end:   mean=9.8441, min=7.6930, max=12.3200
+    [Diagnostic] f_diff:  mean=9.4168, max=13.5265, pos=1024
+    [Diagnostic] Passed threshold (0.001): 1024
+GP Langevin Sampling Report (Fixed Functions):
+  Rollout Time: 4.4401s
+Generated 1024 trajectories from GP samples
+  [⏱️ Time] GP采样: 4.53s | 轨迹生成: 0.03s
+  [⏱️ Time] 训练: 0.09s | Epoch总计: 4.66s
+Epoch 100/100 | Loss: 0.1836 | Trajs: 1024
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_100.pt
+
+[💾 Final Model] Saved to checkpoints/cfm_model_final.pt
+
+=== SOTA Evaluation (Highest-point, Q=128) ===
+Selected 128 highest samples as starting points
+Starting scores (normalized): mean=0.9310, max=0.9342
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+
+[Result] Final scores distribution (raw):
+  Max: 278.8474 | Mean: 202.5538
+------------------------------------------------------------
+Normalized 100th Percentile (Max):      0.949186
+Normalized 80th Percentile:             0.904586
+Normalized 50th Percentile (Median):    0.885627
+------------------------------------------------------------
