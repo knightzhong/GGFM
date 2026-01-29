@@ -10,7 +10,7 @@ from src.utils import set_seed, Normalizer
 from src.oracle import NTKOracle
 from src.generator import GP, sampling_data_from_GP, generate_trajectories_from_GP_samples
 from src.models import VectorFieldNet
-from src.flow import train_cfm_step,train_cfm, inference_ode
+from src.flow import train_cfm_step, inference_ode
 import time
 import os
 
@@ -356,7 +356,7 @@ def main():
         
         # 对这批轨迹进行流匹配训练更新
         train_start = time.time()
-        avg_loss = train_cfm_step(cfm_model, trajs_array, optimizer, device, weights=weights_np)
+        avg_loss, avg_cos_sim, avg_l_grad, avg_l_sigma = train_cfm_step(cfm_model, trajs_array, optimizer, device, gp_model=GP_Model, weights=weights_np)
         train_time = time.time() - train_start
         
         epoch_total_time = time.time() - epoch_start
@@ -365,6 +365,7 @@ def main():
         # scheduler.step()
         
         print(f"  [⏱️ Time] 训练: {train_time:.2f}s | Epoch总计: {epoch_total_time:.2f}s")
+        print(f"  [Metrics] CosSim: {avg_cos_sim:.4f} | L_grad: {avg_l_grad:.4f} | L_sigma: {avg_l_sigma:.4f}")
         
         if (epoch + 1) % 10 == 0:
             print(f"Epoch {epoch+1}/{Config.FM_EPOCHS} | Loss: {avg_loss:.4f} | Trajs: {len(trajs_array)}")

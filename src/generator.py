@@ -53,9 +53,8 @@ def sampling_data_from_GP(x_train, device, GP_Model, num_gradient_steps=50, num_
     
     流程：
     1. 选择起始点
-    2. 梯度下降找到 x_low（低分起点）
-    3. 从 x_low 开始梯度上升，记录每一步，形成完整的"弧度轨迹"
-    4. 最终得到 x_high，验证分数差
+    2. 不再分两个阶段（先下降再上升），而是模仿 ROOT，将起始点复制成两份，一份用于下降（找 $x_{low}$），一份用于上升（找 $x_{high}$）。
+    3. 最终得到 x_high，验证分数差
     
     返回格式: datasets = {f'f{i}': [(trajectory, y_start, y_end), ...], ...}
     其中 trajectory 是 (num_gradient_steps+1, dim) 的完整上升轨迹
@@ -80,55 +79,73 @@ def sampling_data_from_GP(x_train, device, GP_Model, num_gradient_steps=50, num_
         GP_Model.set_hyper(lengthscale=new_lengthscale, variance=new_variance)
         total_set_hyper_time += time.time() - set_hyper_start
     
-        # 2. 随机选择起始点
+        # 2. 随机选择起始点并构造并行计算张量
         selected_indices = torch.randperm(x_train.shape[0])[:num_points]
-        x_start = x_train[selected_indices].clone()
+        x_base = x_train[selected_indices].clone()
+        
+        # 模仿 ROOT: 前一半点下降，后一半点上升
+        # 这样我们可以同时得到 x_low 和 x_high
+        joint_x = torch.cat([x_base.clone(), x_base.clone()], dim=0).requires_grad_(True)
+        
+        # 构造统一的学习率向量: 前 num_points 个点 -lr (下降), 后 num_points 个点 +lr (上升)
+        lr_vec = torch.cat([
+            -learning_rate * torch.ones(num_points, x_train.shape[1], device=device),
+            learning_rate * torch.ones(num_points, x_train.shape[1], device=device)
+        ], dim=0)
         
         gradient_start = time.time()
         
-        # 3. 第一阶段：梯度下降找到 x_low（低分起点）
-        # ✅ 优化：使用 in-place 操作，避免重复创建 tensor
-        x_low = x_start.clone().requires_grad_(True)
+        # 预分配内存记录轨迹 (记录 num_gradient_steps 步)
+        # 维度: (Steps, 2*num_points, dim)
+        traj_record = []
+        
+        # 3. 统一优化阶段
         with torch.enable_grad():
-            for _ in range(num_gradient_steps):
-                mu_star = GP_Model.mean_posterior(x_low)
-                grad = torch.autograd.grad(mu_star.sum(), x_low, create_graph=False)[0]
-                x_low.data.sub_(learning_rate * grad)  # in-place: x_low -= lr * grad
-        
-        # 4. 第二阶段：从 x_low 开始梯度上升，记录每一步形成"弧度轨迹"
-        # ✅ 预分配内存存储轨迹: (num_gradient_steps+1, num_points, dim)
-        trajectory_storage = torch.zeros(num_gradient_steps + num_gradient_steps + 1, num_points, x_train.shape[1], 
-                                        device=device, dtype=x_train.dtype)
-        
-        # ✅ 复用 x_low，避免 clone
-        x_curr = x_low
-        trajectory_storage[0] = x_curr.data.clone()  # 只在保存时 clone
-        
-        with torch.enable_grad():
-            for t in range(num_gradient_steps+num_gradient_steps):
-                mu_star = GP_Model.mean_posterior(x_curr)
-                grad = torch.autograd.grad(mu_star.sum(), x_curr, create_graph=False)[0]
-                x_curr.data.add_(learning_rate * grad)  # in-place: x_curr += lr * grad
-                trajectory_storage[t + 1] = x_curr.data.clone()  # 只在保存时 clone
+            for t in range(num_gradient_steps):
+                mu_star = GP_Model.mean_posterior(joint_x)
+                grad = torch.autograd.grad(mu_star.sum(), joint_x)[0]
+                
+                # 统一更新
+                joint_x.data.add_(lr_vec * grad)
+                
+                # 记录当前所有点的位置
+                traj_record.append(joint_x.data.clone())
         
         total_gradient_time += time.time() - gradient_start
         
-        # 5. 批量计算起点和终点的分数
+        # 4. 提取结果并构造从 low 到 high 的轨迹
+        # joint_x 的前一半是最终的 x_low, 后一半是最终的 x_high
+        x_low_final = joint_x.data[:num_points]
+        x_high_final = joint_x.data[num_points:]
+        
+        # 构造完整的"弧度"轨迹: 从 x_low 经过起始点到 x_high
+        # 在 GGFM 逻辑中，我们通常需要的是从低分到高分的单向轨迹
+        # 我们可以通过将 traj_record 中前一半点的轨迹反转，再接上后一半点的轨迹
+        
         posterior_start = time.time()
         with torch.no_grad():
-            y_start = GP_Model.mean_posterior(trajectory_storage[0])  # x_low 的分数
-            y_end = GP_Model.mean_posterior(trajectory_storage[-1])   # x_high 的分数
-            # ✅ 一次性计算所有有效样本的 mask
-            valid_mask = (y_end - y_start) > threshold_diff
+            y_low = GP_Model.mean_posterior(x_low_final)
+            y_high = GP_Model.mean_posterior(x_high_final)
+            valid_mask = (y_high - y_low) > threshold_diff
         total_posterior_time += time.time() - posterior_start
         
-        # 6. 批量过滤和保存轨迹
-        # ✅ 优化：使用向量化操作，避免循环
+        # 5. 批量保存有效轨迹
         valid_indices = torch.where(valid_mask)[0]
         for i in valid_indices:
-            i_cpu = i.item()
-            # trajectory_storage 已经是 detached 的（因为我们用 .data.clone()）
-            sample = (trajectory_storage[:, i_cpu, :], y_start[i_cpu], y_end[i_cpu])
+            idx = i.item()
+            
+            # 提取第 idx 个点的下降路径 (从 start 到 low)
+            # 我们需要将其反转，变成从 low 到 start
+            path_down = torch.stack([step[idx] for step in traj_record], dim=0)
+            path_low_to_start = torch.flip(path_down, dims=[0])
+            
+            # 提取第 idx+num_points 个点的上升路径 (从 start 到 high)
+            path_start_to_high = torch.stack([step[idx + num_points] for step in traj_record], dim=0)
+            
+            # 合并成完整轨迹: low -> start -> high
+            full_trajectory = torch.cat([path_low_to_start, path_start_to_high], dim=0)
+            
+            sample = (full_trajectory, y_low[idx], y_high[idx])
             datasets[f'f{iter}'].append(sample)
 
     # 恢复原始超参数

@@ -1,0 +1,825 @@
+nohup: 忽略输入
+=== GGFM with ROOT GP Sampling: DKittyMorphology-Exact-v0 ===
+[Config] Using: configs/Dkitty.yaml
+Loading task: DKittyMorphology-Exact-v0...
+[数据编码] 连续任务：直接使用原始数据
+[GP Init] Using top 1024 samples for GP sampling (ROOT style: same samples, different order each epoch)
+=== Training: Dynamic GP Sampling (100 Epochs) ===
+每个 Epoch 采样 n_e = 8 个 GP 函数
+每个 GP 函数采样 1024 个配对
+总计将生成约 8 × 100 = 800 个 GP 函数
+
+=== Epoch 1/100 ===
+    [GP内部] set_hyper: 1.03s | 梯度采样: 2.13s | 后验: 0.02s
+  [Rank Weight] Min: 0.1572 | Max: 3.1569
+Generated 8149 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.97s | 轨迹生成: 0.23s
+  [⏱️ Time] 训练: 0.88s | Epoch总计: 7.08s
+
+=== Epoch 2/100 ===
+Generated 8186 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.42s | 轨迹生成: 0.24s
+  [⏱️ Time] 训练: 0.90s | Epoch总计: 6.56s
+
+=== Epoch 3/100 ===
+Generated 8156 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.31s | 轨迹生成: 0.24s
+  [⏱️ Time] 训练: 0.88s | Epoch总计: 6.44s
+
+=== Epoch 4/100 ===
+Generated 8159 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.37s | 轨迹生成: 0.24s
+  [⏱️ Time] 训练: 0.87s | Epoch总计: 6.49s
+
+=== Epoch 5/100 ===
+Generated 8189 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.35s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.88s | Epoch总计: 6.48s
+
+=== Epoch 6/100 ===
+Generated 8166 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.34s | 轨迹生成: 0.24s
+  [⏱️ Time] 训练: 0.88s | Epoch总计: 6.47s
+
+=== Epoch 7/100 ===
+Generated 8166 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.37s | 轨迹生成: 0.24s
+  [⏱️ Time] 训练: 0.85s | Epoch总计: 6.47s
+
+=== Epoch 8/100 ===
+Generated 8139 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.32s | 轨迹生成: 0.24s
+  [⏱️ Time] 训练: 0.87s | Epoch总计: 6.43s
+
+=== Epoch 9/100 ===
+Generated 8167 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.31s | 轨迹生成: 0.24s
+  [⏱️ Time] 训练: 0.86s | Epoch总计: 6.41s
+
+=== Epoch 10/100 ===
+Generated 8167 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.30s | 轨迹生成: 0.24s
+  [⏱️ Time] 训练: 0.84s | Epoch总计: 6.38s
+Epoch 10/100 | Loss: 0.0176 | Trajs: 8167
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_10.pt
+
+=== Epoch 11/100 ===
+  [Rank Weight] Min: 0.1572 | Max: 3.1569
+Generated 8160 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.30s | 轨迹生成: 0.24s
+  [⏱️ Time] 训练: 0.84s | Epoch总计: 6.38s
+
+=== Epoch 12/100 ===
+Generated 8176 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.27s | 轨迹生成: 0.24s
+  [⏱️ Time] 训练: 0.84s | Epoch总计: 6.35s
+
+=== Epoch 13/100 ===
+Generated 8164 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.30s | 轨迹生成: 0.24s
+  [⏱️ Time] 训练: 0.84s | Epoch总计: 6.38s
+
+=== Epoch 14/100 ===
+Generated 8178 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.26s | 轨迹生成: 0.24s
+  [⏱️ Time] 训练: 0.85s | Epoch总计: 6.35s
+
+=== Epoch 15/100 ===
+Generated 8168 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.29s | 轨迹生成: 0.24s
+  [⏱️ Time] 训练: 0.84s | Epoch总计: 6.38s
+
+=== Epoch 16/100 ===
+Generated 8184 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.26s | 轨迹生成: 0.24s
+  [⏱️ Time] 训练: 0.85s | Epoch总计: 6.36s
+
+=== Epoch 17/100 ===
+Generated 8188 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.25s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.85s | Epoch总计: 6.35s
+
+=== Epoch 18/100 ===
+Generated 8192 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.33s | 轨迹生成: 0.24s
+  [⏱️ Time] 训练: 0.86s | Epoch总计: 6.43s
+
+=== Epoch 19/100 ===
+Generated 8158 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.27s | 轨迹生成: 0.24s
+  [⏱️ Time] 训练: 0.85s | Epoch总计: 6.36s
+
+=== Epoch 20/100 ===
+Generated 8175 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.31s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.85s | Epoch总计: 6.41s
+Epoch 20/100 | Loss: 0.0204 | Trajs: 8175
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_20.pt
+
+=== Epoch 21/100 ===
+  [Rank Weight] Min: 0.1572 | Max: 3.1569
+Generated 8180 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.28s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.85s | Epoch总计: 6.38s
+
+=== Epoch 22/100 ===
+Generated 8144 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.31s | 轨迹生成: 0.24s
+  [⏱️ Time] 训练: 0.84s | Epoch总计: 6.40s
+
+=== Epoch 23/100 ===
+Generated 8188 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.28s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.85s | Epoch总计: 6.38s
+
+=== Epoch 24/100 ===
+Generated 8190 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.31s | 轨迹生成: 0.24s
+  [⏱️ Time] 训练: 0.86s | Epoch总计: 6.42s
+
+=== Epoch 25/100 ===
+Generated 8192 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.26s | 轨迹生成: 0.24s
+  [⏱️ Time] 训练: 0.90s | Epoch总计: 6.41s
+
+=== Epoch 26/100 ===
+Generated 8155 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.36s | 轨迹生成: 0.24s
+  [⏱️ Time] 训练: 0.86s | Epoch总计: 6.46s
+
+=== Epoch 27/100 ===
+Generated 8190 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.30s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.87s | Epoch总计: 6.41s
+
+=== Epoch 28/100 ===
+Generated 8163 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.25s | 轨迹生成: 0.24s
+  [⏱️ Time] 训练: 0.85s | Epoch总计: 6.35s
+
+=== Epoch 29/100 ===
+Generated 8156 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.30s | 轨迹生成: 0.24s
+  [⏱️ Time] 训练: 0.85s | Epoch总计: 6.41s
+
+=== Epoch 30/100 ===
+Generated 8166 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.30s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.87s | Epoch总计: 6.42s
+Epoch 30/100 | Loss: 0.0179 | Trajs: 8166
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_30.pt
+
+=== Epoch 31/100 ===
+  [Rank Weight] Min: 0.1572 | Max: 3.1569
+Generated 8160 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.31s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.86s | Epoch总计: 6.41s
+
+=== Epoch 32/100 ===
+Generated 8181 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.28s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.86s | Epoch总计: 6.39s
+
+=== Epoch 33/100 ===
+Generated 8189 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.32s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.85s | Epoch总计: 6.42s
+
+=== Epoch 34/100 ===
+Generated 8192 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.25s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.85s | Epoch总计: 6.36s
+
+=== Epoch 35/100 ===
+Generated 8172 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.31s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.86s | Epoch总计: 6.41s
+
+=== Epoch 36/100 ===
+Generated 8145 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.27s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.85s | Epoch总计: 6.37s
+
+=== Epoch 37/100 ===
+Generated 8169 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.32s | 轨迹生成: 0.24s
+  [⏱️ Time] 训练: 0.85s | Epoch总计: 6.42s
+
+=== Epoch 38/100 ===
+Generated 8190 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.28s | 轨迹生成: 0.24s
+  [⏱️ Time] 训练: 0.85s | Epoch总计: 6.38s
+
+=== Epoch 39/100 ===
+Generated 8192 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.27s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.85s | Epoch总计: 6.37s
+
+=== Epoch 40/100 ===
+Generated 8155 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.42s | 轨迹生成: 0.26s
+  [⏱️ Time] 训练: 0.90s | Epoch总计: 6.58s
+Epoch 40/100 | Loss: 0.0229 | Trajs: 8155
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_40.pt
+
+=== Epoch 41/100 ===
+  [Rank Weight] Min: 0.1572 | Max: 3.1569
+Generated 8153 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.36s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.85s | Epoch总计: 6.46s
+
+=== Epoch 42/100 ===
+Generated 8158 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.38s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.87s | Epoch总计: 6.51s
+
+=== Epoch 43/100 ===
+Generated 8189 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.35s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.87s | Epoch总计: 6.47s
+
+=== Epoch 44/100 ===
+Generated 8131 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.39s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.89s | Epoch总计: 6.53s
+
+=== Epoch 45/100 ===
+Generated 8162 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.38s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.90s | Epoch总计: 6.53s
+
+=== Epoch 46/100 ===
+Generated 8151 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.41s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.88s | Epoch总计: 6.55s
+
+=== Epoch 47/100 ===
+Generated 8164 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.35s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.89s | Epoch总计: 6.50s
+
+=== Epoch 48/100 ===
+Generated 8163 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.35s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.88s | Epoch总计: 6.49s
+
+=== Epoch 49/100 ===
+Generated 8173 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.34s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.87s | Epoch总计: 6.46s
+
+=== Epoch 50/100 ===
+Generated 8178 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.30s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.88s | Epoch总计: 6.44s
+Epoch 50/100 | Loss: 0.0177 | Trajs: 8178
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_50.pt
+
+=== Epoch 51/100 ===
+  [Rank Weight] Min: 0.1572 | Max: 3.1569
+Generated 8168 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.33s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.87s | Epoch总计: 6.45s
+
+=== Epoch 52/100 ===
+Generated 8186 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.33s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.87s | Epoch总计: 6.45s
+
+=== Epoch 53/100 ===
+Generated 8163 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.32s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.85s | Epoch总计: 6.42s
+
+=== Epoch 54/100 ===
+Generated 8181 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.35s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.89s | Epoch总计: 6.49s
+
+=== Epoch 55/100 ===
+Generated 8180 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.38s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.86s | Epoch总计: 6.50s
+
+=== Epoch 56/100 ===
+Generated 8175 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.26s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.87s | Epoch总计: 6.39s
+
+=== Epoch 57/100 ===
+Generated 8153 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.32s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.88s | Epoch总计: 6.45s
+
+=== Epoch 58/100 ===
+Generated 8134 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.33s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.89s | Epoch总计: 6.47s
+
+=== Epoch 59/100 ===
+Generated 8163 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.39s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.87s | Epoch总计: 6.51s
+
+=== Epoch 60/100 ===
+Generated 8182 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.33s | 轨迹生成: 0.26s
+  [⏱️ Time] 训练: 0.90s | Epoch总计: 6.49s
+Epoch 60/100 | Loss: 0.0258 | Trajs: 8182
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_60.pt
+
+=== Epoch 61/100 ===
+  [Rank Weight] Min: 0.1572 | Max: 3.1569
+Generated 8180 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.36s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.88s | Epoch总计: 6.49s
+
+=== Epoch 62/100 ===
+Generated 8188 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.41s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.89s | Epoch总计: 6.55s
+
+=== Epoch 63/100 ===
+Generated 8188 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.35s | 轨迹生成: 0.26s
+  [⏱️ Time] 训练: 0.88s | Epoch总计: 6.50s
+
+=== Epoch 64/100 ===
+Generated 8169 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.41s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.90s | Epoch总计: 6.57s
+
+=== Epoch 65/100 ===
+Generated 8157 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.34s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.87s | Epoch总计: 6.46s
+
+=== Epoch 66/100 ===
+Generated 8171 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.48s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.90s | Epoch总计: 6.64s
+
+=== Epoch 67/100 ===
+Generated 8156 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.39s | 轨迹生成: 0.26s
+  [⏱️ Time] 训练: 0.89s | Epoch总计: 6.54s
+
+=== Epoch 68/100 ===
+Generated 8154 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.41s | 轨迹生成: 0.26s
+  [⏱️ Time] 训练: 0.88s | Epoch总计: 6.55s
+
+=== Epoch 69/100 ===
+Generated 8182 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.34s | 轨迹生成: 0.26s
+  [⏱️ Time] 训练: 0.87s | Epoch总计: 6.47s
+
+=== Epoch 70/100 ===
+Generated 8180 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.29s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.85s | Epoch总计: 6.39s
+Epoch 70/100 | Loss: 362.5990 | Trajs: 8180
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_70.pt
+
+=== Epoch 71/100 ===
+  [Rank Weight] Min: 0.1572 | Max: 3.1569
+Generated 8192 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.31s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.84s | Epoch总计: 6.41s
+
+=== Epoch 72/100 ===
+Generated 8168 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.29s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.85s | Epoch总计: 6.39s
+
+=== Epoch 73/100 ===
+Generated 8180 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.32s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.84s | Epoch总计: 6.42s
+
+=== Epoch 74/100 ===
+Generated 8184 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.28s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.85s | Epoch总计: 6.39s
+
+=== Epoch 75/100 ===
+Generated 8172 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.34s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.85s | Epoch总计: 6.44s
+
+=== Epoch 76/100 ===
+Generated 8157 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.28s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.85s | Epoch总计: 6.39s
+
+=== Epoch 77/100 ===
+Generated 8166 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.37s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.89s | Epoch总计: 6.52s
+
+=== Epoch 78/100 ===
+Generated 8145 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.33s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.88s | Epoch总计: 6.47s
+
+=== Epoch 79/100 ===
+Generated 8188 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.37s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.87s | Epoch总计: 6.50s
+
+=== Epoch 80/100 ===
+Generated 8145 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.32s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.87s | Epoch总计: 6.45s
+Epoch 80/100 | Loss: 17.0616 | Trajs: 8145
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_80.pt
+
+=== Epoch 81/100 ===
+  [Rank Weight] Min: 0.1572 | Max: 3.1569
+Generated 8189 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.34s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.86s | Epoch总计: 6.45s
+
+=== Epoch 82/100 ===
+Generated 8186 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.33s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.86s | Epoch总计: 6.44s
+
+=== Epoch 83/100 ===
+Generated 8180 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.32s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.86s | Epoch总计: 6.44s
+
+=== Epoch 84/100 ===
+Generated 8161 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.36s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.88s | Epoch总计: 6.49s
+
+=== Epoch 85/100 ===
+Generated 8161 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.28s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.85s | Epoch总计: 6.38s
+
+=== Epoch 86/100 ===
+Generated 8176 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.32s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.86s | Epoch总计: 6.44s
+
+=== Epoch 87/100 ===
+Generated 8138 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.28s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.86s | Epoch总计: 6.39s
+
+=== Epoch 88/100 ===
+Generated 8155 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.32s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.85s | Epoch总计: 6.43s
+
+=== Epoch 89/100 ===
+Generated 8163 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.31s | 轨迹生成: 0.26s
+  [⏱️ Time] 训练: 0.87s | Epoch总计: 6.44s
+
+=== Epoch 90/100 ===
+Generated 8179 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.36s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.89s | Epoch总计: 6.50s
+Epoch 90/100 | Loss: 19.4642 | Trajs: 8179
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_90.pt
+
+=== Epoch 91/100 ===
+  [Rank Weight] Min: 0.1572 | Max: 3.1569
+Generated 8164 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.30s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.87s | Epoch总计: 6.43s
+
+=== Epoch 92/100 ===
+Generated 8189 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.31s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.83s | Epoch总计: 6.39s
+
+=== Epoch 93/100 ===
+Generated 8169 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.31s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.84s | Epoch总计: 6.41s
+
+=== Epoch 94/100 ===
+Generated 8189 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.31s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.84s | Epoch总计: 6.40s
+
+=== Epoch 95/100 ===
+Generated 8158 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.34s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.87s | Epoch总计: 6.46s
+
+=== Epoch 96/100 ===
+Generated 8140 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.34s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.88s | Epoch总计: 6.47s
+
+=== Epoch 97/100 ===
+Generated 8187 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.40s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.87s | Epoch总计: 6.53s
+
+=== Epoch 98/100 ===
+Generated 8165 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.35s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.88s | Epoch总计: 6.48s
+
+=== Epoch 99/100 ===
+Generated 8169 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.41s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.89s | Epoch总计: 6.55s
+
+=== Epoch 100/100 ===
+Generated 8178 trajectories from GP samples
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 5.34s | 轨迹生成: 0.25s
+  [⏱️ Time] 训练: 0.90s | Epoch总计: 6.49s
+Epoch 100/100 | Loss: 4.5083 | Trajs: 8178
+  [💾 Checkpoint] Saved to checkpoints/cfm_model_epoch_100.pt
+
+[💾 Final Model] Saved to checkpoints/cfm_model_final.pt
+
+=== SOTA Evaluation (Highest-point, Q=128) ===
+Selected 128 highest samples as starting points
+Starting scores (normalized): mean=0.9310, max=0.9342
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+WARNING:root:[-0.  1.] or [0. 0.] is all 0s; this may be normal during initialization.
+
+[Result] Final scores distribution (raw):
+  Min: 137.2068
+  Max: 290.0852
+  Mean: 204.3378
+  Std: 23.6204
+
+[Result] Normalized scores distribution (comparable with ROOT):
+  Min: 0.8332
+  Max: 0.9584
+  Mean: 0.8882
+  Std: 0.0193
+------------------------------------------------------------
+Original Mean (Top 128, raw): 198.8122
+Optimized Mean (Top 128, raw): 204.3378
+Improvement (raw):                   5.5256
+------------------------------------------------------------
+Normalized 100th Percentile (Max):      0.958387
+Normalized 80th Percentile:             0.901269
+Normalized 50th Percentile (Median):    0.886382
+------------------------------------------------------------
+[ROOT Comparable] These normalized percentiles are directly comparable with ROOT results

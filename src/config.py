@@ -31,6 +31,9 @@ class Config:
     FM_BATCH_SIZE = 256
     FM_EPOCHS = 150
     FM_LR = 1e-3
+    LAMBDA_GRAD = 0.05
+    LAMBDA_SIGMA = 0.01
+    SIGMA_MAX = 0.01
     INFERENCE_STEPS = 50
     NUM_TEST_SAMPLES = 128
 
@@ -79,6 +82,9 @@ def _apply_model_config(model_cfg):
 
     _apply_if_present(fm_params.get('hidden_dim'), 'HIDDEN_DIM')
     _apply_if_present(fm_params.get('dropout'), 'DROPOUT')
+    _apply_if_present(fm_params.get('lambda_grad'), 'LAMBDA_GRAD')
+    _apply_if_present(fm_params.get('lambda_sigma'), 'LAMBDA_SIGMA')
+    _apply_if_present(fm_params.get('sigma_max'), 'SIGMA_MAX')
     _apply_if_present(fm_params.get('ode_steps'), 'INFERENCE_STEPS')
     _apply_if_present(fm_opt.get('lr'), 'FM_LR')
 

@@ -35,7 +35,13 @@ class VectorFieldNet(nn.Module):
         
         # 主干网络 (Residual MLP)
         self.blocks = nn.ModuleList([ResidualBlock(hidden_dim, dropout=dropout) for _ in range(6)])
-        self.out_proj = nn.Linear(hidden_dim, input_dim) # 输出速度向量
+        
+        # SDE 解耦输出层
+        self.mu_head = nn.Linear(hidden_dim, input_dim) # Drift mu
+        self.sigma_head = nn.Linear(hidden_dim, 1)      # Log-sigma
+        
+        # 初始化 sigma head 使其初始值偏小 (bias < 0)
+        nn.init.constant_(self.sigma_head.bias, -2.0)
 
     def forward(self, x, t, x_0):
         """
@@ -50,7 +56,13 @@ class VectorFieldNet(nn.Module):
         h = x_emb + t_emb
         for block in self.blocks:
             h = block(h)
-        return self.out_proj(h)
+        
+        mu_pred = self.mu_head(h)
+        log_sigma_pred = self.sigma_head(h)
+        # 限制 log_sigma 范围，防止数值爆炸
+        # 🔑 稍微放宽上限，允许模型在需要的地方有更大的探索性
+        log_sigma_pred = torch.clamp(log_sigma_pred, min=-10.0, max=3.0)
+        return mu_pred, log_sigma_pred
 
 
 class ResidualBlock(nn.Module):
