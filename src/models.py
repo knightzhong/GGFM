@@ -19,7 +19,8 @@ class SinusoidalPosEmb(nn.Module):
 
 class VectorFieldNet(nn.Module):
     """
-    条件流匹配网络 v_theta(x_t, t, x_0)
+    条件流匹配网络 v_theta(x_t, t, y_low, y_high)，与 BB denoise_fn 一致：网络不接收 x_low，
+    x_low 只在推理的更新公式里使用（见 inference_ode 中 x_curr = x_low + t * v_pred）。
     """
     def __init__(self, input_dim, hidden_dim=256, dropout=0.1):
         super().__init__()
@@ -30,27 +31,40 @@ class VectorFieldNet(nn.Module):
             nn.SiLU(),
             nn.Linear(hidden_dim, hidden_dim),
         )
-        # 输入投影 (x_t, x_0 拼接)
-        self.input_proj = nn.Linear(input_dim * 2, hidden_dim)
-        
+        # 输入投影（当前状态 x_t）
+        self.input_proj = nn.Linear(input_dim, hidden_dim)
+        # 条件嵌入 (y_low, y_high)，与 BB denoise_fn 一致
+        self.cond_proj = nn.Linear(2, hidden_dim)
+
         # 主干网络 (Residual MLP)
         self.blocks = nn.ModuleList([ResidualBlock(hidden_dim, dropout=dropout) for _ in range(6)])
-        self.out_proj = nn.Linear(hidden_dim, input_dim) # 输出速度向量
 
-    def forward(self, x, t, x_0):
+        # 输出层
+        self.mu_head = nn.Linear(hidden_dim, input_dim)
+        self.sigma_head = nn.Linear(hidden_dim, 1)
+
+        nn.init.constant_(self.sigma_head.bias, -2.0)
+
+    def forward(self, x, t, y_low, y_high):
         """
         Args:
-            x: 当前状态 [B, D]
+            x: 当前状态 [B, D]（即 x_t）
             t: 时间 [B, 1]
-            x_0: 初始状态 [B, D]
+            y_low: 起点分数 [B, 1]
+            y_high: 目标分数 [B, 1]
         """
         t_emb = self.time_mlp(t)
-        x_input = torch.cat([x, x_0], dim=-1)
-        x_emb = self.input_proj(x_input)
-        h = x_emb + t_emb
+        x_emb = self.input_proj(x)
+        y_cat = torch.cat([y_low, y_high], dim=-1)
+        cond_emb = self.cond_proj(y_cat)
+        h = x_emb + t_emb + cond_emb
         for block in self.blocks:
             h = block(h)
-        return self.out_proj(h)
+
+        mu_pred = self.mu_head(h)
+        log_sigma_pred = self.sigma_head(h)
+        log_sigma_pred = torch.clamp(log_sigma_pred, min=-10.0, max=3.0)
+        return mu_pred, log_sigma_pred
 
 
 class ResidualBlock(nn.Module):

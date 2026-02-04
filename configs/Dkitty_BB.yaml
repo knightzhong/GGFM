@@ -1,0 +1,76 @@
+# DKitty + Brownian Bridge (BBDM)，与 ROOT_new/configs/Dkitty.yaml 对齐
+seed: 42
+device: cuda
+
+task:
+  name: DKittyMorphology-Exact-v0
+  normalize_x: true
+  normalize_y: true
+
+GP:
+  num_functions: 8
+  num_points: 1024
+  num_gradient_steps: 100
+  sampling_from_GP_lr: 0.001
+  delta_lengthscale: 0.25
+  delta_variance: 0.25
+  initial_lengthscale: 1.0
+  initial_outputscale: 1.0
+  noise: 0.01
+  threshold_diff: 0.001
+  type_of_initial_points: highest
+  # 与 ROOT 一致：固定用 top 1024 做 GP 采样，不用混合池
+  use_fixed_best_x_for_gp: true
+
+model:
+  model_type: BBDM
+  BB:
+    params:
+      MLPParams:
+        condition_key: SpatialRescaler
+        hidden_size: 1024
+        image_size: 56  # 由 input_dim 覆盖，config 中可不写
+      num_timesteps: 1000
+      mt_type: linear
+      max_var: 1.0
+      eta: 0.2
+      loss_type: l1
+      objective: grad
+      skip_sample: true
+      sample_type: linear
+      sample_step: 200
+    optimizer:
+      optimizer: Adam
+      lr: 0.001
+      beta1: 0.9
+      weight_decay: 0.0
+    lr_scheduler:
+      cooldown: 200
+      factor: 0.5
+      min_lr: 5.0e-07
+      patience: 200
+      threshold: 0.0001
+  EMA:
+    use_ema: true
+    ema_decay: 0.995
+    start_ema_step: 4000
+    update_ema_interval: 8
+
+training:
+  batch_size: 64
+  accumulate_grad_batches: 2
+  n_epochs: 100
+  val_frac: 0.1
+  validation_interval: 20
+  save_interval: 20
+  use_classifier_free_guidance: false
+  classifier_free_guidance_prob: 0.15
+
+testing:
+  num_candidates: 128
+  type_sampling: highest
+  percentile_sampling: 0.2
+  clip_denoised: false
+  use_classifier_free_guidance: false
+  classifier_free_guidance_weight: -1.5
+  alpha: 0.8

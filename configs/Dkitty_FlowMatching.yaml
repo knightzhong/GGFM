@@ -1,0 +1,59 @@
+seed: 42
+device: cuda
+
+task:
+  name: DKittyMorphology-Exact-v0
+  normalize_x: true
+  normalize_y: true
+
+GP:
+  num_functions: 8
+  num_points: 1024
+  num_gradient_steps: 100
+  sampling_from_GP_lr: 0.001
+  delta_lengthscale: 0.25
+  delta_variance: 0.25
+  initial_lengthscale: 1.0
+  initial_outputscale: 1.0
+  noise: 0.01
+  num_fit_samples: 15000
+  threshold_diff: 0.001
+  type_of_initial_points: highest
+  # 与 ROOT 一致：固定用 top 1024 做 GP 采样，不用混合池
+  use_fixed_best_x_for_gp: true
+  traj_steps: 200
+
+model:
+  model_type: FM
+  FM:
+    params:
+      hidden_dim: 1024
+      dropout: 0.15
+      ode_steps: 200
+    optimizer:
+      lr: 0.001
+  EMA:
+    use_ema: true
+    ema_decay: 0.995
+    start_ema_step: 4000
+    update_ema_interval: 8
+
+training:
+  batch_size: 64
+  accumulate_grad_batches: 2
+  n_epochs: 100
+  val_frac: 0.1
+  validation_interval: 20
+  save_interval: 20
+  use_classifier_free_guidance: false
+  classifier_free_guidance_prob: 0.15
+
+testing:
+  num_candidates: 128
+  type_sampling: highest
+  percentile_sampling: 0.2
+  clip_denoised: false
+  use_classifier_free_guidance: false
+  classifier_free_guidance_weight: -1.5
+  alpha: 0.8
+

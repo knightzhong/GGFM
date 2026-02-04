@@ -3,16 +3,73 @@ import argparse
 import design_bench
 import torch
 import torch.optim as optim
+import torch.nn as nn
 import numpy as np
+from tqdm.autonotebook import tqdm
 
 from src.config import Config, load_config
 from src.utils import set_seed, Normalizer
 from src.oracle import NTKOracle
-from src.generator import GP, sampling_data_from_GP, generate_trajectories_from_GP_samples
+from src.generator import GP, sampling_data_from_GP, create_train_dataloader, create_val_dataloader
+# ROOT 没有的功能暂时注释
+# from src.generator import generate_trajectories_from_GP_samples
 from src.models import VectorFieldNet
-from src.flow import train_cfm_step,train_cfm, inference_ode
+from src.brownian_bridge import BrownianBridgeModel
+from src.flow import train_cfm_step, train_bb_step, inference_ode, inference_bb
 import time
 import os
+
+
+def weights_init(m):
+    """与 ROOT runners/utils.py 的 weights_init 完全一致（N(0,0.02) 初始化）"""
+    classname = m.__class__.__name__
+    if classname.find("Conv2d") != -1:
+        nn.init.normal_(m.weight.data, 0.0, 0.02)
+    elif classname.find("Linear") != -1:
+        nn.init.normal_(m.weight.data, 0.0, 0.02)
+    elif classname.find("Parameter") != -1:
+        nn.init.normal_(m.weight.data, 0.0, 0.02)
+    elif classname.find("BatchNorm") != -1:
+        nn.init.normal_(m.weight.data, 1.0, 0.02)
+        nn.init.constant_(m.bias.data, 0)
+
+
+class EMA:
+    """与 ROOT_new/runners/base/EMA.py 完全一致"""
+    def __init__(self, ema_decay: float):
+        super().__init__()
+        self.ema_decay = ema_decay
+        self.backup = {}
+        self.shadow = {}
+
+    def register(self, current_model: nn.Module):
+        for name, param in current_model.named_parameters():
+            if param.requires_grad:
+                self.shadow[name] = param.data.clone()
+
+    def update(self, current_model: nn.Module, with_decay: bool = True):
+        for name, param in current_model.named_parameters():
+            if param.requires_grad:
+                assert name in self.shadow
+                if with_decay:
+                    new_average = (1.0 - self.ema_decay) * param.data + self.ema_decay * self.shadow[name]
+                else:
+                    new_average = param.data
+                self.shadow[name] = new_average.clone()
+
+    def apply_shadow(self, current_model: nn.Module):
+        for name, param in current_model.named_parameters():
+            if param.requires_grad:
+                assert name in self.shadow
+                self.backup[name] = param.data
+                param.data = self.shadow[name]
+
+    def restore(self, current_model: nn.Module):
+        for name, param in current_model.named_parameters():
+            if param.requires_grad:
+                assert name in self.backup
+                param.data = self.backup[name]
+        self.backup = {}
 
 
 def parse_args():
@@ -61,13 +118,11 @@ def get_design_bench_data(task_name):
     logits_shape = None  # 保存 logits 形状信息
     
     if task.is_discrete:
-        # ROOT 风格：使用 map_to_logits 修改 task 内部状态
-        # 这样 task.predict() 才能正确处理 logits 格式的数据
-        task.map_to_logits()
-        offline_x = task.x  # 现在 task.x 已经是 logits 格式 (N, L, V-1)
-        logits_shape = offline_x.shape  # 保存形状 (N, L, V-1)
-        offline_x = offline_x.reshape(offline_x.shape[0], -1)  # 展平为 (N, L*(V-1))
-        print(f"[数据编码] 离散任务：已调用 map_to_logits，Logits {logits_shape} -> 展平 {offline_x.shape}")
+        # 与 ROOT 完全一致：不修改 task 内部状态，使用 to_logits() 得到 logits 表示
+        offline_x = task.to_logits(offline_x)
+        logits_shape = offline_x.shape  # (N, L, V-1)
+        offline_x = offline_x.reshape(offline_x.shape[0], -1)  # (N, L*(V-1))
+        print(f"[数据编码] 离散任务：to_logits {logits_shape} -> 展平 {offline_x.shape}")
     else:
         print("[数据编码] 连续任务：直接使用原始数据")
     
@@ -75,7 +130,7 @@ def get_design_bench_data(task_name):
     mean_x = np.mean(offline_x, axis=0)
     std_x = np.std(offline_x, axis=0)
     std_x = np.where(std_x == 0, 1.0, std_x)  # ROOT 使用 == 0，不是 < 1e-6
-    offline_x_norm = (offline_x - mean_x) / std_x
+    offline_x_norm = (offline_x - mean_x) / std_x if getattr(Config, "TASK_NORMALIZE_X", True) else offline_x
     
     # 处理 Y（与 ROOT 一致）
     offline_y = task.y.reshape(-1)  # ROOT 使用 reshape(-1)，不是 reshape(-1, 1)
@@ -88,7 +143,7 @@ def get_design_bench_data(task_name):
     offline_y = offline_y[shuffle_idx]
     
     # 标准化 Y
-    offline_y_norm = (offline_y - mean_y) / std_y
+    offline_y_norm = (offline_y - mean_y) / std_y if getattr(Config, "TASK_NORMALIZE_Y", True) else offline_y
     
     return task, offline_x_norm, offline_y_norm, mean_x, std_x, mean_y, std_y, logits_shape
 
@@ -175,78 +230,115 @@ def main():
     # 预先计算好高分索引 (Top 2000 作为一个池子，防止只盯着 Top 1024 过拟合)
     top_k_indices = torch.argsort(y_train_tensor.view(-1), descending=True)[:2000]
     
-    # 5. 初始化 Flow Matching 网络
+    # 5. 根据 config 初始化模型 (FM 或 Brownian Bridge)
     input_dim = X_train_norm.shape[1]
-    cfm_model = VectorFieldNet(
-        input_dim,
-        hidden_dim=Config.HIDDEN_DIM,
-        dropout=Config.DROPOUT,
-    ).to(device)
-    optimizer = optim.Adam(cfm_model.parameters(), lr=Config.FM_LR)
+    use_bb = getattr(Config, 'MODEL_TYPE', 'FM').upper() == 'BB'
+    if use_bb:
+        net = BrownianBridgeModel(
+            image_size=input_dim,
+            hidden_size=Config.HIDDEN_DIM,
+            num_timesteps=Config.BB_NUM_TIMESTEPS,
+            mt_type=Config.BB_MT_TYPE,
+            max_var=Config.BB_MAX_VAR,
+            eta=Config.BB_ETA,
+            loss_type=Config.BB_LOSS_TYPE,
+            objective=Config.BB_OBJECTIVE,
+            skip_sample=Config.BB_SKIP_SAMPLE,
+            sample_type=Config.BB_SAMPLE_TYPE,
+            sample_step=Config.BB_SAMPLE_STEP,
+        ).to(device)
+        print(f"[Model] Brownian Bridge (BBDM), steps={Config.BB_SAMPLE_STEP}, objective={Config.BB_OBJECTIVE}")
+    else:
+        net = VectorFieldNet(
+            input_dim,
+            hidden_dim=Config.HIDDEN_DIM,
+            dropout=Config.DROPOUT,
+        ).to(device)
+        print("[Model] Flow Matching (FM)")
+    # 与 ROOT 对齐：权重初始化
+    net.apply(weights_init)
+    # 与 ROOT 对齐：优化器配置（Adam beta1=0.9, weight_decay=0）
+    optimizer = optim.Adam(
+        net.parameters(),
+        lr=Config.FM_LR,
+        betas=(getattr(Config, "OPT_BETA1", 0.9), 0.999),
+        weight_decay=getattr(Config, "OPT_WEIGHT_DECAY", 0.0),
+    )
     
-    # 🔧 添加学习率调度器，防止后期学习率过大
-    # scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=Config.FM_EPOCHS, eta_min=1e-5)
+    # 与 ROOT 对齐：ReduceLROnPlateau scheduler（参数对齐 ROOT_new/configs/Dkitty.yaml）
+    scheduler = optim.lr_scheduler.ReduceLROnPlateau(
+        optimizer=optimizer,
+        mode='min',
+        verbose=True,
+        threshold_mode='rel',
+        cooldown=getattr(Config, "LR_SCHEDULER_COOLDOWN", 200),
+        factor=getattr(Config, 'LR_SCHEDULER_FACTOR', 0.5),
+        patience=getattr(Config, 'LR_SCHEDULER_PATIENCE', 200),
+        threshold=getattr(Config, "LR_SCHEDULER_THRESHOLD", 1e-4),
+        min_lr=getattr(Config, 'LR_SCHEDULER_MIN_LR', 5e-7)
+    )
+    
+    # 与 ROOT 对齐：EMA（shadow/apply/restore + update_ema_interval + start_ema_step）
+    use_ema = getattr(Config, "USE_EMA", True)
+    ema = EMA(getattr(Config, "EMA_DECAY", 0.995)) if use_ema else None
+    if ema is not None:
+        ema.register(net)
+    update_ema_interval = getattr(Config, "EMA_UPDATE_INTERVAL", 8)
+    start_ema_step = getattr(Config, "EMA_START_STEP", 4000)
 
-    # --- 核心修改：每个 Epoch 动态采样 GP 函数生成轨迹 ---
+    # --- 与 ROOT BaseRunner 对齐：每个 Epoch 动态采样 GP + DataLoader + accumulate + per-step scheduler + EMA ---
     print(f"=== Training: Dynamic GP Sampling ({Config.FM_EPOCHS} Epochs) ===")
     print(f"每个 Epoch 采样 n_e = {Config.GP_NUM_FUNCTIONS} 个 GP 函数")
     print(f"每个 GP 函数采样 {Config.GP_NUM_POINTS} 个配对")
     print(f"总计将生成约 {Config.GP_NUM_FUNCTIONS} × {Config.FM_EPOCHS} = {Config.GP_NUM_FUNCTIONS * Config.FM_EPOCHS} 个 GP 函数")
 
-    # y_train_norm 已经是 (N,) 形状了，不需要 flatten
-    y_scores_flat = y_train_norm
+    global_step = 0
+    accumulate_grad_batches = getattr(Config, "ACCUMULATE_GRAD_BATCHES", 2)
+    val_dataset = []
+    validation_interval = getattr(Config, "VALIDATION_INTERVAL", 20)
 
     for epoch in range(Config.FM_EPOCHS):
-        # 每个 Epoch 重新采样具有不同超参数的 GP
-        epoch_start = time.time()  # 记录 epoch 开始时间
+        epoch_start = time.time()
         print(f"\n=== Epoch {epoch+1}/{Config.FM_EPOCHS} ===")
 
-        # === 核心修改：构建混合采样池 (Mix 50/50) ===
-        # A. 50% 来自 Top 高分 (保证上限)
-        num_high = int(Config.GP_NUM_POINTS // 2)  # 例如 512
-        # 从 Top 2000 里随机选 512 个，增加一点变异性
-        idx_high = top_k_indices[torch.randperm(len(top_k_indices))[:num_high]]
-        
-        # B. 50% 来自全局随机 (保证中位数和泛化)
-        num_rand = Config.GP_NUM_POINTS - num_high
-        idx_rand = all_indices[torch.randperm(len(all_indices))[:num_rand]]
-        
-        # C. 合并
-        mixed_indices = torch.cat([idx_high, idx_rand])
-        current_epoch_x = X_train_tensor[mixed_indices]
-        
-        # -------------------------------------------------
-        
-        # 构建 GP 模型（TFBind8 使用部分样本，与 ROOT 一致）
-        gp_init_start = time.time()
-        if Config.TASK_NAME == 'TFBind8-Exact-v0':
+        # GP 采样输入：与 ROOT 一致用固定 best_x（top 1024）
+        if getattr(Config, "GP_USE_FIXED_BEST_X", True) and Config.GP_TYPE_INITIAL_POINTS == "highest":
+            gp_sampling_x = best_x
+        else:
+            # fallback（ROOT 没有，保留但通常不走）
+            num_high = int(Config.GP_NUM_POINTS // 2)
+            idx_high = top_k_indices[torch.randperm(len(top_k_indices))[:num_high]]
+            num_rand = Config.GP_NUM_POINTS - num_high
+            idx_rand = all_indices[torch.randperm(len(all_indices))[:num_rand]]
+            mixed_indices = torch.cat([idx_high, idx_rand])
+            gp_sampling_x = X_train_tensor[mixed_indices]
+
+        # 构建 GP 模型（TFBind8 用部分样本）
+        if Config.TASK_NAME == "TFBind8-Exact-v0":
             selected_fit_samples = torch.randperm(X_train_tensor.shape[0])[:Config.GP_NUM_FIT_SAMPLES]
             GP_Model = GP(
                 device=device,
                 x_train=X_train_tensor[selected_fit_samples],
-                y_train=y_train_tensor[selected_fit_samples].view(-1),  # 确保是 (N,) 形状
+                y_train=y_train_tensor[selected_fit_samples].view(-1),
                 lengthscale=lengthscale,
                 variance=variance,
                 noise=noise,
-                mean_prior=mean_prior
+                mean_prior=mean_prior,
             )
         else:
             GP_Model = GP(
                 device=device,
                 x_train=X_train_tensor,
-                y_train=y_train_tensor.view(-1),  # 确保是 (N,) 形状
+                y_train=y_train_tensor.view(-1),
                 lengthscale=lengthscale,
                 variance=variance,
                 noise=noise,
-                mean_prior=mean_prior
+                mean_prior=mean_prior,
             )
-        gp_init_time = time.time() - gp_init_start
-        
-        # 从 GP 采样 n_e = 8 个函数，每个函数生成 num_points 个配对
-        # best_x = torch.randperm(X_train_tensor.shape[0])[:1024]
+
         sampling_start = time.time()
         data_from_GP = sampling_data_from_GP(
-            x_train=current_epoch_x,
+            x_train=gp_sampling_x,
             device=device,
             GP_Model=GP_Model,
             num_functions=Config.GP_NUM_FUNCTIONS,
@@ -255,164 +347,249 @@ def main():
             learning_rate=Config.GP_LEARNING_RATE,
             delta_lengthscale=Config.GP_DELTA_LENGTHSCALE,
             delta_variance=Config.GP_DELTA_VARIANCE,
-            seed=epoch,  # 使用 epoch 作为随机种子，确保每个 epoch 不同
+            seed=epoch,
             threshold_diff=Config.GP_THRESHOLD_DIFF,
-            verbose=(epoch == 0)  # 第一个 epoch 显示详细计时
+            verbose=False,
         )
         sampling_time = time.time() - sampling_start
-        
-        # 从 GP 采样结果生成轨迹
-        traj_gen_start = time.time()
-        trajs_array, scores_array = generate_trajectories_from_GP_samples(
-            data_from_GP,
-            device=device,
-            num_steps=Config.GP_TRAJ_STEPS
-        )
-        # # 2. 计算动态 Softmax 权重 (Dynamic Softmax Weighting)
-        # if len(scores_array) > 0:
-        #     # 转为 Tensor
-        #     batch_scores = torch.FloatTensor(scores_array).to(device)
-            
-        #     # === 关键步骤 1: Z-Score 标准化 (让分数分布对齐，不依赖绝对值) ===
-        #     # 这样无论是 [0.2, 0.4] 还是 [0.8, 1.0]，相对差距都能被正确捕捉
-        #     scores_mean = batch_scores.mean()
-        #     scores_std = batch_scores.std() + 1e-6  # 防止除以 0
-        #     z_scores = (batch_scores - scores_mean) / scores_std
-            
-        #     # === 关键步骤 2: 温度系数 k (Temperature) ===
-        #     # k = 1.0 : 温和加权，保留低分样本的学习信号 (推荐起点)
-        #     # k = 2.0 : 激进加权，强力冲击 SOTA
-        #     # k > 5.0 : 极度贪婪，可能导致 Median 下降 (近似 Argmax)
-        #     # 建议先设为 2.0，既能拉开差距，又不会把低分样本权重杀到 0
-        #     k = 2.0 
-        #     if Config.TASK_NAME == 'TFBind10-Exact-v0':
-        #         k = 0.5
-            
-        #     # 计算 Softmax
-        #     weights_softmax = torch.softmax(z_scores * k, dim=0)
-            
-        #     # === 关键步骤 3: 重缩放 (Rescaling) ===
-        #     # Softmax 的和是 1，我们需要 和 = N (即平均权重为 1)
-        #     # 否则梯度会消失
-        #     batch_size = len(batch_scores)
-        #     weights = weights_softmax * batch_size
-            
-        #     # 转回 numpy 传给训练函数
-        #     weights_np = weights.cpu().numpy()
-            
-        #     # (可选) 打印一下权重的极值，看看是不是太极端
-        #     if epoch % 10 == 0:
-        #         print(f"  [Weight Debug] Min: {weights.min().item():.4f} | Max: {weights.max().item():.4f} | Mean: {weights.mean().item():.4f}")
 
-        # else:
-        #     weights_np = None
-        if len(scores_array) > 0:
-            batch_scores = torch.FloatTensor(scores_array).to(device)
-            N = len(batch_scores)
-            
-            # === 🌟 升级方案：Rank-Based Weighting (基于排名的加权) ===
-            
-            # 1. 获取排名 (argsort 两次可以得到每个元素的排名索引)
-            # argsort 默认是升序，所以最后一名是最高分
-            # ranks: 0 (最低分) -> N-1 (最高分)
-            sorted_indices = torch.argsort(batch_scores)
-            ranks = torch.zeros_like(sorted_indices, dtype=torch.float, device=device)
-            ranks[sorted_indices] = torch.arange(N, device=device, dtype=torch.float)
-            
-            # 2. 归一化排名到 [0, 1] 区间
-            # 这样无论是 1000 个样本还是 8000 个样本，温度 k 的物理意义不变
-            normalized_ranks = ranks / (N - 1)  # Range: [0.0, 1.0]
-            
-            # 3. 带温度的 Softmax
-            # k 控制"贪婪程度"：
-            # k=0: 所有权重一样 (Uniform)
-            # k=5: 也就是 exp(5) ≈ 148 倍的差距 (Top vs Bottom)
-            # 对于 TFBind10，建议 k=5.0 到 10.0 之间
-            # 相比之前的 Z-Score，这里的 k 需要设得大一点，因为输入被压缩到了 [0,1]
-            k = 3.0 
-            
-            weights_softmax = torch.softmax(normalized_ranks * k, dim=0)
-            
-            # 4. 重缩放 (保持 Sum = N)
-            weights = weights_softmax * N
-            
-            # 转 numpy
-            weights_np = weights.cpu().numpy()
-            
-            # [Debug] 看看现在的权重分布是不是漂亮多了
-            if epoch % 10 == 0:
-                print(f"  [Rank Weight] Min: {weights.min().item():.4f} | Max: {weights.max().item():.4f}")
+        # 与 ROOT 对齐：create_train_dataloader(val_frac=0.1, batch_size=64)
+        val_frac = getattr(Config, "VAL_FRAC", 0.1)
+        batch_size = Config.FM_BATCH_SIZE
+        train_loader, current_epoch_val_dataset = create_train_dataloader(
+            data_from_GP=data_from_GP,
+            val_frac=val_frac,
+            batch_size=batch_size,
+            shuffle=True,
+        )
+        val_dataset = val_dataset + current_epoch_val_dataset
+
+        if len(train_loader.dataset) == 0:
+            print(f"Warning: No valid training data generated in epoch {epoch+1}")
+            continue
+
+        print(f"Created DataLoader: {len(train_loader.dataset)} train, {len(current_epoch_val_dataset)} val (epoch)")
+        print(f"  [⏱️ Time] GP采样: {sampling_time:.2f}s")
+
+        # ==============================
+        #   训练阶段：根据 MODEL_TYPE 分支
+        #   - BB: 走原有 Brownian Bridge 训练逻辑
+        #   - FM: 使用端点对构造直线轨迹，调用 train_cfm_step
+        # ==============================
+        if use_bb:
+            # ---------- Brownian Bridge 训练 ----------
+            use_cfg = getattr(Config, "USE_CFG_TRAINING", False)
+            cfg_prob = getattr(Config, "CFG_PROB", 0.15)
+
+            net.train()
+            optimizer.zero_grad()
+            loss_sum = 0.0
+            num_loss = 0
+
+            pbar = tqdm(train_loader, total=len(train_loader), smoothing=0.01, disable=False)
+            for (x_high, y_high), (x_low, y_low) in pbar:
+                global_step += 1
+                x_high = x_high.to(device)
+                x_low = x_low.to(device)
+                y_high = y_high.to(device)
+                y_low = y_low.to(device)
+
+                if use_cfg:
+                    torch.manual_seed(global_step)
+                    rand_mask = torch.rand(y_high.size(), device=y_high.device)
+                    mask = rand_mask <= cfg_prob
+                    y_high = y_high.clone()
+                    y_low = y_low.clone()
+                    y_high[mask] = 0.0
+                    y_low[mask] = 0.0
+
+                loss, _ = net(x_high, y_high, x_low, y_low)
+                loss.backward()
+
+                if global_step % accumulate_grad_batches == 0:
+                    optimizer.step()
+                    optimizer.zero_grad()
+                    if scheduler is not None:
+                        scheduler.step(loss)
+
+                if ema is not None and global_step % (update_ema_interval * accumulate_grad_batches) == 0:
+                    with_decay = False if global_step < start_ema_step else True
+                    ema.update(net, with_decay=with_decay)
+
+                loss_sum += float(loss.detach().mean().item())
+                num_loss += 1
+                pbar.set_description(f"Epoch: [{epoch + 1} / {Config.FM_EPOCHS}] iter: {global_step} loss: {loss.detach().mean().item():.4f}")
+
+            avg_loss = loss_sum / max(1, num_loss)
+            epoch_total_time = time.time() - epoch_start
+            print(f"Epoch {epoch+1}/{Config.FM_EPOCHS} | BB Loss: {avg_loss:.4f} | time: {epoch_total_time:.2f}s")
+
+            # validation（与 ROOT 一致：validation_interval/最后一轮，且 val 时 apply EMA）
+            if (epoch + 1) % validation_interval == 0 or (epoch + 1) == Config.FM_EPOCHS:
+                val_loader = create_val_dataloader(val_dataset=val_dataset, batch_size=batch_size, shuffle=False)
+                if ema is not None:
+                    ema.apply_shadow(net)
+                net.eval()
+                with torch.no_grad():
+                    val_loss_sum = 0.0
+                    val_n = 0
+                    for (vx_high, vy_high), (vx_low, vy_low) in val_loader:
+                        vx_high = vx_high.to(device)
+                        vx_low = vx_low.to(device)
+                        vy_high = vy_high.to(device)
+                        vy_low = vy_low.to(device)
+                        vloss, _ = net(vx_high, vy_high, vx_low, vy_low)
+                        val_loss_sum += float(vloss.detach().mean().item())
+                        val_n += 1
+                avg_val_loss = val_loss_sum / max(1, val_n)
+                if ema is not None:
+                    ema.restore(net)
+                print(f"[Val] Epoch {epoch+1} | BB avg_val_loss={avg_val_loss:.4f} | batches={val_n}")
+
+            # 与 ROOT 对齐：按 save_interval 保存 checkpoint（BB）
+            save_interval = getattr(Config, "SAVE_INTERVAL", 20)
+            if (epoch + 1) % save_interval == 0 or (epoch + 1) == Config.FM_EPOCHS:
+                os.makedirs("checkpoints", exist_ok=True)
+                ckpt_path = f"checkpoints/bbdm_epoch_{epoch+1}.pt"
+                ckpt = {
+                    "epoch": epoch + 1,
+                    "step": global_step,
+                    "model": net.state_dict(),
+                    "optimizer": optimizer.state_dict(),
+                }
+                if ema is not None:
+                    ckpt["ema"] = ema.shadow
+                torch.save(ckpt, ckpt_path)
+                print(f"[Checkpoint] Saved to {ckpt_path}")
 
         else:
-            weights_np = None
-        traj_gen_time = time.time() - traj_gen_start
-        
-        if len(trajs_array) == 0:
-            print(f"Warning: No valid trajectories generated in epoch {epoch+1}")
-            continue
-        
-        print(f"Generated {len(trajs_array)} trajectories from GP samples")
-        print(f"  [⏱️ Time] GP初始化: {gp_init_time:.2f}s | GP采样: {sampling_time:.2f}s | 轨迹生成: {traj_gen_time:.2f}s")
-        
-        # 对这批轨迹进行流匹配训练更新
-        train_start = time.time()
-        avg_loss = train_cfm_step(cfm_model, trajs_array, optimizer, device, weights=weights_np)
-        train_time = time.time() - train_start
-        
-        epoch_total_time = time.time() - epoch_start
-        
-        # 🔧 更新学习率
-        # scheduler.step()
-        
-        print(f"  [⏱️ Time] 训练: {train_time:.2f}s | Epoch总计: {epoch_total_time:.2f}s")
-        
-        if (epoch + 1) % 10 == 0:
-            print(f"Epoch {epoch+1}/{Config.FM_EPOCHS} | Loss: {avg_loss:.4f} | Trajs: {len(trajs_array)}")
-            # 保存检查点
-            checkpoint_path = f"checkpoints/cfm_model_epoch_{epoch+1}.pt"
-            os.makedirs("checkpoints", exist_ok=True)
-            torch.save({
-                'epoch': epoch + 1,
-                'model_state_dict': cfm_model.state_dict(),
-                'optimizer_state_dict': optimizer.state_dict(),
-                'loss': avg_loss,
-            }, checkpoint_path)
-            print(f"  [💾 Checkpoint] Saved to {checkpoint_path}")
-    
+            # ---------- Flow Matching 训练（与 BB 一致：条件 y_low, y_high）----------
+            # 使用 GP 端点对构造轨迹 [x_low, x_high]，并收集对应的 y_low, y_high
+            net.train()
+            traj_list = []
+            y_low_list = []
+            y_high_list = []
+            for (x_high, y_high), (x_low, y_low) in train_loader:
+                x_high = x_high.to(device)
+                x_low = x_low.to(device)
+                traj_batch = torch.stack([x_low, x_high], dim=1)
+                traj_list.append(traj_batch.cpu().numpy())
+                # 与 BB 一致：每条轨迹对应一对 (y_low, y_high)；先转 CPU 再 numpy 避免 CUDA tensor 报错
+                y_low_list.append((y_low.detach().cpu().numpy() if torch.is_tensor(y_low) else np.asarray(y_low)).reshape(-1))
+                y_high_list.append((y_high.detach().cpu().numpy() if torch.is_tensor(y_high) else np.asarray(y_high)).reshape(-1))
+
+            trajectories = np.concatenate(traj_list, axis=0)
+            y_low_arr = np.concatenate(y_low_list, axis=0)
+            y_high_arr = np.concatenate(y_high_list, axis=0)
+            fm_loss, fm_cos_sim, fm_l_grad, fm_l_sigma = train_cfm_step(
+                net,
+                trajectories=trajectories,
+                y_low=y_low_arr,
+                y_high=y_high_arr,
+                optimizer=optimizer,
+                device=device,
+                gp_model=None,
+                weights=None,
+            )
+
+            if scheduler is not None:
+                scheduler.step(fm_loss)
+
+            # 简单的 EMA：按 epoch 级别更新
+            if ema is not None:
+                ema.update(net, with_decay=True)
+
+            epoch_total_time = time.time() - epoch_start
+            print(f"Epoch {epoch+1}/{Config.FM_EPOCHS} | FM Loss: {fm_loss:.4f} | time: {epoch_total_time:.2f}s")
+
+            # Flow Matching 分支暂不做额外的 val-loop，直接使用 loss 监控
+
+            # 保存 Flow Matching checkpoint
+            save_interval = getattr(Config, "SAVE_INTERVAL", 20)
+            if (epoch + 1) % save_interval == 0 or (epoch + 1) == Config.FM_EPOCHS:
+                os.makedirs("checkpoints", exist_ok=True)
+                ckpt_path = f"checkpoints/cfm_epoch_{epoch+1}.pt"
+                ckpt = {
+                    "epoch": epoch + 1,
+                    "model": net.state_dict(),
+                    "optimizer": optimizer.state_dict(),
+                }
+                if ema is not None:
+                    ckpt["ema"] = ema.shadow
+                torch.save(ckpt, ckpt_path)
+                print(f"[Checkpoint] Saved to {ckpt_path}")
+
     # 保存最终模型
-    final_model_path = "checkpoints/cfm_model_final.pt"
+    final_model_path = f"checkpoints/{'bb' if use_bb else 'cfm'}_model_final.pt"
     os.makedirs("checkpoints", exist_ok=True)
-    torch.save({
+    final_ckpt = {
         'epoch': Config.FM_EPOCHS,
-        'model_state_dict': cfm_model.state_dict(),
+        'model_state_dict': net.state_dict(),
         'optimizer_state_dict': optimizer.state_dict(),
+        'model_type': 'BB' if use_bb else 'FM',
         'input_dim': input_dim,
         'hidden_dim': Config.HIDDEN_DIM,
-    }, final_model_path)
+    }
+    if use_bb:
+        final_ckpt.update({
+            'BB_NUM_TIMESTEPS': Config.BB_NUM_TIMESTEPS,
+            'BB_SAMPLE_STEP': Config.BB_SAMPLE_STEP,
+            'BB_OBJECTIVE': Config.BB_OBJECTIVE,
+        })
+    torch.save(final_ckpt, final_model_path)
     print(f"\n[💾 Final Model] Saved to {final_model_path}")
 
-    # 4. 推理与 SOTA 评估 (Q=128)（完全对齐 ROOT 的测试逻辑）
-    print(f"\n=== SOTA Evaluation (Highest-point, Q=128) ===")
+    # 与 ROOT 对齐：测试前应用 EMA
+    if ema is not None:
+        print("\n[EMA] Applying EMA weights for evaluation...")
+        ema.apply_shadow(net)
     
-    # 对齐 ROOT：从得分最高的 128 个标准化样本出发
+    # 4. 推理与 SOTA 评估 (Q=128)（与 ROOT 的测试逻辑对齐）
+    eval_type = getattr(Config, 'EVAL_TYPE_SAMPLING', 'highest').lower()
     test_q = Config.NUM_TEST_SAMPLES
-    
-    # 使用标准化后的 y 来选择高分样本（与 ROOT 一致）
-    # y_train_norm 是 numpy array，所以这里的索引都是 numpy
     sorted_indices = np.argsort(y_train_norm)
-    high_indices = sorted_indices[-test_q:]
-    
-    # 获取标准化的高分样本作为起点
-    X_test_norm = X_train_norm[high_indices]
-    y_test_start = y_train_norm[high_indices]
-    
-    print(f"Selected {test_q} highest samples as starting points")
-    print(f"Starting scores (normalized): mean={np.mean(y_test_start):.4f}, max={np.max(y_test_start):.4f}")
-    
-    # ODE 推理
-    # 与 ROOT 完全对齐：使用 Oracle 理论最大值而非数据集分位数！
-    
-    opt_X_norm = inference_ode(cfm_model, X_test_norm, device)
+
+    if eval_type == 'low':
+        # 与 ROOT 一致：从最低 percentile_sampling 比例中随机抽 test_q 个（ROOT sampling_from_offline_data）
+        pct = getattr(Config, 'EVAL_PERCENTILE_SAMPLING', 0.2)
+        n_low = int(pct * len(sorted_indices))  # 最低 20% 的个数
+        low_pool = sorted_indices[:n_low]
+        np.random.seed(Config.SEED)
+        size = min(test_q, len(low_pool))
+        chosen = np.random.choice(len(low_pool), size=size, replace=False)
+        start_indices = low_pool[chosen]
+        print(f"\n=== SOTA Evaluation (Low-point, Q=128, in-distribution) ===")
+        print(f"Selected {size} from lowest {pct*100:.0f}% (n_low={len(low_pool)}, conditioning = low->high)")
+    else:
+        # 从最高 128 出发：与 ROOT type_sampling=highest 一致
+        start_indices = sorted_indices[-test_q:]
+        print(f"\n=== SOTA Evaluation (Highest-point, Q=128) ===")
+        print(f"Selected {test_q} highest samples as starting points")
+
+    test_q = len(start_indices)  # 实际评估数量（low 时可能 < 128）
+    X_test_norm = X_train_norm[start_indices]
+    y_test_start = y_train_norm[start_indices]
+    print(f"Starting scores (normalized): mean={np.mean(y_test_start):.4f}, max={np.max(y_test_start):.4f}, min={np.min(y_test_start):.4f}")
+
+    # 与 ROOT 完全一致：目标分数 = (oracle_y_max - mean_y)/std_y * alpha
+    task_to_max = {'TFBind8-Exact-v0': 1.0, 'TFBind10-Exact-v0': 2.1287067, 'AntMorphology-Exact-v0': 590.24445, 'DKittyMorphology-Exact-v0': 340.90985}
+    oracle_y_max = task_to_max[Config.TASK_NAME]
+    normalized_oracle_y_max = (oracle_y_max - mean_y) / std_y
+    test_alpha = getattr(Config, 'TEST_ALPHA', 0.8)
+    y_high_cond_root = float(normalized_oracle_y_max * test_alpha)
+    y_high_cond = np.full_like(y_test_start, y_high_cond_root)
+    print(f"[ROOT-aligned] y_high_cond = (oracle_y_max - mean_y)/std_y * alpha = {y_high_cond_root:.4f} (alpha={test_alpha})")
+
+    # 推理：FM 与 BB 一致，均条件 (y_low, y_high)，可从 top-128 出发往目标 y_high 走
+    if use_bb:
+        cfg_weight = getattr(Config, "BB_CFG_WEIGHT", -1.5) if getattr(Config, "BB_USE_CFG_TEST", False) else 0.0
+        opt_X_norm = inference_bb(
+            net, X_test_norm, y_test_start, y_high_cond, device,
+            clip_denoised=getattr(Config, "BB_CLIP_DENOISED", False),
+            cfg_weight=cfg_weight,
+        )
+    else:
+        opt_X_norm = inference_ode(net, X_test_norm, y_test_start, y_high_cond, device)
     
     # 反标准化（与 ROOT 一致）
     opt_X_denorm = opt_X_norm * std_x + mean_x

@@ -49,160 +49,154 @@ class GP:
 def sampling_data_from_GP(x_train, device, GP_Model, num_gradient_steps=50, num_functions=5, num_points=10, 
                           learning_rate=0.001, delta_lengthscale=0.1, delta_variance=0.1, seed=0, threshold_diff=0.1, verbose=False):
     """
-    改进版 GP 采样：生成从 x_low 到 x_high 的连续上升轨迹
+    与 ROOT 完全一致：GP 采样，只返回端点对，不返回轨迹
     
-    流程：
-    1. 选择起始点
-    2. 梯度下降找到 x_low（低分起点）
-    3. 从 x_low 开始梯度上升，记录每一步，形成完整的"弧度轨迹"
-    4. 最终得到 x_high，验证分数差
-    
-    返回格式: datasets = {f'f{i}': [(trajectory, y_start, y_end), ...], ...}
-    其中 trajectory 是 (num_gradient_steps+1, dim) 的完整上升轨迹
+    返回格式: datasets = {f'f{i}': [[(high_x, high_y), (low_x, low_y)], ...], ...}
+    与 ROOT runners/utils.py 第 92-94 行完全一致
     """
-    import time
     lengthscale = GP_Model.kernel.lengthscale
     variance = GP_Model.variance 
     torch.manual_seed(seed=seed)
     datasets = {}
+    learning_rate_vec = torch.cat((-learning_rate*torch.ones(num_points, x_train.shape[1], device=device), 
+                                    learning_rate*torch.ones(num_points, x_train.shape[1], device=device)))
 
-    total_set_hyper_time = 0
-    total_gradient_time = 0
-    total_posterior_time = 0
-    
     for iter in range(num_functions):
         datasets[f'f{iter}'] = []
         
-        # 1. 为每个函数采样不同的超参数
-        set_hyper_start = time.time()
         new_lengthscale = lengthscale + delta_lengthscale*(torch.rand(1, device=device)*2 -1)
         new_variance = variance + delta_variance*(torch.rand(1, device=device)*2 -1)
         GP_Model.set_hyper(lengthscale=new_lengthscale, variance=new_variance)
-        total_set_hyper_time += time.time() - set_hyper_start
     
-        # 2. 随机选择起始点
         selected_indices = torch.randperm(x_train.shape[0])[:num_points]
-        x_start = x_train[selected_indices].clone()
+        low_x = x_train[selected_indices].clone().detach().requires_grad_(True)
+        high_x = x_train[selected_indices].clone().detach().requires_grad_(True)
+        joint_x = torch.cat((low_x, high_x)) 
         
-        gradient_start = time.time()
+        # Using gradient ascent and descent to find high and low designs 
+        for t in range(num_gradient_steps): 
+            mu_star = GP_Model.mean_posterior(joint_x)
+            grad = torch.autograd.grad(mu_star.sum(), joint_x)[0]
+            joint_x += learning_rate_vec * grad 
+
+        joint_y = GP_Model.mean_posterior(joint_x)
         
-        # 3. 第一阶段：梯度下降找到 x_low（低分起点）
-        # ✅ 优化：使用 in-place 操作，避免重复创建 tensor
-        x_low = x_start.clone().requires_grad_(True)
-        with torch.enable_grad():
-            for _ in range(num_gradient_steps):
-                mu_star = GP_Model.mean_posterior(x_low)
-                grad = torch.autograd.grad(mu_star.sum(), x_low, create_graph=False)[0]
-                x_low.data.sub_(learning_rate * grad)  # in-place: x_low -= lr * grad
+        low_x = joint_x[:num_points, :]
+        high_x = joint_x[num_points:, :]
+        low_y = joint_y[:num_points]
+        high_y = joint_y[num_points:]
         
-        # 4. 第二阶段：从 x_low 开始梯度上升，记录每一步形成"弧度轨迹"
-        # ✅ 预分配内存存储轨迹: (num_gradient_steps+1, num_points, dim)
-        trajectory_storage = torch.zeros(num_gradient_steps + num_gradient_steps + 1, num_points, x_train.shape[1], 
-                                        device=device, dtype=x_train.dtype)
-        
-        # ✅ 复用 x_low，避免 clone
-        x_curr = x_low
-        trajectory_storage[0] = x_curr.data.clone()  # 只在保存时 clone
-        
-        with torch.enable_grad():
-            for t in range(num_gradient_steps+num_gradient_steps):
-                mu_star = GP_Model.mean_posterior(x_curr)
-                grad = torch.autograd.grad(mu_star.sum(), x_curr, create_graph=False)[0]
-                x_curr.data.add_(learning_rate * grad)  # in-place: x_curr += lr * grad
-                trajectory_storage[t + 1] = x_curr.data.clone()  # 只在保存时 clone
-        
-        total_gradient_time += time.time() - gradient_start
-        
-        # 5. 批量计算起点和终点的分数
-        posterior_start = time.time()
-        with torch.no_grad():
-            y_start = GP_Model.mean_posterior(trajectory_storage[0])  # x_low 的分数
-            y_end = GP_Model.mean_posterior(trajectory_storage[-1])   # x_high 的分数
-            # ✅ 一次性计算所有有效样本的 mask
-            valid_mask = (y_end - y_start) > threshold_diff
-        total_posterior_time += time.time() - posterior_start
-        
-        # 6. 批量过滤和保存轨迹
-        # ✅ 优化：使用向量化操作，避免循环
-        valid_indices = torch.where(valid_mask)[0]
-        for i in valid_indices:
-            i_cpu = i.item()
-            # trajectory_storage 已经是 detached 的（因为我们用 .data.clone()）
-            sample = (trajectory_storage[:, i_cpu, :], y_start[i_cpu], y_end[i_cpu])
+        for i in range(num_points):
+            if high_y[i] - low_y[i] <= threshold_diff:
+                continue
+            # 与 ROOT 完全一致：返回 [(high_x, high_y), (low_x, low_y)]
+            sample = [(high_x[i].detach(), high_y[i].detach()), (low_x[i].detach(), low_y[i].detach())]
             datasets[f'f{iter}'].append(sample)
 
-    # 恢复原始超参数
+    # restore lengthscale and variance of GP
     GP_Model.kernel.lengthscale = lengthscale
     GP_Model.variance = variance
-    
-    if verbose:
-        print(f"    [GP内部] set_hyper: {total_set_hyper_time:.2f}s | 梯度采样: {total_gradient_time:.2f}s | 后验: {total_posterior_time:.2f}s")
     
     return datasets
 
 
-def generate_trajectories_from_GP_samples(GP_samples, device, num_steps=50):
-    """
-    从 GP 采样得到的完整非线性轨迹生成训练数据（高效版本）
-    使用 GP 梯度搜索生成的真实非线性路径，而不是简单的直线插值
-    
-    Args:
-        GP_samples: dict, 格式为 {f'f{i}': [(trajectory, y_start, y_end), ...], ...}
-                    其中 trajectory 是 (gp_steps+1, dim) 的完整 GP 梯度搜索路径
-        device: torch.device
-        num_steps: int, 目标轨迹步数（用于重采样）
-    
-    Returns:
-        trajs_array: numpy array (num_trajs, num_steps+1, dim)
-    """
-    # 收集所有轨迹
-    all_trajectories = []
-    all_scores = []  # <--- [新增] 收集分数
-    
-    for func_name, samples in GP_samples.items():
-        for sample in samples:
-            trajectory, y_start, y_end = sample
-            # trajectory: (gp_steps+1, dim) - GP 的完整非线性路径
-            all_trajectories.append(trajectory)
-            all_scores.append(y_end) # <--- [新增] 保存 y_end
-    
-    if len(all_trajectories) == 0:
-        return np.array([]).reshape(0, num_steps + 1, 0), np.array([])
-    
-    # 批量堆叠所有轨迹: (N, gp_steps+1, dim)
-    trajectories_batch = torch.stack(all_trajectories, dim=0).to(device)
-    N, gp_steps, dim = trajectories_batch.shape
+# ========== 与 ROOT 一致的 DataLoader 工具函数 ==========
+class CustomDataset(torch.utils.data.Dataset):
+    """与 ROOT runners/utils.py 第 102-111 行完全一致"""
+    def __init__(self, data):
+        self.data = data
 
-    # [新增] 转换分数
-    # y_end 可能是 tensor 也可能是 float，统一转 numpy
-    scores_array = np.array([s.item() if torch.is_tensor(s) else s for s in all_scores])
-    
-    # 如果 GP 步数和目标步数相同，直接返回
-    if gp_steps == num_steps + 1:
-        return trajectories_batch.cpu().numpy(),scores_array
-    
-    # ✅ 高效重采样：批量插值（完全向量化，无循环）
-    # 使用 F.interpolate 批量处理所有轨迹
-    # 输入: (N, dim, gp_steps) - batch, channels, length
-    # 输出: (N, dim, num_steps+1)
-    trajectories_transposed = trajectories_batch.permute(0, 2, 1)  # (N, dim, gp_steps)
-    
-    resampled_transposed = torch.nn.functional.interpolate(
-        trajectories_transposed,
-        size=num_steps + 1,
-        mode='linear',
-        align_corners=True
-    )  # (N, dim, num_steps+1)
-    
-    # 转回 (N, num_steps+1, dim)
-    final_trajs = resampled_transposed.permute(0, 2, 1)
-    
-    # 转换为 numpy
-    trajs_array = final_trajs.cpu().numpy()
+    def __len__(self):
+        return len(self.data)
 
+    def __getitem__(self, idx):
+        [[x_high, y_high], [x_low, y_low]] = self.data[idx]
+        return (x_high, y_high), (x_low, y_low)
+
+def create_train_dataloader(data_from_GP, val_frac=0.2, batch_size=32, shuffle=True):
+    """
+    与 ROOT runners/utils.py 第 114-124 行完全一致
+    每个 function 只取 samples[int(len*val_frac):]（后 80%）用于训练
+    """
+    train_data = []
+    val_data = []
+    for function, function_samples in data_from_GP.items():
+        train_data = train_data + function_samples[int(len(function_samples)*val_frac):]
+        val_data = val_data + function_samples[:int(len(function_samples)*val_frac)]
+        
+    train_dataset = CustomDataset(train_data)
+    train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=shuffle)
+
+    return train_dataloader, val_data
+
+
+def create_val_dataloader(val_dataset, batch_size=32, shuffle=False):
+    """与 ROOT runners/utils.py 第 126-131 行一致"""
+    valid_dataset = CustomDataset(val_dataset)
+    valid_dataloader = torch.utils.data.DataLoader(valid_dataset, batch_size=batch_size, shuffle=shuffle)
+    return valid_dataloader
+
+# ========== 以下函数 ROOT 没有，暂时注释 ==========
+# def generate_trajectories_from_GP_samples(GP_samples, device, num_steps=50):
+    # """
+    # 从 GP 采样得到的完整非线性轨迹生成训练数据（高效版本）
+    # 使用 GP 梯度搜索生成的真实非线性路径，而不是简单的直线插值
     
+    # Args:
+    #     GP_samples: dict, 格式为 {f'f{i}': [(trajectory, y_start, y_end), ...], ...}
+    #                 其中 trajectory 是 (gp_steps+1, dim) 的完整 GP 梯度搜索路径
+    #     device: torch.device
+    #     num_steps: int, 目标轨迹步数（用于重采样）
     
-    return trajs_array,scores_array
+    # Returns:
+    #     trajs_array: numpy array (num_trajs, num_steps+1, dim)
+    # """
+    # # 收集所有轨迹及起点/终点分数（BB 训练需要 y_low, y_high）
+    # all_trajectories = []
+    # all_scores_low = []
+    # all_scores_high = []
+
+    # for func_name, samples in GP_samples.items():
+    #     for sample in samples:
+    #         trajectory, y_start, y_end = sample
+    #         all_trajectories.append(trajectory)
+    #         all_scores_low.append(y_start)
+    #         all_scores_high.append(y_end)
+
+    # if len(all_trajectories) == 0:
+    #     return np.array([]).reshape(0, num_steps + 1, 0), np.array([]), np.array([])
+    
+    # # 批量堆叠所有轨迹: (N, gp_steps+1, dim)
+    # trajectories_batch = torch.stack(all_trajectories, dim=0).to(device)
+    # N, gp_steps, dim = trajectories_batch.shape
+
+    # def _to_np(s):
+    #     return s.item() if torch.is_tensor(s) else float(s)
+    # scores_low_array = np.array([_to_np(s) for s in all_scores_low])
+    # scores_high_array = np.array([_to_np(s) for s in all_scores_high])
+
+    # # 如果 GP 步数和目标步数相同，直接返回
+    # if gp_steps == num_steps + 1:
+    #     return trajectories_batch.cpu().numpy(), scores_low_array, scores_high_array
+    
+    # # ✅ 高效重采样：批量插值（完全向量化，无循环）
+    # # 使用 F.interpolate 批量处理所有轨迹
+    # # 输入: (N, dim, gp_steps) - batch, channels, length
+    # # 输出: (N, dim, num_steps+1)
+    # trajectories_transposed = trajectories_batch.permute(0, 2, 1)  # (N, dim, gp_steps)
+    
+    # resampled_transposed = torch.nn.functional.interpolate(
+    #     trajectories_transposed,
+    #     size=num_steps + 1,
+    #     mode='linear',
+    #     align_corners=True
+    # )  # (N, dim, num_steps+1)
+    
+    # # 转回 (N, num_steps+1, dim)
+    # final_trajs = resampled_transposed.permute(0, 2, 1)
+    
+    # trajs_array = final_trajs.cpu().numpy()
+    # return trajs_array, scores_low_array, scores_high_array
 
 
 def generate_long_trajectories(oracle, X_init_numpy, device):

@@ -20,6 +20,7 @@ GP:
   traj_steps: 200
 
 model:
+  model_type: FM
   FM:
     params:
       hidden_dim: 1024
