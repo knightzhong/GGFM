@@ -36,6 +36,7 @@ class Config:
     # Flow Matching training config
     HIDDEN_DIM = 1024
     DROPOUT = 0.15
+    FM_BACKBONE = 'vectorfield'  # 'vectorfield' | 'bbmlp'
     FM_BATCH_SIZE = 256
     FM_EPOCHS = 150
     FM_LR = 1e-3
@@ -142,6 +143,7 @@ def _apply_model_config(model_cfg):
 
     _apply_if_present(fm_params.get('hidden_dim'), 'HIDDEN_DIM')
     _apply_if_present(fm_params.get('dropout'), 'DROPOUT')
+    _apply_if_present(fm_params.get('backbone'), 'FM_BACKBONE')
     _apply_if_present(fm_params.get('lambda_grad'), 'LAMBDA_GRAD')
     _apply_if_present(fm_params.get('lambda_sigma'), 'LAMBDA_SIGMA')
     _apply_if_present(fm_params.get('sigma_max'), 'SIGMA_MAX')

@@ -67,6 +67,46 @@ class VectorFieldNet(nn.Module):
         return mu_pred, log_sigma_pred
 
 
+class FlowBBMLP(nn.Module):
+    """
+    BBMLP-style backbone for Flow Matching.
+    Inputs: (x_t, t, y_low, y_high) but concatenates as (x_t, t, y_high, y_low)
+    to align with BB denoiser conditioning order.
+    """
+    def __init__(self, input_dim, hidden_dim=128, dropout=0.0):
+        super().__init__()
+        self.input_dim = input_dim
+        self.hidden_dim = hidden_dim
+        self.y_dim = 1
+        self.act = nn.SiLU()
+        self.main = nn.Sequential(
+            nn.Linear(input_dim + 1 + 2 * self.y_dim, hidden_dim),
+            self.act,
+            nn.Dropout(dropout),
+            nn.Linear(hidden_dim, hidden_dim),
+            self.act,
+            nn.Dropout(dropout),
+            nn.Linear(hidden_dim, hidden_dim),
+            self.act,
+            nn.Dropout(dropout),
+        )
+        self.mu_head = nn.Linear(hidden_dim, input_dim)
+        self.sigma_head = nn.Linear(hidden_dim, 1)
+        nn.init.constant_(self.sigma_head.bias, -2.0)
+
+    def forward(self, x, t, y_low, y_high):
+        x = x.view(-1, self.input_dim)
+        t = t.view(-1, 1).float()
+        y_high = y_high.view(-1, self.y_dim).float()
+        y_low = y_low.view(-1, self.y_dim).float()
+        h = torch.cat([x, t, y_high, y_low], dim=1)
+        h = self.main(h)
+        mu_pred = self.mu_head(h)
+        log_sigma_pred = self.sigma_head(h)
+        log_sigma_pred = torch.clamp(log_sigma_pred, min=-10.0, max=3.0)
+        return mu_pred, log_sigma_pred
+
+
 class ResidualBlock(nn.Module):
     def __init__(self, dim, dropout=0.1):
         super().__init__()

@@ -13,7 +13,7 @@ from src.oracle import NTKOracle
 from src.generator import GP, sampling_data_from_GP, create_train_dataloader, create_val_dataloader
 # ROOT 没有的功能暂时注释
 # from src.generator import generate_trajectories_from_GP_samples
-from src.models import VectorFieldNet
+from src.models import VectorFieldNet, FlowBBMLP
 from src.brownian_bridge import BrownianBridgeModel
 from src.flow import inference_ode, inference_bb, train_cfm_batch, fm_loss_on_batch
 import time
@@ -249,11 +249,19 @@ def main():
         ).to(device)
         print(f"[Model] Brownian Bridge (BBDM), steps={Config.BB_SAMPLE_STEP}, objective={Config.BB_OBJECTIVE}")
     else:
-        net = VectorFieldNet(
-            input_dim,
-            hidden_dim=Config.HIDDEN_DIM,
-            dropout=Config.DROPOUT,
-        ).to(device)
+        fm_backbone = getattr(Config, "FM_BACKBONE", "vectorfield").lower()
+        if fm_backbone == "bbmlp":
+            net = FlowBBMLP(
+                input_dim,
+                hidden_dim=Config.HIDDEN_DIM,
+                dropout=Config.DROPOUT,
+            ).to(device)
+        else:
+            net = VectorFieldNet(
+                input_dim,
+                hidden_dim=Config.HIDDEN_DIM,
+                dropout=Config.DROPOUT,
+            ).to(device)
         print("[Model] Flow Matching (FM)")
     # 与 ROOT 对齐：权重初始化
     net.apply(weights_init)
