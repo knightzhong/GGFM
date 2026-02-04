@@ -13,9 +13,9 @@ from src.oracle import NTKOracle
 from src.generator import GP, sampling_data_from_GP, create_train_dataloader, create_val_dataloader
 # ROOT 没有的功能暂时注释
 # from src.generator import generate_trajectories_from_GP_samples
-from src.models import VectorFieldNet
+from src.models import VectorFieldNet, FlowBBMLP
 from src.brownian_bridge import BrownianBridgeModel
-from src.flow import train_cfm_step, train_bb_step, inference_ode, inference_bb
+from src.flow import inference_ode, inference_bb, train_cfm_batch, fm_loss_on_batch
 import time
 import os
 
@@ -249,11 +249,19 @@ def main():
         ).to(device)
         print(f"[Model] Brownian Bridge (BBDM), steps={Config.BB_SAMPLE_STEP}, objective={Config.BB_OBJECTIVE}")
     else:
-        net = VectorFieldNet(
-            input_dim,
-            hidden_dim=Config.HIDDEN_DIM,
-            dropout=Config.DROPOUT,
-        ).to(device)
+        fm_backbone = getattr(Config, "FM_BACKBONE", "vectorfield").lower()
+        if fm_backbone == "bbmlp":
+            net = FlowBBMLP(
+                input_dim,
+                hidden_dim=Config.HIDDEN_DIM,
+                dropout=Config.DROPOUT,
+            ).to(device)
+        else:
+            net = VectorFieldNet(
+                input_dim,
+                hidden_dim=Config.HIDDEN_DIM,
+                dropout=Config.DROPOUT,
+            ).to(device)
         print("[Model] Flow Matching (FM)")
     # 与 ROOT 对齐：权重初始化
     net.apply(weights_init)
@@ -374,7 +382,7 @@ def main():
         # ==============================
         #   训练阶段：根据 MODEL_TYPE 分支
         #   - BB: 走原有 Brownian Bridge 训练逻辑
-        #   - FM: 使用端点对构造直线轨迹，调用 train_cfm_step
+        #   - FM: 使用端点对做 drift matching，训练流程与 BB 对齐
         # ==============================
         if use_bb:
             # ---------- Brownian Bridge 训练 ----------
@@ -464,45 +472,67 @@ def main():
 
         else:
             # ---------- Flow Matching 训练（与 BB 一致：条件 y_low, y_high）----------
-            # 使用 GP 端点对构造轨迹 [x_low, x_high]，并收集对应的 y_low, y_high
+            use_cfg = getattr(Config, "USE_CFG_TRAINING", False)
+            cfg_prob = getattr(Config, "CFG_PROB", 0.15)
+
             net.train()
-            traj_list = []
-            y_low_list = []
-            y_high_list = []
-            for (x_high, y_high), (x_low, y_low) in train_loader:
-                x_high = x_high.to(device)
-                x_low = x_low.to(device)
-                traj_batch = torch.stack([x_low, x_high], dim=1)
-                traj_list.append(traj_batch.cpu().numpy())
-                # 与 BB 一致：每条轨迹对应一对 (y_low, y_high)；先转 CPU 再 numpy 避免 CUDA tensor 报错
-                y_low_list.append((y_low.detach().cpu().numpy() if torch.is_tensor(y_low) else np.asarray(y_low)).reshape(-1))
-                y_high_list.append((y_high.detach().cpu().numpy() if torch.is_tensor(y_high) else np.asarray(y_high)).reshape(-1))
+            optimizer.zero_grad()
+            loss_sum = 0.0
+            num_loss = 0
 
-            trajectories = np.concatenate(traj_list, axis=0)
-            y_low_arr = np.concatenate(y_low_list, axis=0)
-            y_high_arr = np.concatenate(y_high_list, axis=0)
-            fm_loss, fm_cos_sim, fm_l_grad, fm_l_sigma = train_cfm_step(
-                net,
-                trajectories=trajectories,
-                y_low=y_low_arr,
-                y_high=y_high_arr,
-                optimizer=optimizer,
-                device=device,
-                gp_model=None,
-                weights=None,
-            )
+            pbar = tqdm(train_loader, total=len(train_loader), smoothing=0.01, disable=False)
+            for (x_high, y_high), (x_low, y_low) in pbar:
+                global_step += 1
+                loss = train_cfm_batch(
+                    net,
+                    x_high=x_high,
+                    x_low=x_low,
+                    y_high=y_high,
+                    y_low=y_low,
+                    optimizer=optimizer,
+                    device=device,
+                    use_cfg=use_cfg,
+                    cfg_prob=cfg_prob,
+                    step_seed=global_step,
+                )
 
-            if scheduler is not None:
-                scheduler.step(fm_loss)
+                if global_step % accumulate_grad_batches == 0:
+                    torch.nn.utils.clip_grad_norm_(net.parameters(), max_norm=5.0)
+                    optimizer.step()
+                    optimizer.zero_grad()
+                    if scheduler is not None:
+                        scheduler.step(loss)
 
-            # 简单的 EMA：按 epoch 级别更新
-            if ema is not None:
-                ema.update(net, with_decay=True)
+                if ema is not None and global_step % (update_ema_interval * accumulate_grad_batches) == 0:
+                    with_decay = False if global_step < start_ema_step else True
+                    ema.update(net, with_decay=with_decay)
+
+                loss_sum += float(loss.detach().mean().item())
+                num_loss += 1
+                pbar.set_description(f"Epoch: [{epoch + 1} / {Config.FM_EPOCHS}] iter: {global_step} loss: {loss.detach().mean().item():.4f}")
+
+            fm_loss = loss_sum / max(1, num_loss)
 
             epoch_total_time = time.time() - epoch_start
             print(f"Epoch {epoch+1}/{Config.FM_EPOCHS} | FM Loss: {fm_loss:.4f} | time: {epoch_total_time:.2f}s")
 
-            # Flow Matching 分支暂不做额外的 val-loop，直接使用 loss 监控
+            # validation（与 BB 一致：validation_interval/最后一轮，且 val 时 apply EMA）
+            if (epoch + 1) % validation_interval == 0 or (epoch + 1) == Config.FM_EPOCHS:
+                val_loader = create_val_dataloader(val_dataset=val_dataset, batch_size=batch_size, shuffle=False)
+                if ema is not None:
+                    ema.apply_shadow(net)
+                net.eval()
+                with torch.no_grad():
+                    val_loss_sum = 0.0
+                    val_n = 0
+                    for (vx_high, vy_high), (vx_low, vy_low) in val_loader:
+                        vloss = fm_loss_on_batch(net, vx_high, vx_low, vy_high, vy_low, device)
+                        val_loss_sum += float(vloss.detach().mean().item())
+                        val_n += 1
+                avg_val_loss = val_loss_sum / max(1, val_n)
+                if ema is not None:
+                    ema.restore(net)
+                print(f"[Val] Epoch {epoch+1} | FM avg_val_loss={avg_val_loss:.4f} | batches={val_n}")
 
             # 保存 Flow Matching checkpoint
             save_interval = getattr(Config, "SAVE_INTERVAL", 20)
