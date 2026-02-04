@@ -16,6 +16,66 @@ def _fm_schedule(t, device):
     return m_t, sigma_t
 
 
+def _maybe_apply_cfg(y_high, y_low, step_seed, cfg_prob):
+    if cfg_prob <= 0:
+        return y_high, y_low
+    torch.manual_seed(step_seed)
+    rand_mask = torch.rand(y_high.size(), device=y_high.device)
+    mask = rand_mask <= cfg_prob
+    y_high = y_high.clone()
+    y_low = y_low.clone()
+    y_high[mask] = 0.0
+    y_low[mask] = 0.0
+    return y_high, y_low
+
+
+def fm_loss_on_batch(model, x_high, x_low, y_high, y_low, device):
+    """Compute FM drift matching loss on a batch (no optimizer step)."""
+    x_high = x_high.to(device)
+    x_low = x_low.to(device)
+    y_high = y_high.to(device)
+    y_low = y_low.to(device)
+
+    t_global = torch.rand(x_low.shape[0], 1, device=device)
+    x_t = (1 - t_global) * x_low + t_global * x_high
+    v = x_high - x_low
+
+    drift_target_mode = getattr(Config, "FM_DRIFT_TARGET", "constant")
+    if drift_target_mode == "schedule":
+        m_t, sigma_t = _fm_schedule(t_global, device)
+        mu_target = m_t * v + sigma_t * torch.randn_like(v, device=device)
+    else:
+        mu_target = v
+        drift_noise_scale = getattr(Config, "FM_DRIFT_NOISE_SCALE", 0.0)
+        if drift_noise_scale > 0:
+            sigma_t = drift_noise_scale * torch.sqrt(t_global * (1.0 - t_global) + 1e-8)
+            mu_target = mu_target + sigma_t * torch.randn_like(mu_target, device=device)
+
+    mu_pred, _ = model(x_t, t_global, y_low, y_high)
+    loss = torch.mean(torch.mean((mu_pred - mu_target).abs(), dim=-1))
+    return loss
+
+
+def train_cfm_batch(
+    model,
+    x_high,
+    x_low,
+    y_high,
+    y_low,
+    optimizer,
+    device,
+    use_cfg=False,
+    cfg_prob=0.1,
+    step_seed=0,
+):
+    """Train FM on a single batch to align with BB training flow."""
+    if use_cfg:
+        y_high, y_low = _maybe_apply_cfg(y_high, y_low, step_seed, cfg_prob)
+    loss = fm_loss_on_batch(model, x_high, x_low, y_high, y_low, device)
+    loss.backward()
+    return loss
+
+
 # --------------- Brownian Bridge 训练与推理 ---------------
 def train_bb_step(model, train_loader, optimizer, device, use_cfg=False, cfg_prob=0.1):
     """
