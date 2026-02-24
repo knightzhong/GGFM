@@ -11,8 +11,7 @@ from torch.utils.data import Dataset, DataLoader
 from src.config import Config, load_config
 from src.generator import (
     GP,
-    sampling_data_from_GP,
-    generate_seed_grouped_trajectories_from_GP_samples,
+    sampling_data_from_GP
 )
 from src.models import DriftNet
 from src.flow import train_sde_drift_step, inference_sde
@@ -107,23 +106,16 @@ def get_design_bench_data(task_name):
 
 class DriftDataset(Dataset):
     """
-    监督式 SDE 漂移数据集。
+    监督式 SDE 漂移数据集（K-SB-SDE 粒度）。
 
-    每个样本对应一个三元组 (seed_id, k, i)：
-      - x:           轨迹上的状态 x_i         [D]
-      - t:           归一化时间 i/(T-1)      [1]
-      - cond:        concat([x_seed, s])     [D+1]，其中 s = Δy
-      - drift_label: 局部漂移 (x_{i+1}-x_i)/dt [D]
+    每个样本对应一个二元组 (seed_id, k)，即一整条轨迹：
+      - x:           轨迹状态序列 x_0...x_{T-2}      [T-1, D]
+      - t:           归一化时间序列                 [T-1, 1]
+      - cond:        concat([x_seed, s])            [D+1]
+      - drift_label: 漂移标签序列                  [T-1, D]
     """
 
     def __init__(self, seed_x_array, traj_array, drift_label_array, score_array):
-        """
-        Args:
-            seed_x_array: [N_seed, D]
-            traj_array: [N_seed, K, T, D]
-            drift_label_array: [N_seed, K, T-1, D]
-            score_array: [N_seed, K, T]，score[..., 0] = y_low, score[..., -1] = y_high
-        """
         super().__init__()
 
         seed_x_array = seed_x_array.astype(np.float32)
@@ -132,67 +124,49 @@ class DriftDataset(Dataset):
         score_array = score_array.astype(np.float32)
 
         self.N_seed, self.K, self.T, self.D = traj_array.shape
-        M = self.T - 1  # 时间段数
+        self.M = self.T - 1
 
-        # x_i 与漂移 f_hat(x_i)
-        x = traj_array[:, :, :M, :]  # [N_seed, K, M, D]
-        drift = drift_label_array  # [N_seed, K, M, D]
+        # 每个样本是一整条轨迹
+        self.x = torch.from_numpy(traj_array[:, :, : self.M, :])  # [N_seed, K, M, D]
+        self.drift_label = torch.from_numpy(drift_label_array)  # [N_seed, K, M, D]
 
-        # 时间 t_i = i/(T-1)，与 (seed, k) 无关
-        t_values = np.arange(M, dtype=np.float32) / float(self.T - 1)  # [M]
-        t = np.tile(t_values.reshape(1, 1, M, 1), (self.N_seed, self.K, 1, 1))  # [N_seed, K, M, 1]
+        t_values = np.arange(self.M, dtype=np.float32) / float(self.T - 1)
+        self.t = torch.from_numpy(t_values.reshape(1, 1, self.M, 1)).repeat(self.N_seed, self.K, 1, 1)
 
-        # 条件 cond = concat([x_seed, s])，其中 s = Δy = y_high - y_low
-        y_low = score_array[:, :, 0]  # [N_seed, K]
-        y_high = score_array[:, :, -1]  # [N_seed, K]
+        # cond = concat([x_seed, s])，其中 s = y_high - y_low
+        y_low = score_array[:, :, 0]
+        y_high = score_array[:, :, -1]
         delta_y = (y_high - y_low).astype(np.float32)  # [N_seed, K]
 
-        x_seed = seed_x_array.astype(np.float32)  # [N_seed, D]
-        x_seed_broadcast = np.repeat(x_seed[:, None, :], self.K, axis=1)  # [N_seed, K, D]
-        x_seed_broadcast = np.repeat(
-            x_seed_broadcast[:, :, None, :], M, axis=2
-        )  # [N_seed, K, M, D]
+        x_seed = seed_x_array[:, None, :].repeat(self.K, axis=1)  # [N_seed, K, D]
+        self.cond = torch.from_numpy(np.concatenate([x_seed, delta_y[..., None]], axis=-1))  # [N_seed, K, D+1]
 
-        s_broadcast = np.repeat(delta_y[:, :, None, None], M, axis=2)  # [N_seed, K, M, 1]
-        cond = np.concatenate([x_seed_broadcast, s_broadcast], axis=-1)  # [N_seed, K, M, D+1]
-
-        # 基于 Δy 的 rank-based 轨迹权重（先在轨迹级计算，再 broadcast 到时间级）
-        flat_delta_y = delta_y.reshape(-1)  # [N_seed * K]
+        # 轨迹级权重
+        flat_delta_y = delta_y.reshape(-1)
         if flat_delta_y.size > 0:
             delta_tensor = torch.from_numpy(flat_delta_y)
-            N_traj = delta_tensor.shape[0]
+            n_traj = delta_tensor.shape[0]
             sorted_idx = torch.argsort(delta_tensor)
             ranks = torch.zeros_like(sorted_idx, dtype=torch.float32)
-            ranks[sorted_idx] = torch.arange(N_traj, dtype=torch.float32)
-            norm_ranks = ranks / max(1, N_traj - 1)
-            k_temp = 3.0
-            weights_traj = torch.softmax(norm_ranks * k_temp, dim=0) * N_traj  # [N_traj]
-            weights_traj_np = weights_traj.numpy().astype(np.float32)
-            weights = np.repeat(weights_traj_np[:, None], M, axis=1).reshape(-1).astype(
-                np.float32
-            )  # [N_seed*K*M]
+            ranks[sorted_idx] = torch.arange(n_traj, dtype=torch.float32)
+            norm_ranks = ranks / max(1, n_traj - 1)
+            self.weight = torch.softmax(norm_ranks * 3.0, dim=0) * n_traj
         else:
-            weights = np.zeros((0,), dtype=np.float32)
-
-        # 展平为 [N_seed * K * M, ...]
-        self.x = torch.from_numpy(x.reshape(-1, self.D))
-        self.t = torch.from_numpy(t.reshape(-1, 1))
-        cond_dim = self.D + 1
-        self.cond = torch.from_numpy(cond.reshape(-1, cond_dim))
-        self.drift_label = torch.from_numpy(drift.reshape(-1, self.D))
-        self.weight = torch.from_numpy(weights) if weights.size > 0 else None
+            self.weight = torch.zeros((0,), dtype=torch.float32)
 
     def __len__(self):
-        return self.x.shape[0]
+        return self.N_seed * self.K
 
     def __getitem__(self, idx):
+        seed_id = idx // self.K
+        k_id = idx % self.K
         sample = {
-            "x": self.x[idx],
-            "t": self.t[idx],
-            "cond": self.cond[idx],
-            "drift_label": self.drift_label[idx],
+            "x": self.x[seed_id, k_id],
+            "t": self.t[seed_id, k_id],
+            "cond": self.cond[seed_id, k_id],
+            "drift_label": self.drift_label[seed_id, k_id],
         }
-        if self.weight is not None and self.weight.numel() > 0:
+        if self.weight.numel() > 0:
             sample["weight"] = self.weight[idx]
         return sample
 
@@ -319,7 +293,12 @@ def main():
 
         # 从 GP 采样若干函数及其轨迹
         sampling_start = time.time()
-        data_from_GP = sampling_data_from_GP(
+        (
+            seed_x_array,
+            traj_array,
+            drift_label_array,
+            score_array,
+        ) = sampling_data_from_GP(
             x_train=current_epoch_x,
             device=device,
             GP_Model=GP_Model,
@@ -332,23 +311,12 @@ def main():
             seed=epoch,
             threshold_diff=Config.GP_THRESHOLD_DIFF,
             verbose=(epoch == 0),
-        )
-        sampling_time = time.time() - sampling_start
-
-        # 生成按 seed 分组的轨迹与漂移标签
-        traj_build_start = time.time()
-        (
-            seed_x_array,
-            traj_array,
-            drift_label_array,
-            score_array,
-        ) = generate_seed_grouped_trajectories_from_GP_samples(
-            data_from_GP,
-            device=device,
+            return_seed_grouped=True,
             num_steps=Config.GP_TRAJ_STEPS,
             k_traj_per_seed=Config.K_TRAJ_PER_SEED,
         )
-        traj_build_time = time.time() - traj_build_start
+        sampling_time = time.time() - sampling_start
+        traj_build_time = 0.0
 
         if seed_x_array.shape[0] == 0:
             print(
@@ -366,7 +334,7 @@ def main():
             f"GP采样: {sampling_time:.2f}s | 轨迹构建: {traj_build_time:.2f}s"
         )
 
-        # 基于 (seed_id, k, i) 构建训练样本
+        # 基于 (seed_id, k) 构建训练样本（整条轨迹）
         dataset = DriftDataset(
             seed_x_array=seed_x_array,
             traj_array=traj_array,

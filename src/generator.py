@@ -47,7 +47,8 @@ class GP:
 
 
 def sampling_data_from_GP(x_train, device, GP_Model, num_gradient_steps=50, num_functions=5, num_points=10, 
-                          learning_rate=0.001, delta_lengthscale=0.1, delta_variance=0.1, seed=0, threshold_diff=0.1, verbose=False):
+                          learning_rate=0.001, delta_lengthscale=0.1, delta_variance=0.1, seed=0, threshold_diff=0.1, verbose=False,
+                          return_seed_grouped=False, num_steps=None, k_traj_per_seed=None):
     """
     改进版 GP 采样（ROOT 风格）：
     - 负学习率：从原始设计出发做梯度下降，得到低分端轨迹
@@ -153,6 +154,18 @@ def sampling_data_from_GP(x_train, device, GP_Model, num_gradient_steps=50, num_
     if verbose:
         print(f"    [GP内部] set_hyper: {total_set_hyper_time:.2f}s | 梯度采样: {total_gradient_time:.2f}s | 后验: {total_posterior_time:.2f}s")
     
+    if return_seed_grouped:
+        if num_steps is None:
+            num_steps = Config.GP_TRAJ_STEPS
+        if k_traj_per_seed is None:
+            k_traj_per_seed = Config.K_TRAJ_PER_SEED
+        return generate_seed_grouped_trajectories_from_GP_samples(
+            datasets,
+            device=device,
+            num_steps=num_steps,
+            k_traj_per_seed=k_traj_per_seed,
+        )
+
     return datasets
 
 
