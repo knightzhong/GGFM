@@ -1,2 +1,3 @@
 *.npz
 checkpoints/
+__pycache__/
