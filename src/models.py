@@ -67,3 +67,57 @@ class ResidualBlock(nn.Module):
 
     def forward(self, x):
         return self.act(x + self.net(x))
+
+
+class DriftNet(nn.Module):
+    """
+    漂移网络 f_θ(x, t, cond)，用于 SDE：
+      输入:  x  [B, D]
+             t  [B, 1]
+             cond  [B, C]，通常为 concat([x_seed, s])
+      输出:  drift [B, D]
+    """
+
+    def __init__(self, input_dim, cond_dim, hidden_dim=256, dropout=0.1):
+        super().__init__()
+        # 时间嵌入
+        self.time_mlp = nn.Sequential(
+            SinusoidalPosEmb(hidden_dim),
+            nn.Linear(hidden_dim, hidden_dim),
+            nn.SiLU(),
+            nn.Linear(hidden_dim, hidden_dim),
+        )
+        # 输入投影 (x, cond 拼接)
+        self.input_proj = nn.Linear(input_dim + cond_dim, hidden_dim)
+
+        # 主干网络 (Residual MLP)
+        self.blocks = nn.ModuleList(
+            [ResidualBlock(hidden_dim, dropout=dropout) for _ in range(6)]
+        )
+        self.out_proj = nn.Linear(hidden_dim, input_dim)  # 输出漂移向量
+
+        self.input_dim = input_dim
+        self.cond_dim = cond_dim
+
+    def forward(self, x, t, cond):
+        """
+        Args:
+            x: 当前状态 [B, D]
+            t: 标量时间 [B, 1]
+            cond: 条件向量 [B, C]，通常为 [x_seed, s]
+
+        Returns:
+            drift: 预测漂移向量 [B, D]
+        """
+        # 维度检查（调试友好）
+        assert x.dim() == 2, "x 应为 [B, D]"
+        assert t.dim() == 2 and t.size(1) == 1, "t 应为 [B, 1]"
+        assert cond.dim() == 2, "cond 应为 [B, C]"
+
+        t_emb = self.time_mlp(t)
+        x_in = torch.cat([x, cond], dim=-1)
+        x_emb = self.input_proj(x_in)
+        h = x_emb + t_emb
+        for block in self.blocks:
+            h = block(h)
+        return self.out_proj(h)

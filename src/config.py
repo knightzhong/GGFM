@@ -34,6 +34,14 @@ class Config:
     INFERENCE_STEPS = 50
     NUM_TEST_SAMPLES = 128
 
+    # SDE inference config (可由 yaml 覆盖)
+    SDE_INFERENCE_STEPS = 200
+    NUM_SDE_SAMPLES = 64
+    SDE_SIGMA_MAX = 0.1
+    SDE_SIGMA_MIN = 0.01
+    # 每个 seed 使用的轨迹条数 K
+    K_TRAJ_PER_SEED = 4
+
     # NTK Oracle config (optional)
     NTK_LENGTH_SCALE = 1.0
     NTK_BETA = 1e-4
@@ -64,6 +72,7 @@ def _apply_gp_config(gp_cfg):
     _apply_if_present(gp_cfg.get('threshold_diff'), 'GP_THRESHOLD_DIFF')
     _apply_if_present(gp_cfg.get('type_of_initial_points'), 'GP_TYPE_INITIAL_POINTS')
     _apply_if_present(gp_cfg.get('traj_steps'), 'GP_TRAJ_STEPS')
+    _apply_if_present(gp_cfg.get('k_traj_per_seed'), 'K_TRAJ_PER_SEED')
 
     # 兼容不同字段名
     if 'sampling_from_GP_lr' in gp_cfg:
@@ -100,6 +109,13 @@ def load_config(config_path):
 
     _apply_if_present(cfg.get('seed'), 'SEED')
     _apply_if_present(cfg.get('device'), 'DEVICE')
+
+    # 允许通过 yaml 顶层字段覆盖 SDE 超参
+    _apply_if_present(cfg.get('SDE_INFERENCE_STEPS'), 'SDE_INFERENCE_STEPS')
+    _apply_if_present(cfg.get('NUM_SDE_SAMPLES'), 'NUM_SDE_SAMPLES')
+    _apply_if_present(cfg.get('SDE_SIGMA_MAX'), 'SDE_SIGMA_MAX')
+    _apply_if_present(cfg.get('SDE_SIGMA_MIN'), 'SDE_SIGMA_MIN')
+    _apply_if_present(cfg.get('K_TRAJ_PER_SEED'), 'K_TRAJ_PER_SEED')
 
     task_cfg = cfg.get('task', {})
     _apply_if_present(task_cfg.get('name'), 'TASK_NAME')
