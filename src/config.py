@@ -40,7 +40,7 @@ class Config:
     SDE_SIGMA_MAX = 0.1
     SDE_SIGMA_MIN = 0.01
     # 每个 seed 使用的轨迹条数 K
-    K_TRAJ_PER_SEED = 4
+    K_TRAJ_PER_SEED = GP_NUM_FUNCTIONS
 
     # NTK Oracle config (optional)
     NTK_LENGTH_SCALE = 1.0
@@ -60,6 +60,7 @@ def _apply_if_present(value, attr_name):
 
 
 def _apply_gp_config(gp_cfg):
+    k_traj_explicit = 'k_traj_per_seed' in gp_cfg
     _apply_if_present(gp_cfg.get('num_functions'), 'GP_NUM_FUNCTIONS')
     _apply_if_present(gp_cfg.get('num_points'), 'GP_NUM_POINTS')
     _apply_if_present(gp_cfg.get('num_gradient_steps'), 'GP_NUM_GRADIENT_STEPS')
@@ -73,6 +74,9 @@ def _apply_gp_config(gp_cfg):
     _apply_if_present(gp_cfg.get('type_of_initial_points'), 'GP_TYPE_INITIAL_POINTS')
     _apply_if_present(gp_cfg.get('traj_steps'), 'GP_TRAJ_STEPS')
     _apply_if_present(gp_cfg.get('k_traj_per_seed'), 'K_TRAJ_PER_SEED')
+    # 默认保持 K_TRAJ_PER_SEED 与 num_functions 对齐
+    if not k_traj_explicit:
+        Config.K_TRAJ_PER_SEED = Config.GP_NUM_FUNCTIONS
 
     # 兼容不同字段名
     if 'sampling_from_GP_lr' in gp_cfg:

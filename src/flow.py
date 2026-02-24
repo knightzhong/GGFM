@@ -150,18 +150,13 @@ def inference_ode(model, x_query, device):
 
 def train_sde_drift_step(model, optimizer, batch, config=None):
     """
-    单步 SDE 漂移回归训练。
+    单步 SDE 漂移回归训练（K-SB-SDE 对齐）。
 
-    Args:
-        model: DriftNet 模型，f_θ(x, t, cond) -> [B, D]
-        optimizer: 优化器
-        batch: dict，包含:
-            - x: [B, D]
-            - t: [B, 1]
-            - cond: [B, C]
-            - drift_label: [B, D]
-            - weight (可选): [B]
-        config: 预留接口（目前未使用）
+    batch 支持两种输入粒度：
+      - 轨迹级: x/t/drift_label 为 [B, T-1, D] / [B, T-1, 1] / [B, T-1, D]
+      - 时间级: x/t/drift_label 为 [B, D] / [B, 1] / [B, D]
+
+    cond 为 [B, C]，如为轨迹级会自动 broadcast 到每个时间步。
     """
     model.train()
 
@@ -171,21 +166,29 @@ def train_sde_drift_step(model, optimizer, batch, config=None):
     drift_label = batch["drift_label"]
     weight = batch.get("weight", None)
 
-    # 预测漂移
-    drift_pred = model(x, t, cond)  # [B, D]
+    if x.dim() == 3:
+        # 轨迹级输入
+        bsz, steps, dim = x.shape
+        x_flat = x.reshape(bsz * steps, dim)
+        t_flat = t.reshape(bsz * steps, 1)
+        cond_flat = cond.unsqueeze(1).expand(-1, steps, -1).reshape(bsz * steps, cond.shape[-1])
 
-    # MSE 损失（逐维再平均到样本级）
-    loss_elementwise = torch.mean((drift_pred - drift_label) ** 2, dim=-1)  # [B]
+        drift_pred = model(x_flat, t_flat, cond_flat).reshape(bsz, steps, dim)
+        loss_per_step = torch.mean((drift_pred - drift_label) ** 2, dim=-1)  # [B, T-1]
+        loss_per_traj = loss_per_step.mean(dim=1)  # [B]
+    else:
+        # 时间级输入（兼容）
+        drift_pred = model(x, t, cond)
+        loss_per_traj = torch.mean((drift_pred - drift_label) ** 2, dim=-1)  # [B]
 
     if weight is not None:
-        # 可选样本权重（仅当长度一致时使用，避免 last batch 截断导致维度不匹配）
         w = weight.view(-1)
-        if w.numel() == loss_elementwise.numel():
-            loss = torch.mean(loss_elementwise * w)
+        if w.numel() == loss_per_traj.numel():
+            loss = torch.mean(loss_per_traj * w)
         else:
-            loss = torch.mean(loss_elementwise)
+            loss = torch.mean(loss_per_traj)
     else:
-        loss = torch.mean(loss_elementwise)
+        loss = torch.mean(loss_per_traj)
 
     optimizer.zero_grad()
     loss.backward()
