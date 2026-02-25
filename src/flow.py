@@ -153,10 +153,10 @@ def train_sde_drift_step(model, optimizer, batch, config=None):
     单步 SDE 漂移回归训练（K-SB-SDE 对齐）。
 
     batch 支持两种输入粒度：
-      - 轨迹级: x/t/drift_label 为 [B, T-1, D] / [B, T-1, 1] / [B, T-1, D]
+      - 序列级: x/t/drift_label 为 [B, m_sub, D] / [B, m_sub, 1] / [B, m_sub, D]
       - 时间级: x/t/drift_label 为 [B, D] / [B, 1] / [B, D]
 
-    cond 为 [B, C]，如为轨迹级会自动 broadcast 到每个时间步。
+    cond 为 [B, C]，会自动 broadcast 到每个时间步。
     """
     model.train()
 
@@ -167,28 +167,50 @@ def train_sde_drift_step(model, optimizer, batch, config=None):
     weight = batch.get("weight", None)
 
     if x.dim() == 3:
-        # 轨迹级输入
+        # 序列级输入: 展平时间维度，按点计算 MSE
         bsz, steps, dim = x.shape
-        x_flat = x.reshape(bsz * steps, dim)
-        t_flat = t.reshape(bsz * steps, 1)
-        cond_flat = cond.unsqueeze(1).expand(-1, steps, -1).reshape(bsz * steps, cond.shape[-1])
+        x_flat = x.reshape(bsz * steps, dim)               # [B*m_sub, D]
+        t_flat = t.reshape(bsz * steps, 1)                 # [B*m_sub, 1]
+        cond_flat = (
+            cond.unsqueeze(1)
+            .expand(-1, steps, -1)
+            .reshape(bsz * steps, cond.shape[-1])
+        )                                                  # [B*m_sub, C]
+        drift_label_flat = drift_label.reshape(bsz * steps, dim)  # [B*m_sub, D]
 
-        drift_pred = model(x_flat, t_flat, cond_flat).reshape(bsz, steps, dim)
-        loss_per_step = torch.mean((drift_pred - drift_label) ** 2, dim=-1)  # [B, T-1]
-        loss_per_traj = loss_per_step.mean(dim=1)  # [B]
+        drift_pred_flat = model(x_flat, t_flat, cond_flat)        # [B*m_sub, D]
+        loss_elementwise = torch.mean(
+            (drift_pred_flat - drift_label_flat) ** 2, dim=-1
+        )  # [B*m_sub]
+
+        if weight is not None:
+            w = weight.view(-1)
+            if w.numel() == bsz:
+                # 轨迹级权重：重复到每个时间点
+                w_rep = w.repeat_interleave(steps)  # [B*m_sub]
+                loss = torch.mean(loss_elementwise * w_rep)
+            elif w.numel() == loss_elementwise.numel():
+                # 已经是按点的权重
+                loss = torch.mean(loss_elementwise * w)
+            else:
+                loss = torch.mean(loss_elementwise)
+        else:
+            loss = torch.mean(loss_elementwise)
     else:
         # 时间级输入（兼容）
         drift_pred = model(x, t, cond)
-        loss_per_traj = torch.mean((drift_pred - drift_label) ** 2, dim=-1)  # [B]
+        loss_elementwise = torch.mean(
+            (drift_pred - drift_label) ** 2, dim=-1
+        )  # [B]
 
-    if weight is not None:
-        w = weight.view(-1)
-        if w.numel() == loss_per_traj.numel():
-            loss = torch.mean(loss_per_traj * w)
+        if weight is not None:
+            w = weight.view(-1)
+            if w.numel() == loss_elementwise.numel():
+                loss = torch.mean(loss_elementwise * w)
+            else:
+                loss = torch.mean(loss_elementwise)
         else:
-            loss = torch.mean(loss_per_traj)
-    else:
-        loss = torch.mean(loss_per_traj)
+            loss = torch.mean(loss_elementwise)
 
     optimizer.zero_grad()
     loss.backward()

@@ -1,0 +1,410 @@
+nohup: 忽略输入
+=== GGFM-SDE (Drift Matching) | Task: DKittyMorphology-Exact-v0 ===
+[Config] Using: configs/Dkitty.yaml
+Loading task: DKittyMorphology-Exact-v0...
+[数据编码] 连续任务：直接使用原始数据
+[GP Init] Using top 1024 samples for GP sampling (ROOT style: same samples, different order each epoch)
+=== Training: SDE Drift Regression with GP Trajectories (100 Epochs) ===
+每个 Epoch 采样 n_e = 8 个 GP 函数
+每个 GP 函数采样 1024 个起点
+每个 seed 使用 K = 8 条轨迹进行监督
+
+=== Epoch 1/100 ===
+    [GP内部] set_hyper: 1.03s | 梯度采样: 2.14s | 后验: 0.01s
+  有效 seed 数量: 973 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.47s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.24s | Epoch总计: 13.80s | 平均 Loss: 0.0085
+
+=== Epoch 2/100 ===
+  有效 seed 数量: 993 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 3.95s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.33s | Epoch总计: 13.45s | 平均 Loss: 0.0051
+
+=== Epoch 3/100 ===
+  有效 seed 数量: 972 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 3.99s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.11s | Epoch总计: 13.25s | 平均 Loss: 0.0048
+
+=== Epoch 4/100 ===
+  有效 seed 数量: 978 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.15s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.22s | Epoch总计: 13.56s | 平均 Loss: 0.0043
+
+=== Epoch 5/100 ===
+  有效 seed 数量: 994 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.05s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.41s | Epoch总计: 13.63s | 平均 Loss: 0.0040
+
+=== Epoch 6/100 ===
+  有效 seed 数量: 983 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 3.98s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.52s | Epoch总计: 13.71s | 平均 Loss: 0.0042
+
+=== Epoch 7/100 ===
+  有效 seed 数量: 975 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 3.97s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.29s | Epoch总计: 13.42s | 平均 Loss: 0.0036
+
+=== Epoch 8/100 ===
+  有效 seed 数量: 978 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.01s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.33s | Epoch总计: 13.54s | 平均 Loss: 0.0038
+
+=== Epoch 9/100 ===
+  有效 seed 数量: 981 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 3.98s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.38s | Epoch总计: 13.49s | 平均 Loss: 0.0038
+
+=== Epoch 10/100 ===
+  有效 seed 数量: 977 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 3.99s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.39s | Epoch总计: 13.54s | 平均 Loss: 0.0034
+  [💾 Checkpoint] Saved to checkpoints/drift_model_epoch_10.pt
+
+=== Epoch 11/100 ===
+  有效 seed 数量: 986 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.02s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.62s | Epoch总计: 13.83s | 平均 Loss: 0.0031
+
+=== Epoch 12/100 ===
+  有效 seed 数量: 993 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.03s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.55s | Epoch总计: 13.77s | 平均 Loss: 0.0032
+
+=== Epoch 13/100 ===
+  有效 seed 数量: 970 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 3.95s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.36s | Epoch总计: 13.56s | 平均 Loss: 0.0032
+
+=== Epoch 14/100 ===
+  有效 seed 数量: 990 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 3.99s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.55s | Epoch总计: 13.73s | 平均 Loss: 0.0031
+
+=== Epoch 15/100 ===
+  有效 seed 数量: 989 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.04s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.60s | Epoch总计: 13.82s | 平均 Loss: 0.0029
+
+=== Epoch 16/100 ===
+  有效 seed 数量: 991 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.05s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.57s | Epoch总计: 13.81s | 平均 Loss: 0.0026
+
+=== Epoch 17/100 ===
+  有效 seed 数量: 991 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 3.96s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.58s | Epoch总计: 13.71s | 平均 Loss: 0.0030
+
+=== Epoch 18/100 ===
+  有效 seed 数量: 990 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.06s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.68s | Epoch总计: 13.89s | 平均 Loss: 0.0028
+
+=== Epoch 19/100 ===
+  有效 seed 数量: 977 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 3.94s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.58s | Epoch总计: 13.69s | 平均 Loss: 0.0027
+
+=== Epoch 20/100 ===
+  有效 seed 数量: 991 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.04s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.72s | Epoch总计: 13.91s | 平均 Loss: 0.0029
+  [💾 Checkpoint] Saved to checkpoints/drift_model_epoch_20.pt
+
+=== Epoch 21/100 ===
+  有效 seed 数量: 997 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 3.93s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.77s | Epoch总计: 13.88s | 平均 Loss: 0.0023
+
+=== Epoch 22/100 ===
+  有效 seed 数量: 977 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.03s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.60s | Epoch总计: 13.78s | 平均 Loss: 0.0029
+
+=== Epoch 23/100 ===
+  有效 seed 数量: 992 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 3.97s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.74s | Epoch总计: 13.90s | 平均 Loss: 0.0029
+
+=== Epoch 24/100 ===
+  有效 seed 数量: 997 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.03s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.81s | Epoch总计: 13.99s | 平均 Loss: 0.0028
+
+=== Epoch 25/100 ===
+  有效 seed 数量: 998 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 3.96s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.74s | Epoch总计: 13.87s | 平均 Loss: 0.0024
+
+=== Epoch 26/100 ===
+  有效 seed 数量: 976 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.17s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.55s | Epoch总计: 13.86s | 平均 Loss: 0.0026
+
+=== Epoch 27/100 ===
+  有效 seed 数量: 990 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.05s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.72s | Epoch总计: 13.94s | 平均 Loss: 0.0023
+
+=== Epoch 28/100 ===
+  有效 seed 数量: 989 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.04s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.81s | Epoch总计: 14.00s | 平均 Loss: 0.0023
+
+=== Epoch 29/100 ===
+  有效 seed 数量: 962 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 3.98s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.53s | Epoch总计: 13.67s | 平均 Loss: 0.0025
+
+=== Epoch 30/100 ===
+  有效 seed 数量: 974 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.05s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.68s | Epoch总计: 13.87s | 平均 Loss: 0.0022
+  [💾 Checkpoint] Saved to checkpoints/drift_model_epoch_30.pt
+
+=== Epoch 31/100 ===
+  有效 seed 数量: 989 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 3.96s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.79s | Epoch总计: 13.91s | 平均 Loss: 0.0025
+
+=== Epoch 32/100 ===
+  有效 seed 数量: 990 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.05s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.81s | Epoch总计: 14.02s | 平均 Loss: 0.0022
+
+=== Epoch 33/100 ===
+  有效 seed 数量: 999 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.00s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.90s | Epoch总计: 14.07s | 平均 Loss: 0.0020
+
+=== Epoch 34/100 ===
+  有效 seed 数量: 993 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.06s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.85s | Epoch总计: 14.07s | 平均 Loss: 0.0024
+
+=== Epoch 35/100 ===
+  有效 seed 数量: 991 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 3.98s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.78s | Epoch总计: 13.93s | 平均 Loss: 0.0023
+
+=== Epoch 36/100 ===
+  有效 seed 数量: 981 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.13s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.69s | Epoch总计: 13.98s | 平均 Loss: 0.0022
+
+=== Epoch 37/100 ===
+  有效 seed 数量: 971 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.05s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.57s | Epoch总计: 13.80s | 平均 Loss: 0.0021
+
+=== Epoch 38/100 ===
+  有效 seed 数量: 996 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.03s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.90s | Epoch总计: 14.08s | 平均 Loss: 0.0021
+
+=== Epoch 39/100 ===
+  有效 seed 数量: 1000 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 3.98s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 10.00s | Epoch总计: 14.16s | 平均 Loss: 0.0019
+
+=== Epoch 40/100 ===
+  有效 seed 数量: 990 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.06s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.91s | Epoch总计: 14.15s | 平均 Loss: 0.0020
+  [💾 Checkpoint] Saved to checkpoints/drift_model_epoch_40.pt
+
+=== Epoch 41/100 ===
+  有效 seed 数量: 985 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 3.93s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.89s | Epoch总计: 13.99s | 平均 Loss: 0.0021
+
+=== Epoch 42/100 ===
+  有效 seed 数量: 979 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.02s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.79s | Epoch总计: 13.96s | 平均 Loss: 0.0021
+
+=== Epoch 43/100 ===
+  有效 seed 数量: 993 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 3.97s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.92s | Epoch总计: 14.06s | 平均 Loss: 0.0020
+
+=== Epoch 44/100 ===
+  有效 seed 数量: 982 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.05s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.83s | Epoch总计: 14.03s | 平均 Loss: 0.0021
+
+=== Epoch 45/100 ===
+  有效 seed 数量: 980 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 3.95s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.71s | Epoch总计: 13.85s | 平均 Loss: 0.0018
+
+=== Epoch 46/100 ===
+  有效 seed 数量: 972 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.16s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.71s | Epoch总计: 14.03s | 平均 Loss: 0.0021
+
+=== Epoch 47/100 ===
+  有效 seed 数量: 988 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.08s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.86s | Epoch总计: 14.10s | 平均 Loss: 0.0020
+
+=== Epoch 48/100 ===
+  有效 seed 数量: 989 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.15s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.84s | Epoch总计: 14.15s | 平均 Loss: 0.0020
+
+=== Epoch 49/100 ===
+  有效 seed 数量: 970 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 3.95s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.75s | Epoch总计: 13.86s | 平均 Loss: 0.0019
+
+=== Epoch 50/100 ===
+  有效 seed 数量: 985 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.05s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.92s | Epoch总计: 14.14s | 平均 Loss: 0.0019
+  [💾 Checkpoint] Saved to checkpoints/drift_model_epoch_50.pt
+
+=== Epoch 51/100 ===
+  有效 seed 数量: 990 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 3.94s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.97s | Epoch总计: 14.08s | 平均 Loss: 0.0019
+
+=== Epoch 52/100 ===
+  有效 seed 数量: 1000 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.07s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 10.07s | Epoch总计: 14.29s | 平均 Loss: 0.0018
+
+=== Epoch 53/100 ===
+  有效 seed 数量: 975 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 3.98s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.81s | Epoch总计: 13.95s | 平均 Loss: 0.0020
+
+=== Epoch 54/100 ===
+  有效 seed 数量: 1003 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.07s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 10.08s | Epoch总计: 14.31s | 平均 Loss: 0.0018
+
+=== Epoch 55/100 ===
+  有效 seed 数量: 983 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.00s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.89s | Epoch总计: 14.05s | 平均 Loss: 0.0019
+
+=== Epoch 56/100 ===
+  有效 seed 数量: 981 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.03s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.82s | Epoch总计: 14.01s | 平均 Loss: 0.0020
+
+=== Epoch 57/100 ===
+  有效 seed 数量: 982 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.10s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.81s | Epoch总计: 14.08s | 平均 Loss: 0.0018
+
+=== Epoch 58/100 ===
+  有效 seed 数量: 971 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.10s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.64s | Epoch总计: 13.89s | 平均 Loss: 248515389.4463
+
+=== Epoch 59/100 ===
+  有效 seed 数量: 975 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.06s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.35s | Epoch总计: 13.60s | 平均 Loss: 10528.1113
+
+=== Epoch 60/100 ===
+  有效 seed 数量: 997 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.08s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.72s | Epoch总计: 13.95s | 平均 Loss: 5437.0678
+  [💾 Checkpoint] Saved to checkpoints/drift_model_epoch_60.pt
+
+=== Epoch 61/100 ===
+  有效 seed 数量: 993 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 3.97s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.62s | Epoch总计: 13.77s | 平均 Loss: 3946.8435
+
+=== Epoch 62/100 ===
+  有效 seed 数量: 990 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.04s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.66s | Epoch总计: 13.86s | 平均 Loss: 3011.4961
+
+=== Epoch 63/100 ===
+  有效 seed 数量: 997 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 3.99s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.73s | Epoch总计: 13.92s | 平均 Loss: 2176.4055
+
+=== Epoch 64/100 ===
+  有效 seed 数量: 974 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.07s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.43s | Epoch总计: 13.68s | 平均 Loss: 1380.4847
+
+=== Epoch 65/100 ===
+  有效 seed 数量: 976 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 3.99s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.52s | Epoch总计: 13.68s | 平均 Loss: 1008.4552
+
+=== Epoch 66/100 ===
+  有效 seed 数量: 982 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.08s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.46s | Epoch总计: 13.69s | 平均 Loss: 661.1879
+
+=== Epoch 67/100 ===
+  有效 seed 数量: 984 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.06s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.48s | Epoch总计: 13.73s | 平均 Loss: 487.2772
+
+=== Epoch 68/100 ===
+  有效 seed 数量: 967 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.13s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.36s | Epoch总计: 13.64s | 平均 Loss: 350.3221
+
+=== Epoch 69/100 ===
+  有效 seed 数量: 987 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 3.96s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.69s | Epoch总计: 13.82s | 平均 Loss: 247.1940
+
+=== Epoch 70/100 ===
+  有效 seed 数量: 996 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.08s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.80s | Epoch总计: 14.04s | 平均 Loss: 193.6357
+  [💾 Checkpoint] Saved to checkpoints/drift_model_epoch_70.pt
+
+=== Epoch 71/100 ===
+  有效 seed 数量: 989 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 3.94s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.64s | Epoch总计: 13.76s | 平均 Loss: 148.8268
+
+=== Epoch 72/100 ===
+  有效 seed 数量: 971 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.06s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.51s | Epoch总计: 13.73s | 平均 Loss: 109.6855
+
+=== Epoch 73/100 ===
+  有效 seed 数量: 999 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.01s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.77s | Epoch总计: 13.97s | 平均 Loss: 96.2251
+
+=== Epoch 74/100 ===
+  有效 seed 数量: 989 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.07s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.61s | Epoch总计: 13.82s | 平均 Loss: 82.6587
+
+=== Epoch 75/100 ===
+  有效 seed 数量: 990 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 3.99s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.58s | Epoch总计: 13.75s | 平均 Loss: 66.5478
+
+=== Epoch 76/100 ===
+  有效 seed 数量: 980 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.15s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.62s | Epoch总计: 13.93s | 平均 Loss: 54.6685
+
+=== Epoch 77/100 ===
+  有效 seed 数量: 980 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.07s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.49s | Epoch总计: 13.74s | 平均 Loss: 45.9987
+
+=== Epoch 78/100 ===
+  有效 seed 数量: 967 | K=8 | 轨迹步数 T=201
+  [⏱️ Time] GP初始化: 0.00s | GP采样: 4.09s | 轨迹构建: 0.00s
+  [⏱️ Time] 训练: 9.39s | Epoch总计: 13.64s | 平均 Loss: 38.9105
+
+=== Epoch 79/100 ===

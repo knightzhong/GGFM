@@ -9,7 +9,7 @@ class Config:
     TASK_NAME = 'TFBind8-Exact-v0'
     SEED = 42
     DEVICE = 'cuda'
-
+    
     # GP sampling config (ROOT style)
     GP_NUM_FUNCTIONS = 8
     GP_NUM_POINTS = 1024
@@ -33,6 +33,10 @@ class Config:
     FM_LR = 1e-3
     INFERENCE_STEPS = 50
     NUM_TEST_SAMPLES = 128
+
+    # Drift training subsampling config
+    DRIFT_SUBSAMPLE_STEPS = 200
+    DRIFT_SUBSAMPLE_MODE = "random"  # "random" or "strided"
 
     # SDE inference config (可由 yaml 覆盖)
     SDE_INFERENCE_STEPS = 200
@@ -99,6 +103,8 @@ def _apply_model_config(model_cfg):
 def _apply_training_config(training_cfg):
     _apply_if_present(training_cfg.get('batch_size'), 'FM_BATCH_SIZE')
     _apply_if_present(training_cfg.get('n_epochs'), 'FM_EPOCHS')
+    _apply_if_present(training_cfg.get('drift_subsample_steps'), 'DRIFT_SUBSAMPLE_STEPS')
+    _apply_if_present(training_cfg.get('drift_subsample_mode'), 'DRIFT_SUBSAMPLE_MODE')
 
 
 def _apply_testing_config(testing_cfg):

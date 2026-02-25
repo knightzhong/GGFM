@@ -160,11 +160,36 @@ class DriftDataset(Dataset):
     def __getitem__(self, idx):
         seed_id = idx // self.K
         k_id = idx % self.K
+
+        # 完整轨迹 [M, D] / [M, 1]
+        x_traj = self.x[seed_id, k_id]
+        t_traj = self.t[seed_id, k_id]
+        drift_traj = self.drift_label[seed_id, k_id]
+
+        # 时间步子采样
+        M = self.M
+        m_sub = min(Config.DRIFT_SUBSAMPLE_STEPS, M)
+
+        if m_sub <= 0:
+            indices = torch.arange(0, M, dtype=torch.long)
+        elif Config.DRIFT_SUBSAMPLE_MODE == "strided":
+            # 均匀步长采样（不放回）
+            step = max(M // m_sub, 1)
+            indices = torch.arange(0, M, step, dtype=torch.long)[:m_sub]
+        else:
+            # 默认随机采样（不放回）
+            perm = torch.randperm(M)
+            indices = perm[:m_sub]
+
+        x_sub = x_traj[indices]              # [m_sub, D]
+        t_sub = t_traj[indices]              # [m_sub, 1]
+        drift_label_sub = drift_traj[indices]  # [m_sub, D]
+
         sample = {
-            "x": self.x[seed_id, k_id],
-            "t": self.t[seed_id, k_id],
-            "cond": self.cond[seed_id, k_id],
-            "drift_label": self.drift_label[seed_id, k_id],
+            "x": x_sub,
+            "t": t_sub,
+            "cond": self.cond[seed_id, k_id],          # [D+1]
+            "drift_label": drift_label_sub,
         }
         if self.weight.numel() > 0:
             sample["weight"] = self.weight[idx]
@@ -345,6 +370,9 @@ def main():
             dataset,
             batch_size=Config.FM_BATCH_SIZE,
             shuffle=True,
+            num_workers=4,
+            pin_memory=(device.type == "cuda"),
+            persistent_workers=True,
         )
 
         # 单 Epoch 训练：drift 回归
@@ -352,7 +380,10 @@ def main():
         running_loss = 0.0
         num_batches = 0
         for batch in dataloader:
-            batch = {k: v.to(device) for k, v in batch.items()}
+            batch = {
+                k: (v.to(device, non_blocking=True) if isinstance(v, torch.Tensor) else v)
+                for k, v in batch.items()
+            }
             loss = train_sde_drift_step(drift_model, optimizer, batch, Config)
             running_loss += loss
             num_batches += 1
@@ -415,7 +446,7 @@ def main():
     )
 
     # 使用 SDE 进行多样本推理：对每个 seed 采样 NUM_SDE_SAMPLES 条候选
-    num_sde_samples = Config.NUM_SDE_SAMPLES
+    num_sde_samples = 1 #Config.NUM_SDE_SAMPLES
     steps = Config.SDE_INFERENCE_STEPS
 
     x0_test = torch.FloatTensor(X_test_norm).to(device)  # [Q, D]
